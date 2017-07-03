@@ -6,7 +6,10 @@ using SimpleVoter.Core.Models;
 
 namespace SimpleVoter.Core.Repositories
 {
-    public interface IAnswerRepository : IRepositoryBase<Answer>
+    public interface IAnswerRepository
     {
+        Answer Get(int id);
+        int GetVotes(int answerId);
+    
     }
 }

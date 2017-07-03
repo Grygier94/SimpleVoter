@@ -225,6 +225,7 @@
     <Compile Include="Core\ViewModels\SetPasswordViewModel.cs" />
     <Compile Include="Core\ViewModels\VerifyCodeViewModel.cs" />
     <Compile Include="Core\ViewModels\VerifyPhoneNumberViewModel.cs" />
+    <Compile Include="Core\IApplicationDbContext.cs" />
     <Compile Include="Persistence\Migrations\201707021234474_Init.cs" />
     <Compile Include="Persistence\Migrations\201707021234474_Init.Designer.cs">
       <DependentUpon>201707021234474_Init.cs</DependentUpon>
@@ -234,7 +235,6 @@
     <Compile Include="Core\Models\Poll.cs" />
     <Compile Include="Core\Repositories\IAnswerRepository.cs" />
     <Compile Include="Core\Repositories\IPollRepository.cs" />
-    <Compile Include="Core\Repositories\IRepositoryBase.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -244,7 +244,6 @@
     <Compile Include="Persistence\EntityConfigurations\PollConfiguration.cs" />
     <Compile Include="Persistence\Repositories\AnswerRepository.cs" />
     <Compile Include="Persistence\Repositories\PollRepository.cs" />
-    <Compile Include="Persistence\Repositories\RepositoryBase.cs" />
     <Compile Include="Persistence\UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

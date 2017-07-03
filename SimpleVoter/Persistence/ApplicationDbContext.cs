@@ -1,14 +1,15 @@
 using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using SimpleVoter.Core;
 using SimpleVoter.Core.Models;
 using SimpleVoter.Persistence.EntityConfigurations;
 
 namespace SimpleVoter.Persistence
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplicationDbContext
     {
-        public DbSet<Poll> Polls { get; set; }
-        public DbSet<Answer> Answers { get; set; }
+        public IDbSet<Poll> Polls { get; set; }
+        public IDbSet<Answer> Answers { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
