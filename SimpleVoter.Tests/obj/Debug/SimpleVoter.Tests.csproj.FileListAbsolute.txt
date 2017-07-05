@@ -91,3 +91,10 @@ E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\roslyn\vbc.exe.config
 E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\roslyn\vbc.rsp
 E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\roslyn\VBCSCompiler.exe
 E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\roslyn\VBCSCompiler.exe.config
+E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\Microsoft.Owin.Security.Twitter.dll
+E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\Microsoft.Owin.Security.Facebook.dll
+E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\Microsoft.Owin.Security.Google.dll
+E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\Owin.Security.Providers.GitHub.dll
+E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\Microsoft.Owin.Security.Twitter.xml
+E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\Microsoft.Owin.Security.Facebook.xml
+E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\Microsoft.Owin.Security.Google.xml

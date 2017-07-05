@@ -3,8 +3,12 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.Facebook;
 using Microsoft.Owin.Security.Google;
 using Owin;
+using Owin.Security.Providers.GitHub;
+using Owin.Security.Providers.LinkedIn;
+using Owin.Security.Providers.Twitch;
 using SimpleVoter.Core.Models;
 using SimpleVoter.Persistence;
 
@@ -35,7 +39,7 @@ namespace SimpleVoter
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
                 }
-            });            
+            });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.
@@ -47,23 +51,28 @@ namespace SimpleVoter
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
 
             // Uncomment the following lines to enable logging in with third party login providers
-            //app.UseMicrosoftAccountAuthentication(
-            //    clientId: "",
-            //    clientSecret: "");
+            app.UseTwitterAuthentication(
+               consumerKey: "e3V7BzwVcxoAjaK8IycmHx3lY",
+               consumerSecret: "UkXzQ3qt8krSdnmqSdGCKv7JIDQ7u1WJ8FsUISsPmVK1XdWbfI");
 
-            //app.UseTwitterAuthentication(
-            //   consumerKey: "",
-            //   consumerSecret: "");
+            app.UseFacebookAuthentication(new FacebookAuthenticationOptions()
+            {
+                AppId = "133183320606121",
+                AppSecret = "50ba39e5c5d587b8377b31116d9bde28",
+                Scope = { "public_profile", "email" }
+            });
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "983661371116-c7avscfvj525pudr3vi6getkmh4gbfi9.apps.googleusercontent.com",
+                ClientSecret = "k3-v2-uhhjB8QROeLZAlgz2H"
+            });
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGitHubAuthentication(new GitHubAuthenticationOptions()
+            {
+                ClientId = "ae12fe21116a8673128f",
+                ClientSecret = "1dea51cec710a500a9dcc280ce9c196b3e11d61d"
+            });
         }
     }
 }
