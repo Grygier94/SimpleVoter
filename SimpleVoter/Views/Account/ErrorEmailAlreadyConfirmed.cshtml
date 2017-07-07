@@ -1,0 +1,9 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Email has been already confirmed";
+}
+
+
+<h1>Email is confirmed.</h1>
+<h2 class="text-warning">Given email has been already confirmed. Please @Html.ActionLink("click here to Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</h2>

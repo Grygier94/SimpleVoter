@@ -273,3 +273,8 @@ E:\Repositories\simplevoter\SimpleVoter\bin\PreMailer.Net.dll
 E:\Repositories\simplevoter\SimpleVoter\bin\SgmlReaderDll.dll
 E:\Repositories\simplevoter\SimpleVoter\bin\Thrift.dll
 E:\Repositories\simplevoter\SimpleVoter\bin\CsQuery.xml
+E:\Repositories\simplevoter\SimpleVoter\bin\Microsoft.IdentityModel.Logging.dll
+E:\Repositories\simplevoter\SimpleVoter\bin\Microsoft.IdentityModel.Tokens.dll
+E:\Repositories\simplevoter\SimpleVoter\bin\System.IdentityModel.Tokens.Jwt.dll
+E:\Repositories\simplevoter\SimpleVoter\bin\Microsoft.IdentityModel.Tokens.xml
+E:\Repositories\simplevoter\SimpleVoter\bin\System.IdentityModel.Tokens.Jwt.xml

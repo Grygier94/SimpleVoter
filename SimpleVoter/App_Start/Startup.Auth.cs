@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web.Configuration;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -36,7 +37,7 @@ namespace SimpleVoter
                     // Enables the application to validate the security stamp when the user logs in.
                     // This is a security feature which is used when you change a password or add an external login to your account.  
                     OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, ApplicationUser>(
-                        validateInterval: TimeSpan.FromMinutes(30),
+                        validateInterval: TimeSpan.FromMinutes(5),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
                 }
             });
@@ -50,28 +51,27 @@ namespace SimpleVoter
             // This is similar to the RememberMe option when you log in.
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
 
-            // Uncomment the following lines to enable logging in with third party login providers
             app.UseTwitterAuthentication(
-               consumerKey: "e3V7BzwVcxoAjaK8IycmHx3lY",
-               consumerSecret: "UkXzQ3qt8krSdnmqSdGCKv7JIDQ7u1WJ8FsUISsPmVK1XdWbfI");
+               consumerKey: WebConfigurationManager.AppSettings["TwitterConsumerKey"],
+               consumerSecret: WebConfigurationManager.AppSettings["TwitterConsumerSecret"]);
 
             app.UseFacebookAuthentication(new FacebookAuthenticationOptions()
             {
-                AppId = "133183320606121",
-                AppSecret = "50ba39e5c5d587b8377b31116d9bde28",
+                AppId = WebConfigurationManager.AppSettings["FacebookAppId"],
+                AppSecret = WebConfigurationManager.AppSettings["FacebookAppSecret"],
                 Scope = { "public_profile", "email" }
             });
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
-                ClientId = "983661371116-c7avscfvj525pudr3vi6getkmh4gbfi9.apps.googleusercontent.com",
-                ClientSecret = "k3-v2-uhhjB8QROeLZAlgz2H"
+                ClientId = WebConfigurationManager.AppSettings["GoogleClientId"],
+                ClientSecret = WebConfigurationManager.AppSettings["GoogleClientSecret"]
             });
 
             app.UseGitHubAuthentication(new GitHubAuthenticationOptions()
             {
-                ClientId = "ae12fe21116a8673128f",
-                ClientSecret = "1dea51cec710a500a9dcc280ce9c196b3e11d61d"
+                ClientId = WebConfigurationManager.AppSettings["GitHubClientId"],
+                ClientSecret = WebConfigurationManager.AppSettings["GitHubClientSecret"]
             });
         }
     }

@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Configuration;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -19,7 +23,27 @@ namespace SimpleVoter
     {
         public Task SendAsync(IdentityMessage message)
         {
-            // Plug in your email service here to send an email.
+            var msg = new MailMessage();
+            msg.To.Add(message.Destination);
+            msg.From = new MailAddress(WebConfigurationManager.AppSettings["ServerMailName"]);
+            msg.Subject = message.Subject;
+            msg.Body = message.Body;
+            msg.IsBodyHtml = true;
+
+            using (var smtp = new SmtpClient())
+            {
+                var credential = new NetworkCredential
+                {
+                    UserName = WebConfigurationManager.AppSettings["ServerMailName"], 
+                    Password = WebConfigurationManager.AppSettings["ServerMailPassword"]
+                };
+                smtp.Credentials = credential;
+                smtp.Host = WebConfigurationManager.AppSettings["MailHost"];
+                smtp.Port = int.Parse(WebConfigurationManager.AppSettings["MailPort"]);
+                smtp.EnableSsl = true;
+                smtp.Send(msg);
+            }
+
             return Task.FromResult(0);
         }
     }
@@ -41,7 +65,7 @@ namespace SimpleVoter
         {
         }
 
-        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
+        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
             var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
             // Configure validation logic for usernames
@@ -54,7 +78,7 @@ namespace SimpleVoter
             // Configure validation logic for passwords
             manager.PasswordValidator = new PasswordValidator
             {
-                RequiredLength = 6,
+                RequiredLength = 8,
                 RequireNonLetterOrDigit = false,
                 RequireDigit = true,
                 RequireLowercase = false,
@@ -82,7 +106,7 @@ namespace SimpleVoter
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
             {
-                manager.UserTokenProvider = 
+                manager.UserTokenProvider =
                     new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
             return manager;
