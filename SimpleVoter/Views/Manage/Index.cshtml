@@ -67,9 +67,7 @@
                 using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
                     @Html.AntiForgeryToken()
-                    <text>Enabled
-                        <input type="submit" value="Disable" class="btn btn-link" />
-                    </text>
+                    <text>Enabled<input type="submit" value="[Disable]" class="btn btn-link" /></text>
                 }
             }
             else
@@ -77,11 +75,16 @@
                 using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
                     @Html.AntiForgeryToken()
-                    <text>Disabled
-                        <input type="submit" value="Enable" class="btn btn-link" />
-                    </text>
+                    <text>Disabled<input type="submit" value="[Enable]" class="btn btn-link" /></text>
                 }
             }
+        </dd>
+        <dt> Google Authenticator: </dt>
+        <dd>
+            @(Model.IsGoogleAuthenticatorEnabled ? "Enabled" : "Disabled")
+            @(Model.IsGoogleAuthenticatorEnabled 
+            ? Html.ActionLink("[Disable]", "DisableGoogleAuthenticator") 
+            : Html.ActionLink("[Enable]", "EnableGoogleAuthenticator"))
         </dd>
     </dl>
 </div>

@@ -14,6 +14,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
+using SimpleVoter.Core.Extensions;
 using SimpleVoter.Core.Models;
 using SimpleVoter.Persistence;
 
@@ -101,8 +102,10 @@ namespace SimpleVoter
                 Subject = "Security Code",
                 BodyFormat = "Your security code is {0}"
             });
+            manager.RegisterTwoFactorProvider("GoogleAuthenticator", new GoogleAuthenticatorTokenProvider());
             manager.EmailService = new EmailService();
             manager.SmsService = new SmsService();
+            
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
             {

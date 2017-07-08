@@ -278,3 +278,8 @@ E:\Repositories\simplevoter\SimpleVoter\bin\Microsoft.IdentityModel.Tokens.dll
 E:\Repositories\simplevoter\SimpleVoter\bin\System.IdentityModel.Tokens.Jwt.dll
 E:\Repositories\simplevoter\SimpleVoter\bin\Microsoft.IdentityModel.Tokens.xml
 E:\Repositories\simplevoter\SimpleVoter\bin\System.IdentityModel.Tokens.Jwt.xml
+E:\Repositories\simplevoter\SimpleVoter\bin\Base32.dll
+E:\Repositories\simplevoter\SimpleVoter\bin\OtpSharp.dll
+E:\Repositories\simplevoter\SimpleVoter\bin\OtpSharp.xml
+E:\Repositories\simplevoter\SimpleVoter\obj\Debug\SimpleVoter.Migrations.AddGoogleAuthenticator.resources
+E:\Repositories\simplevoter\SimpleVoter\bin\Microsoft.IdentityModel.Logging.xml
