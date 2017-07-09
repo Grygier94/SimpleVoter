@@ -65,6 +65,10 @@ namespace SimpleVoter
             : base(store)
         {
         }
+        public bool GetGoogleAuthenticatorEnabled(string userId)
+        {
+            return Users.Single(u => u.Id == userId).IsGoogleAuthenticatorEnabled;
+        }
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
@@ -102,7 +106,7 @@ namespace SimpleVoter
                 Subject = "Security Code",
                 BodyFormat = "Your security code is {0}"
             });
-            manager.RegisterTwoFactorProvider("GoogleAuthenticator", new GoogleAuthenticatorTokenProvider());
+            manager.RegisterTwoFactorProvider("Google Authenticator", new GoogleAuthenticatorTokenProvider());
             manager.EmailService = new EmailService();
             manager.SmsService = new SmsService();
             

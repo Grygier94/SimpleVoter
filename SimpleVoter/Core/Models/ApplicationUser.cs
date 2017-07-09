@@ -11,11 +11,6 @@ namespace SimpleVoter.Core.Models
         public bool IsGoogleAuthenticatorEnabled { get; set; }
         public string GoogleAuthenticatorSecretKey { get; set; }
 
-        public bool GetGoogleAuthenticatorEnabled(string userId)
-        {
-            return IsGoogleAuthenticatorEnabled;
-        }
-
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

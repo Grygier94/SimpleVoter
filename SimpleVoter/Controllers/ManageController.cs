@@ -68,7 +68,7 @@ namespace SimpleVoter.Controllers
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
-                //TODO: IsGoogleAuthenticatorEnabled = 
+                IsGoogleAuthenticatorEnabled = UserManager.GetGoogleAuthenticatorEnabled(userId)
             };
             return View(model);
         }
@@ -134,7 +134,7 @@ namespace SimpleVoter.Controllers
         {
             var secretKey = KeyGeneration.GenerateRandomKey(20);
             var userName = User.Identity.GetUserName();
-            var barcodeUrl = KeyUrl.GetTotpUrl(secretKey, userName) + "&issuer=MySuperApplication";
+            var barcodeUrl = KeyUrl.GetTotpUrl(secretKey, userName) + "&issuer=Simple Voter";
 
             var model = new GoogleAuthenticatorViewModel
             {
