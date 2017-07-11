@@ -41,7 +41,7 @@ namespace SimpleVoter
                 smtp.Credentials = credential;
                 smtp.Host = WebConfigurationManager.AppSettings["MailHost"];
                 smtp.Port = int.Parse(WebConfigurationManager.AppSettings["MailPort"]);
-                smtp.EnableSsl = true;
+                smtp.EnableSsl = bool.Parse(WebConfigurationManager.AppSettings["MailEnableSsl"]); ;
                 smtp.Send(msg);
             }
 

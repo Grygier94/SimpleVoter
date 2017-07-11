@@ -403,6 +403,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PollsController.cs" />
     <Compile Include="Core\Extensions\GoogleAuthenticatorTokneProvider.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
     <Compile Include="Core\Models\Answer.cs" />
@@ -431,6 +432,10 @@
     <Compile Include="Persistence\Migrations\201707081008592_AddGoogleAuthenticator.cs" />
     <Compile Include="Persistence\Migrations\201707081008592_AddGoogleAuthenticator.Designer.cs">
       <DependentUpon>201707081008592_AddGoogleAuthenticator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\Migrations\201707101940215_AddAdminRole.cs" />
+    <Compile Include="Persistence\Migrations\201707101940215_AddAdminRole.Designer.cs">
+      <DependentUpon>201707101940215_AddAdminRole.cs</DependentUpon>
     </Compile>
     <Compile Include="Persistence\Migrations\Configuration.cs" />
     <Compile Include="Persistence\ApplicationDbContext.cs" />
@@ -513,6 +518,8 @@
     <Content Include="Views\Account\NewAccountCheckEmail.cshtml" />
     <Content Include="Views\Account\ErrorEmailAlreadyConfirmed.cshtml" />
     <Content Include="Views\Manage\EnableGoogleAuthenticator.cshtml" />
+    <Content Include="Views\Polls\ShowAll.cshtml" />
+    <Content Include="Views\Polls\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -538,6 +545,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Persistence\Migrations\201707081008592_AddGoogleAuthenticator.resx">
       <DependentUpon>201707081008592_AddGoogleAuthenticator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201707101940215_AddAdminRole.resx">
+      <DependentUpon>201707101940215_AddAdminRole.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
