@@ -15,21 +15,20 @@ namespace SimpleVoter.Tests.Controllers
     [TestClass]
     public class PollsControllerTest
     {
-        private Mock<IPollRepository> _mockRepository;
-        private Mock<IUnitOfWork> _mockUoW;
         private PollsController _pollsController;
+        private Mock<IPollRepository> _mockRepository;
 
         [TestInitialize]
         public void TestInitialize()
         {
             _mockRepository = new Mock<IPollRepository>();
-            _mockUoW = new Mock<IUnitOfWork>();
+            var _mockUoW = new Mock<IUnitOfWork>();
             _mockUoW.SetupGet(u => u.Polls).Returns(_mockRepository.Object);
             _pollsController = new PollsController(_mockUoW.Object);
         }
 
         [TestMethod]
-        public void ShowAll_ValidRequest_ShouldReturnViewResultWithIEnumerableModel()
+        public void ShowAll_ValidRequest_ShouldReturnView()
         {
             var result = _pollsController.ShowAll() as ViewResult;
 
@@ -41,7 +40,7 @@ namespace SimpleVoter.Tests.Controllers
         [TestMethod]
         public void Create_ValidRequest_ShouldCreatePollAndReturnView()
         {
-            var poll = new Poll{Id = 1,Question = "Test question?",UserId = "1"};
+            var poll = new Poll { Id = 1, Question = "Test question?", UserId = "1" };
 
             var result = _pollsController.Create(poll) as RedirectToRouteResult;
 
@@ -58,6 +57,16 @@ namespace SimpleVoter.Tests.Controllers
             result.Should().NotBe(null);
             result.Should().BeOfType<ViewResult>();
         }
+
+        [TestMethod]
+        public void Edit_InvalidRequest_ShouldReturnEditView()
+        {
+            var result = _pollsController.Edit(null) as ViewResult;
+
+            result.Should().NotBe(null);
+            result.Should().BeOfType<ViewResult>();
+        }
+
 
         [TestMethod]
         public void Details_ValidRequest_ShouldReturnDetailsView()

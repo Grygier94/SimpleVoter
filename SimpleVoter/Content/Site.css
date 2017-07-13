@@ -1,12 +1,19 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿html {
+    display: block;
+    min-height: 100%;
+    position: relative;
+    padding-bottom: 350px;
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+@media (min-width: 768px) {
+    html {
+        padding-bottom: 150px;
+    }
+}
+
+body {
+    padding-top: 50px;
+    font-family: Arial;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -22,3 +29,143 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.body-content {
+    padding: 0;
+}
+
+.main-header {
+    padding-top: 50px;
+    padding-bottom: 30px;
+    background-color: #4394b9;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.main-title {
+    margin: 0;
+    font-size: 4.5em;
+    font-weight: bold;
+    color: #eee;
+    letter-spacing: 5px;
+}
+
+.main-description {
+    font-size: 1.6em;
+    color: #eee;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.mid-section {
+    padding-top: 50px;
+}
+
+.mid-section > div > div {
+    padding: 40px;  
+}
+
+.index-icon {
+    height: 250px;
+}
+
+.btn-custom {
+    background-color: #eeeeee;
+    border: solid 1px lightblue;
+    color: #4394b9;
+    padding: 20px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.4em;
+    margin: 5px;
+}
+
+    .btn-custom.btn-white {
+        background-color: #fff;
+    }
+
+    .btn-custom.btn-green {
+        color: white;
+        background-color: #22bb22;
+    }
+
+    .btn-custom:hover {
+        background-color: #fff;
+        cursor: pointer;
+    }
+
+    .btn-custom.btn-white:hover {
+        background-color: #eeeeee;
+        color: #4394b9;
+    }
+
+    .btn-custom.btn--green:hover {
+        background-color: #66bb66;
+    }
+
+.transition {
+    -webkit-transition: 0.4s ease-in-out;
+    -moz-transition: 0.4s ease-in-out;
+    -o-transition: 0.4s ease-in-out;
+    transition: 0.4s ease-in-out;
+}
+.no-padding {
+    padding: 0;
+}
+
+/*FOOTER*/
+footer {
+    background-color: #333;
+    color: #888;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    min-height: 80px;
+}
+
+.footer-container {
+    margin: 0 auto;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+}
+
+    .footer-container > div > div {
+        padding: 0;
+        padding-bottom: 5px;
+    }
+
+        .footer-container > div > div p {
+            padding-bottom: 20px;
+            padding-top: 20px;
+        }
+
+        .footer-container > div > div a {
+            display: block;
+            min-width: 100%;
+            padding-bottom: 20px;
+            padding-top: 20px;
+            color: #888;
+        }
+
+    .footer-container > div > div a:hover {
+        color: #fff;
+    }
+
+#Github:hover {
+    background-color: #666;
+}
+
+#Facebook:hover {
+    background-color: #3b5998;
+}
+
+#Twitter:hover {
+    background-color: #55acee;
+}
+
+#GooglePlus:hover {
+    background-color: #dd4b39;
+}
+/*FOOTER ---END---*/

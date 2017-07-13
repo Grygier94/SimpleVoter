@@ -8,6 +8,7 @@ using SimpleVoter.Core.Models;
 
 namespace SimpleVoter.Controllers
 {
+    [Authorize]
     public class PollsController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -59,7 +60,16 @@ namespace SimpleVoter.Controllers
         [HttpPost]
         public ActionResult Edit(Poll poll)
         {
-            return View();
+            if (poll != null && ModelState.IsValid)
+            {
+                var pollFromDb = _unitOfWork.Polls.Get(poll.Id);
+                pollFromDb.Answers = poll.Answers;
+                pollFromDb.Question = poll.Question;
+
+                return RedirectToAction("Details", poll.Id);
+            }
+
+            return View(poll);
         }
 
         public ActionResult DeletePoll(int pollId)

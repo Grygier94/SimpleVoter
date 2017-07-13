@@ -1,0 +1,22 @@
+﻿<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid no-padding">
+        <div class="col-sm-10 col-sm-offset-1 no-padding">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Simple Voter", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home", null, new { @class = "text-center" })</li>
+                    <li>@Html.ActionLink("About", "About", "Home", null, new { @class = "text-center" })</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "text-center" })</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+</nav>

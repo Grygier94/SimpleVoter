@@ -24,6 +24,9 @@ namespace SimpleVoter
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
+                      "~/Content/reset.css",
+                      "~/Content/font-awesome.css",
+                      "~/Content/font-awesome-overrides.css",
                       "~/Content/bootstrap.css",
                       "~/Content/bootstrap-overrides.css",
                       "~/Content/site.css"));
