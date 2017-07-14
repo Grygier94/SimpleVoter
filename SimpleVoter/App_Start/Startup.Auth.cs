@@ -51,15 +51,11 @@ namespace SimpleVoter
             // This is similar to the RememberMe option when you log in.
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
 
-            app.UseTwitterAuthentication(
-               consumerKey: WebConfigurationManager.AppSettings["TwitterConsumerKey"],
-               consumerSecret: WebConfigurationManager.AppSettings["TwitterConsumerSecret"]);
 
-            app.UseFacebookAuthentication(new FacebookAuthenticationOptions()
+            app.UseGitHubAuthentication(new GitHubAuthenticationOptions()
             {
-                AppId = WebConfigurationManager.AppSettings["FacebookAppId"],
-                AppSecret = WebConfigurationManager.AppSettings["FacebookAppSecret"],
-                Scope = { "public_profile", "email" }
+                ClientId = WebConfigurationManager.AppSettings["GitHubClientId"],
+                ClientSecret = WebConfigurationManager.AppSettings["GitHubClientSecret"]
             });
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
@@ -68,11 +64,17 @@ namespace SimpleVoter
                 ClientSecret = WebConfigurationManager.AppSettings["GoogleClientSecret"]
             });
 
-            app.UseGitHubAuthentication(new GitHubAuthenticationOptions()
+            app.UseTwitterAuthentication(
+                consumerKey: WebConfigurationManager.AppSettings["TwitterConsumerKey"],
+                consumerSecret: WebConfigurationManager.AppSettings["TwitterConsumerSecret"]);
+
+            app.UseFacebookAuthentication(new FacebookAuthenticationOptions()
             {
-                ClientId = WebConfigurationManager.AppSettings["GitHubClientId"],
-                ClientSecret = WebConfigurationManager.AppSettings["GitHubClientSecret"]
+                AppId = WebConfigurationManager.AppSettings["FacebookAppId"],
+                AppSecret = WebConfigurationManager.AppSettings["FacebookAppSecret"],
+                Scope = { "public_profile", "email" }
             });
+
         }
     }
 }

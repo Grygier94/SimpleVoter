@@ -5,29 +5,9 @@
     padding-bottom: 350px;
 }
 
-@media (min-width: 768px) {
-    html {
-        padding-bottom: 150px;
-    }
-}
-
 body {
     padding-top: 50px;
     font-family: Arial;
-}
-
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
-}
-
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
 }
 
 .body-content {
@@ -44,14 +24,14 @@ textarea {
 
 .main-title {
     margin: 0;
-    font-size: 4.5em;
+    font-size: 3em;
     font-weight: bold;
     color: #eee;
     letter-spacing: 5px;
 }
 
 .main-description {
-    font-size: 1.6em;
+    font-size: 1.4em;
     color: #eee;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -59,16 +39,137 @@ textarea {
 
 .mid-section {
     padding-top: 50px;
+    padding-bottom: 50px;
 }
 
-.mid-section > div > div {
-    padding: 40px;  
+    .mid-section .index-icon-container {
+        padding: 40px;
+    }
+
+        .mid-section .index-icon-container:last-child {
+            padding-bottom: 0;
+        }
+
+.mid-login-section {
+    display: block;
 }
 
 .index-icon {
     height: 250px;
 }
 
+/* UNIVERSAL */
+.transition {
+    -webkit-transition: 0.4s ease-in-out;
+    -moz-transition: 0.4s ease-in-out;
+    -o-transition: 0.4s ease-in-out;
+    transition: 0.4s ease-in-out;
+}
+
+.no-padding {
+    padding: 0;
+}
+
+.no-horizontal-margin {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.block {
+    display: block;
+}
+
+/* INPUTS */
+fieldset {
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.registration-fieldset {
+    border: 1px solid silver;
+    -ms-border-radius: 20px;
+    border-radius: 20px;
+    width: 90%;
+}
+
+.left-login-fieldset {
+    border: 1px solid silver;
+    border-bottom: none;
+    -ms-border-top-left-radius: 20px;
+    border-top-left-radius: 20px;
+    -ms-border-top-right-radius: 20px;
+    border-top-right-radius: 20px;
+    width: 80%;
+}
+
+.right-login-fieldset {
+    border: 1px solid silver;
+    -ms-border-bottom-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    -ms-border-bottom-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    width: 80%;
+}
+
+fieldset label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+fieldset input[type="text"],
+fieldset input[type="email"],
+fieldset input[type="password"] {
+    width: 100%;
+    padding: 5px;
+    font-size: 15px;
+    -ms-border-radius: 3px;
+    border-radius: 3px;
+}
+
+#register {
+    display: block;
+    margin: 10px auto 0 auto;
+}
+
+.register-as-new-user,
+.forgot-password {
+    display: block;
+    text-align: center;
+}
+
+.remember-me {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+    .remember-me label {
+        margin-top: 3px;
+        margin-bottom: 0;
+        font-weight: normal;
+    }
+
+    .remember-me input[type="checkbox"] {
+        margin: 0;
+        margin-left: 5px;
+        -ms-transform: scale(1.2);
+        -webkit-transform: scale(1.2);
+        transform: scale(1.2);
+    }
+
+.login-main-button {
+    width: 100%;
+}
+
+.external-provider-button {
+    display: block;
+    width: 100%;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+/* CUSTOM BUTTON */
 .btn-custom {
     background-color: #eeeeee;
     border: solid 1px lightblue;
@@ -90,31 +191,26 @@ textarea {
         background-color: #22bb22;
     }
 
-    .btn-custom:hover {
+    .btn-custom:hover,
+    .btn-custom:focus {
         background-color: #fff;
         cursor: pointer;
     }
 
-    .btn-custom.btn-white:hover {
+    .btn-custom.btn-white:hover,
+    .btn-custom.btn-white:focus {
         background-color: #eeeeee;
         color: #4394b9;
     }
 
-    .btn-custom.btn--green:hover {
+    .btn-custom.btn--green:hover,
+    .btn-custom.btn--green:focus {
         background-color: #66bb66;
     }
 
-.transition {
-    -webkit-transition: 0.4s ease-in-out;
-    -moz-transition: 0.4s ease-in-out;
-    -o-transition: 0.4s ease-in-out;
-    transition: 0.4s ease-in-out;
-}
-.no-padding {
-    padding: 0;
-}
 
-/*FOOTER*/
+
+/* FOOTER */
 footer {
     background-color: #333;
     color: #888;
@@ -149,23 +245,121 @@ footer {
             color: #888;
         }
 
-    .footer-container > div > div a:hover {
-        color: #fff;
-    }
+            .footer-container > div > div a:hover {
+                color: #fff;
+            }
 
-#Github:hover {
+#footer-github:hover {
     background-color: #666;
 }
 
-#Facebook:hover {
+#footer-facebook:hover {
     background-color: #3b5998;
 }
 
-#Twitter:hover {
+#footer-twitter:hover {
     background-color: #55acee;
 }
 
-#GooglePlus:hover {
+#footer-google-plus:hover {
     background-color: #dd4b39;
 }
-/*FOOTER ---END---*/
+
+/* MEDIA QUERIES */
+@media (min-width: 768px) {
+    html {
+        padding-bottom: 150px;
+    }
+
+    .registration-fieldset {
+        padding-right: 40px;
+    }
+
+    .main-title {
+        font-size: 4.5em;
+    }
+
+    .main-description {
+        font-size: 1.6em;
+    }
+
+    .mid-section .index-icon-container:last-child {
+        padding-bottom: 40px;
+    }
+
+    fieldset input[type="text"],
+    fieldset input[type="email"],
+    fieldset input[type="password"] {
+        padding: 5px;
+        font-size: 18px;
+    }
+}
+
+@media (min-width: 992px) {
+    #register {
+        display: inline;
+    }
+
+    .mid-login-section {
+        display: flex;
+    }
+
+    .left-login-fieldset {
+        border: 1px solid silver;
+        -ms-border-bottom-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+        -ms-border-top-left-radius: 20px;
+        border-top-left-radius: 20px;
+        -ms-border-top-right-radius: 0px;
+        border-top-right-radius: 0px;
+        border-right: none;
+        height: 100%;
+        width: 100%;
+    }
+
+    .right-login-fieldset {
+        border: 1px solid silver;
+        -ms-border-bottom-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+        -ms-border-top-right-radius: 20px;
+        border-top-right-radius: 20px;
+        -ms-border-bottom-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+        height: 100%;
+        width: 100%;
+    }
+
+    .register-as-new-user,
+    .forgot-password {
+        display: inline;
+    }
+
+    .remember-me {
+        display: inline;
+    }
+
+        .remember-me label {
+            margin-top: 3px;
+            margin-bottom: 0;
+            font-weight: normal;
+            display: inline;
+        }
+
+        .remember-me input[type="checkbox"] {
+            margin: 0;
+            margin-left: 5px;
+            -ms-transform: scale(1.2);
+            -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+            display: inline;
+        }
+
+    .login-main-button {
+        width: 50%; 
+        display: inline;
+    }
+
+    .test {
+        display: inline;
+    }
+}
