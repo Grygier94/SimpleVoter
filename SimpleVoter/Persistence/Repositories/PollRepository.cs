@@ -27,6 +27,11 @@ namespace SimpleVoter.Persistence.Repositories
             return Context.Polls;
         }
 
+        public IEnumerable<Poll> GetAll(string userId)
+        {
+            return Context.Polls.Where(p => p.UserId == userId);
+        }
+
         public void Add(Poll poll)
         {
             Context.Polls.Add(poll);

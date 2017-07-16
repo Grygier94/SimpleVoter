@@ -6,15 +6,25 @@
         <header class="main-header text-center">
             <h1 class="main-title">Simple Voter</h1>
             <p class="main-description">Create custom polls with live results.</p>
-            @Html.ActionLink("Sing Up", "Register", "Account", null, new { @class = "btn btn-custom btn-white" })
+            <div class="dashboard-buttons">
+                @Html.ActionLink("New Poll", "Create", "Polls", null, new { @class = "btn btn-custom btn-white" })
+                @if (Request.IsAuthenticated)
+                {
+                    @Html.ActionLink("My Polls", "ShowAll", "Polls", null, new { @class = "btn btn-custom btn-white" })
+                }
+                else
+                {
+                    @Html.ActionLink("Sing Up", "Register", "Account", null, new { @class = "btn btn-custom btn-white" })
+                }
+            </div>
         </header>
 
         <section class="mid-section">
             <div class="col-sm-10 col-sm-offset-1">
                 <div class="col-sm-4 index-icon-container">
-                        <img src="/Content/images/bolt.png" class="img-responsive index-icon center-block" />
-                        <h2 class="text-center">Live Results</h2>
-                        <p class="text-center">Live graphs show your poll results immediately in an easy to understand format. One graph will not provide the whole picture, that's why we provide multiple graph types to better describe your results.</p>
+                    <img src="/Content/images/bolt.png" class="img-responsive index-icon center-block" />
+                    <h2 class="text-center">Live Results</h2>
+                    <p class="text-center">Live graphs show your poll results immediately in an easy to understand format. One graph will not provide the whole picture, that's why we provide multiple graph types to better describe your results.</p>
                 </div>
                 <div class="col-sm-4 index-icon-container">
                     <img src="/Content/images/earth.png" class="img-responsive index-icon center-block" />

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -10,6 +11,8 @@ namespace SimpleVoter.Core.Models
     {
         public int Id { get; set; }
         public string Question { get; set; }
+        [Display(Name = "Allow Multiple Answers")]
+        public bool AllowMultipleAnswers { get; set; }
         public ApplicationUser User { get; set; }
         public string UserId { get; set; }
         public ICollection<Answer> Answers { get; set; }

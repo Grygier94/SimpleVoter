@@ -284,3 +284,4 @@ E:\Repositories\simplevoter\SimpleVoter\bin\OtpSharp.xml
 E:\Repositories\simplevoter\SimpleVoter\obj\Debug\SimpleVoter.Migrations.AddGoogleAuthenticator.resources
 E:\Repositories\simplevoter\SimpleVoter\bin\Microsoft.IdentityModel.Logging.xml
 E:\Repositories\simplevoter\SimpleVoter\obj\Debug\SimpleVoter.Migrations.AddAdminRole.resources
+E:\Repositories\simplevoter\SimpleVoter\obj\Debug\SimpleVoter.Migrations.AddMultipleAnswersColumnToPollsTable.resources

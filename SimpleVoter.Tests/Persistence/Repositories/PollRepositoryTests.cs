@@ -47,6 +47,58 @@ namespace SimpleVoter.Tests.Persistence.Repositories
         }
 
         [TestMethod]
+        public void GetAll_NoPollExists_ShouldReturnEmptyIEnumerable()
+        {
+            _mockPolls.SetSource(new List<Poll>());
+            var allPolls = _pollRepository.GetAll();
+            allPolls.Should().HaveCount(0);
+        }
+
+        [TestMethod]
+        public void GetAll_PollsExist_ShouldReturnAllPolls()
+        {
+            var poll1 = new Poll { Id = 1, Question = "Question1" };
+            var poll2 = new Poll { Id = 2, Question = "Question2" };
+            var poll3 = new Poll { Id = 3, Question = "Question3" };
+            _mockPolls.SetSource(new[] { poll1, poll2, poll3 });
+
+            var allPolls = _pollRepository.GetAll();
+
+            allPolls.Should().NotBeNull();
+            allPolls.Should().HaveCount(3);
+        }
+
+        [TestMethod]
+        public void GetAll_UserPollsExist_ShouldReturnGivenUserPolls()
+        {
+            var poll1 = new Poll { Id = 1, Question = "Question1", UserId = "1" };
+            var poll2 = new Poll { Id = 2, Question = "Question2", UserId = "2" };
+            var poll3 = new Poll { Id = 3, Question = "Question2.1", UserId = "2" };
+            var poll4 = new Poll { Id = 4, Question = "Question3", UserId = "3" };
+            _mockPolls.SetSource(new[] { poll1, poll2, poll3, poll4 });
+
+            var allPolls = _pollRepository.GetAll("2");
+
+            allPolls.Should().NotBeNull();
+            allPolls.Should().HaveCount(2);
+        }
+
+        [TestMethod]
+        public void GetAll_UserDoesntHavePolls_ShouldReturnEmptyIEnumerable()
+        {
+            var poll1 = new Poll { Id = 1, Question = "Question1", UserId = "1" };
+            var poll2 = new Poll { Id = 2, Question = "Question2", UserId = "2" };
+            var poll3 = new Poll { Id = 3, Question = "Question2.1", UserId = "2" };
+            var poll4 = new Poll { Id = 4, Question = "Question3", UserId = "3" };
+            _mockPolls.SetSource(new[] { poll1, poll2, poll3, poll4 });
+
+            var allPolls = _pollRepository.GetAll("4");
+
+            allPolls.Should().NotBeNull();
+            allPolls.Should().HaveCount(0);
+        }
+
+        [TestMethod]
         public void GetAnswers_PollDoesntExist_ShouldThrowNullReferenceException()
         {
             _pollRepository.Invoking(m => m.GetAnswers(1)).ShouldThrow<NullReferenceException>();

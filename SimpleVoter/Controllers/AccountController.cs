@@ -9,6 +9,7 @@ using System.Web.Routing;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using SimpleVoter.Core.Extensions;
 using SimpleVoter.Core.Models;
 using SimpleVoter.Core.ViewModels;
 
@@ -59,6 +60,9 @@ namespace SimpleVoter.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Home");
+
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -141,6 +145,9 @@ namespace SimpleVoter.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Home");
+            
             return View();
         }
 

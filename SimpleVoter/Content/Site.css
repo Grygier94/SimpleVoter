@@ -15,11 +15,8 @@ body {
 }
 
 .main-header {
-    padding-top: 50px;
-    padding-bottom: 30px;
+    padding: 30px 50px 30px 30px;
     background-color: #4394b9;
-    padding-left: 10px;
-    padding-right: 10px;
 }
 
 .main-title {
@@ -92,6 +89,17 @@ fieldset {
     width: 90%;
 }
 
+.new-poll-fieldset {
+    border: 1px solid silver;
+    -ms-border-radius: 20px;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.new-poll-fieldset label {
+    display: block;
+}
+
 .left-login-fieldset {
     border: 1px solid silver;
     border-bottom: none;
@@ -111,11 +119,11 @@ fieldset {
     width: 80%;
 }
 
-fieldset label {
+/*fieldset label {
     display: block;
     text-align: left;
     margin-bottom: 5px;
-}
+}*/
 
 fieldset input[type="text"],
 fieldset input[type="email"],
@@ -130,6 +138,7 @@ fieldset input[type="password"] {
 #register {
     display: block;
     margin: 10px auto 0 auto;
+    margin-bottom: 15px;
 }
 
 .register-as-new-user,
@@ -140,8 +149,14 @@ fieldset input[type="password"] {
 
 .remember-me {
     display: flex;
+    -ms-flex-direction: row;
+    -o-flex-direction: row;
+    -webkit-flex-direction: row;
     flex-direction: row;
+    -o-justify-content: center;
+    -webkit-justify-content: center;
     justify-content: center;
+    margin-bottom: 10px;
 }
 
     .remember-me label {
@@ -158,10 +173,6 @@ fieldset input[type="password"] {
         transform: scale(1.2);
     }
 
-.login-main-button {
-    width: 100%;
-}
-
 .external-provider-button {
     display: block;
     width: 100%;
@@ -169,6 +180,10 @@ fieldset input[type="password"] {
     margin-top: 5px;
 }
 
+.login-redirect-link {
+    text-align: center;
+    display: block;
+}
 /* CUSTOM BUTTON */
 .btn-custom {
     background-color: #eeeeee;
@@ -208,7 +223,14 @@ fieldset input[type="password"] {
         background-color: #66bb66;
     }
 
+.login-main-button {
+    width: 100%;
+    margin-bottom: 15px;    
+}
 
+.dashboard-buttons a {
+    width: 200px;  
+}
 
 /* FOOTER */
 footer {
@@ -334,32 +356,26 @@ footer {
         display: inline;
     }
 
-    .remember-me {
-        display: inline;
-    }
-
-        .remember-me label {
-            margin-top: 3px;
-            margin-bottom: 0;
-            font-weight: normal;
-            display: inline;
-        }
-
-        .remember-me input[type="checkbox"] {
-            margin: 0;
-            margin-left: 5px;
-            -ms-transform: scale(1.2);
-            -webkit-transform: scale(1.2);
-            transform: scale(1.2);
-            display: inline;
-        }
-
     .login-main-button {
-        width: 50%; 
+        width: 80%;
         display: inline;
     }
 
     .test {
         display: inline;
+    }
+
+    .remember-me {
+        -o-justify-content: flex-start;
+        -webkit-justify-content: flex-start;
+        justify-content: flex-start;
+    }
+
+    .login-options {
+        float: right;
+    }
+
+    .login-redirect-link {
+        text-align: right;
     }
 }

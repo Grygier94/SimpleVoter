@@ -11,6 +11,7 @@ namespace SimpleVoter.Core.Repositories
     {
         Poll Get(int id);
         IEnumerable<Poll> GetAll();
+        IEnumerable<Poll> GetAll(string userId);
         void Add(Poll poll);
         void Remove(Poll poll);
         int Count();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using SimpleVoter.Core;
 using SimpleVoter.Core.Models;
 
@@ -21,6 +22,11 @@ namespace SimpleVoter.Controllers
         public ActionResult ShowAll()
         {
             return View(_unitOfWork.Polls);
+        }
+
+        public ActionResult ShowUserPolls()
+        {
+            return View(_unitOfWork.Polls.GetAll(User.Identity.GetUserId()));
         }
 
         [AllowAnonymous]

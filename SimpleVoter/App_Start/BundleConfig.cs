@@ -21,7 +21,8 @@ namespace SimpleVoter
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/respond.js",
+                      "~/Scripts/bootstrap-toggle.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/reset.css",
@@ -29,6 +30,7 @@ namespace SimpleVoter
                       "~/Content/font-awesome-overrides.css",
                       "~/Content/bootstrap.css",
                       "~/Content/bootstrap-overrides.css",
+                      "~/Content/bootstrap-toggle.css",
                       "~/Content/site.css"));
         }
     }
