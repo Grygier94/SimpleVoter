@@ -30,11 +30,13 @@
                     </div>
                     @Html.ValidationMessageFor(model => model.AllowMultipleAnswers, "", new { @class = "text-danger" })
                 </div>
-                
+
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.Answers)
-                    @Html.EditorFor(model => model.Answers)
+                    <div class="answers">
+                        <input type="text" class="form-control answer" id="answer1" />
+                    </div>
                     @Html.ValidationMessageFor(model => model.Answers, "", new { @class = "text-danger" })
                 </div>
 
@@ -52,4 +54,24 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+            $('.answers').on('input',
+                '.answer',
+                function (e) {
+                    var numberOfAnswers = $(".answers input").length;
+                    debugger
+                    if (!/\S/.test(this.value) && this.id == "answer" + (numberOfAnswers - 1))
+                        while(!/\S/.test($("#answer" + (numberOfAnswers - 1)).val())) {
+                            $("#answer" + numberOfAnswers).remove();
+                            numberOfAnswers--;
+                        }
+                    else if (this.id == "answer" + numberOfAnswers && /\S/.test(this.value)) {
+                        $('<input type="text" class="form-control answer" id="answer' + (numberOfAnswers + 1) + '" />')
+                            .insertAfter($(this));
+                    }
+                });
+        });
+    </script>
 }

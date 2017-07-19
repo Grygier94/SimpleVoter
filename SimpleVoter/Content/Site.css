@@ -135,6 +135,11 @@ fieldset input[type="password"] {
     border-radius: 3px;
 }
 
+    fieldset input[type="text"].answer {
+        width: 50%;
+        margin: 5px auto;
+    }
+
 #register {
     display: block;
     margin: 10px auto 0 auto;
@@ -184,6 +189,7 @@ fieldset input[type="password"] {
     text-align: center;
     display: block;
 }
+
 /* CUSTOM BUTTON */
 .btn-custom {
     background-color: #eeeeee;
