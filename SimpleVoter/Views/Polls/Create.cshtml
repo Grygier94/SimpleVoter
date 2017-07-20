@@ -1,4 +1,4 @@
-﻿@model SimpleVoter.Core.Models.Poll
+﻿@model SimpleVoter.Core.ViewModels.CreateViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -14,61 +14,65 @@
     @Html.AntiForgeryToken()
 
     <section class="mid-section">
-        <fieldset class="new-poll-fieldset col-md-offset-3 col-md-6">
-            <div class="form-horizontal">
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Question)
-                    @Html.TextAreaFor(model => model.Question, new { htmlAttributes = new { @class = "form-control question-area" } })
-                    @Html.ValidationMessageFor(model => model.Question, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AllowMultipleAnswers)
-                    <div class="checkbox">
-                        @Html.CheckBoxFor(model => model.AllowMultipleAnswers, htmlAttributes: new { data_toggle = "toggle" })
+        <div class="col-md-offset-3 col-md-6">
+            <fieldset class="new-poll-fieldset">
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <div>
+                            @Html.LabelFor(model => model.Question)
+                            @Html.TextAreaFor(model => model.Question, new { htmlAttributes = new { @class = "form-control question-area" } })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Question, "", new { @class = "text-danger" })
                     </div>
-                    @Html.ValidationMessageFor(model => model.AllowMultipleAnswers, "", new { @class = "text-danger" })
-                </div>
 
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Answers)
-                    <div class="answers">
-                        <input type="text" class="form-control answer" id="answer1" />
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AllowMultipleAnswers)
+                        <div class="checkbox">
+                            @Html.CheckBoxFor(model => model.AllowMultipleAnswers, htmlAttributes: new { data_toggle = "toggle" })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.AllowMultipleAnswers, "", new { @class = "text-danger" })
                     </div>
-                    @Html.ValidationMessageFor(model => model.Answers, "", new { @class = "text-danger" })
-                </div>
 
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-default" />
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Answers)
+                        <div class="answers">
+                            <input type="text" name="Answers[0].Content" class="form-control answer" id="answer1" />
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Answers, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-custom btn-white" />
+                        @(Request.IsAuthenticated 
+                        ? Html.ActionLink("Back to list", "ShowUserPolls", null, new {@class = "btn btn-custom btn-white"}) 
+                        : Html.ActionLink("Back to homepage", "Index", "Home", null, new {@class = "btn btn-custom btn-white"}))
+                    </div>
                 </div>
-            </div>
-        </fieldset>
+            </fieldset>
+        </div>
     </section>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 
     <script>
+        //TODO: Add client side validation if answers > 2
         $(document).ready(function () {
             $('.answers').on('input',
                 '.answer',
                 function (e) {
                     var numberOfAnswers = $(".answers input").length;
-                    debugger
                     if (!/\S/.test(this.value) && this.id == "answer" + (numberOfAnswers - 1))
-                        while(!/\S/.test($("#answer" + (numberOfAnswers - 1)).val())) {
+                        while (!/\S/.test($("#answer" + (numberOfAnswers - 1)).val())) {
                             $("#answer" + numberOfAnswers).remove();
                             numberOfAnswers--;
                         }
                     else if (this.id == "answer" + numberOfAnswers && /\S/.test(this.value)) {
-                        $('<input type="text" class="form-control answer" id="answer' + (numberOfAnswers + 1) + '" />')
+                        $('<input type="text" class="form-control answer" id="answer' + (numberOfAnswers + 1) +
+                                '" name="Answers[' + numberOfAnswers + '].Content"/>')
                             .insertAfter($(this));
                     }
                 });

@@ -15,16 +15,16 @@ body {
 }
 
 .main-header {
-    padding: 30px 50px 30px 30px;
+    padding: 50px 30px;
     background-color: #4394b9;
 }
 
 .main-title {
     margin: 0;
     font-size: 3em;
-    font-weight: bold;
     color: #eee;
-    letter-spacing: 5px;
+    letter-spacing: 0px;
+    font-weight: bold;
 }
 
 .main-description {
@@ -190,6 +190,23 @@ fieldset input[type="password"] {
     display: block;
 }
 
+#Question {
+    width: 90%;
+    resize: vertical;
+    min-height: 100px;
+    -ms-border-radius: 3px;
+    border-radius: 3px;
+    border-color: silver;
+    font-size: 18px;
+}
+
+    #Question:focus {
+        border-color: #66afe9;
+        outline: 0;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+    }
+
 /* CUSTOM BUTTON */
 .btn-custom {
     background-color: #eeeeee;
@@ -231,11 +248,21 @@ fieldset input[type="password"] {
 
 .login-main-button {
     width: 100%;
-    margin-bottom: 15px;    
+    margin-bottom: 15px;
+    margin-left: 0px;
+    margin-right: 0px;
 }
 
 .dashboard-buttons a {
     width: 200px;  
+}
+
+.new-poll-fieldset .btn-custom {
+    width: 70%;
+    display: block;
+    margin: 10px auto;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
 /* FOOTER */
@@ -303,6 +330,10 @@ footer {
         padding-right: 40px;
     }
 
+    .new-poll-fieldset {
+        width: 90%;
+    }
+
     .main-title {
         font-size: 4.5em;
     }
@@ -321,6 +352,23 @@ footer {
         padding: 5px;
         font-size: 18px;
     }
+
+    #Question {
+        width: 50%;
+    }
+
+    .new-poll-fieldset .btn-custom {
+        width: 45%;
+        display: block;
+        margin: 10px auto;
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .main-title {
+        letter-spacing: 5px;
+    }
+
 }
 
 @media (min-width: 992px) {
@@ -354,6 +402,10 @@ footer {
         -ms-border-bottom-left-radius: 0px;
         border-bottom-left-radius: 0px;
         height: 100%;
+        width: 100%;
+    }
+
+    .new-poll-fieldset {
         width: 100%;
     }
 

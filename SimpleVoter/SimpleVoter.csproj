@@ -411,6 +411,7 @@
     <Compile Include="Core\ViewModels\AddPhoneNumberViewModel.cs" />
     <Compile Include="Core\ViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="Core\ViewModels\ConfigureTwoFactorViewModel.cs" />
+    <Compile Include="Core\ViewModels\CreateViewModel.cs" />
     <Compile Include="Core\ViewModels\ExternalLoginConfirmationViewModel.cs" />
     <Compile Include="Core\ViewModels\ExternalLoginListViewModel.cs" />
     <Compile Include="Core\ViewModels\FactorViewModel.cs" />

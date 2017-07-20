@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using SimpleVoter.Core;
 using SimpleVoter.Core.Models;
+using SimpleVoter.Core.ViewModels;
 
 namespace SimpleVoter.Controllers
 {
@@ -30,12 +31,11 @@ namespace SimpleVoter.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Details(int pollId)
+        public ActionResult Details(int id = 1)
         {
-            var poll = _unitOfWork.Polls.Get(pollId);
+            var poll = _unitOfWork.Polls.Get(id);
             return View(poll);
         }
-
 
         [AllowAnonymous]
         public ActionResult Create()
@@ -45,17 +45,31 @@ namespace SimpleVoter.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Create(Poll poll)
+        public ActionResult Create(CreateViewModel viewModel)
         {
-            if (poll != null && ModelState.IsValid)
+            if (viewModel != null && ModelState.IsValid)
             {
+                var poll = new Poll
+                {
+                    AllowMultipleAnswers = viewModel.AllowMultipleAnswers,
+                    Question = viewModel.Question,
+                    UserId = viewModel.UserId,
+                    Answers = viewModel.Answers.Where(a => !string.IsNullOrWhiteSpace(a.Content)).Distinct().ToList()
+                };
+
+                if (poll.Answers.Count < 2)
+                {
+                    ModelState.AddModelError("Answers", "Question must contains at least 2 answers!");
+                    return View(viewModel);
+                }
+
                 _unitOfWork.Polls.Add(poll);
                 _unitOfWork.Complete();
 
-                return RedirectToAction("Details", poll.Id);
+                return RedirectToAction("Details", new { id = poll.Id });
             }
 
-            return View(poll);
+            return View(viewModel);
         }
 
         public ActionResult Edit()

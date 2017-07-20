@@ -11,7 +11,6 @@ namespace SimpleVoter.Core.Models
     {
         public int Id { get; set; }
         public string Question { get; set; }
-        [Display(Name = "Allow Multiple Answers")]
         public bool AllowMultipleAnswers { get; set; }
         public ApplicationUser User { get; set; }
         public string UserId { get; set; }
