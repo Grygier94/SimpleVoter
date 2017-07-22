@@ -57,12 +57,6 @@ namespace SimpleVoter.Controllers
                     Answers = viewModel.Answers.Where(a => !string.IsNullOrWhiteSpace(a.Content)).Distinct().ToList()
                 };
 
-                if (poll.Answers.Count < 2)
-                {
-                    ModelState.AddModelError("Answers", "Question must contains at least 2 answers!");
-                    return View(viewModel);
-                }
-
                 _unitOfWork.Polls.Add(poll);
                 _unitOfWork.Complete();
 

@@ -11,6 +11,7 @@ using SimpleVoter.Controllers;
 using SimpleVoter.Core;
 using SimpleVoter.Core.Models;
 using SimpleVoter.Core.Repositories;
+using SimpleVoter.Core.ViewModels;
 
 namespace SimpleVoter.Tests.Controllers
 {
@@ -42,7 +43,7 @@ namespace SimpleVoter.Tests.Controllers
         [TestMethod]
         public void Create_ValidRequest_ShouldCreatePollAndReturnView()
         {
-            var poll = new Poll { Id = 1, Question = "Test question?", UserId = "1" };
+            var poll = new CreateViewModel { Question = "Test question?", UserId = "1" };
 
             var result = _pollsController.Create(poll) as RedirectToRouteResult;
 

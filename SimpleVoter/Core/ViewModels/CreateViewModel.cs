@@ -4,7 +4,9 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using SimpleVoter.Core.Extensions;
 using SimpleVoter.Core.Models;
+using SimpleVoter.Core.Validators;
 
 namespace SimpleVoter.Core.ViewModels
 {
@@ -18,6 +20,7 @@ namespace SimpleVoter.Core.ViewModels
 
         public string UserId { get; set; }
 
+        [EnsureMinimumElements(3, "Question must contains at least 2 answers!")]
         public ICollection<Answer> Answers { get; set; }
 
         public CreateViewModel()
