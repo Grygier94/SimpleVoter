@@ -20,7 +20,7 @@ namespace SimpleVoter.Core.ViewModels
 
         public string UserId { get; set; }
 
-        [EnsureMinimumElements(3, "Question must contains at least 2 answers!")]
+        [EnsureMinimumElements(2, "Question must contains at least 2 different answers!")]
         public ICollection<Answer> Answers { get; set; }
 
         public CreateViewModel()

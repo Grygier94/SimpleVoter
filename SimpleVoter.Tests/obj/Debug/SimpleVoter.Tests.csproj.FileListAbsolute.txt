@@ -101,3 +101,6 @@ E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\roslyn\vbc.exe.config
 E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\roslyn\vbc.rsp
 E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\roslyn\VBCSCompiler.exe
 E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\roslyn\VBCSCompiler.exe.config
+E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\WebGrease.dll
+E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\Antlr3.Runtime.dll
+E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\Antlr3.Runtime.pdb

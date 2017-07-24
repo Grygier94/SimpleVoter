@@ -182,6 +182,12 @@ namespace SimpleVoter.Controllers
             return View(model);
         }
 
+        [AllowAnonymous]
+        public JsonResult IsEmailAvailable(string email)
+        {
+            return Json(!UserManager.Users.Any(u => u.Email == email && u.EmailConfirmed), JsonRequestBehavior.AllowGet);
+        }
+
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]

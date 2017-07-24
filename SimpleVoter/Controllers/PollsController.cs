@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using SimpleVoter.Core;
 using SimpleVoter.Core.Models;
@@ -54,7 +55,9 @@ namespace SimpleVoter.Controllers
                     AllowMultipleAnswers = viewModel.AllowMultipleAnswers,
                     Question = viewModel.Question,
                     UserId = viewModel.UserId,
-                    Answers = viewModel.Answers.Where(a => !string.IsNullOrWhiteSpace(a.Content)).Distinct().ToList()
+                    Answers = viewModel.Answers
+                                .Where(a => !string.IsNullOrWhiteSpace(a.Content))
+                                .DistinctBy(a => a.Content).ToList()
                 };
 
                 _unitOfWork.Polls.Add(poll);
