@@ -17,9 +17,13 @@ namespace SimpleVoter.Persistence.Repositories
             Context = context;
         }
 
-        public Poll Get(int id)
+        public Poll GetSingle(int id)
         {
             return Context.Polls.Single(a => a.Id == id);
+        }
+        public IEnumerable<Poll> Get(string userId)
+        {
+            return Context.Polls.Where(p => p.UserId == userId);
         }
 
         public IEnumerable<Poll> GetAll()
@@ -27,11 +31,16 @@ namespace SimpleVoter.Persistence.Repositories
             return Context.Polls;
         }
 
-        public IEnumerable<Poll> GetAll(string userId)
+        public IEnumerable<Poll> GetAll(string searchWord)
         {
-            return Context.Polls.Where(p => p.UserId == userId);
+            return Context.Polls.Where(p =>
+                        p.Question.Contains(searchWord) ||
+                        p.User.UserName.Contains(searchWord) ||
+                        p.Id.ToString().Contains(searchWord) ||
+                        searchWord == ""
+                        );
         }
-
+        
         public void Add(Poll poll)
         {
             Context.Polls.Add(poll);

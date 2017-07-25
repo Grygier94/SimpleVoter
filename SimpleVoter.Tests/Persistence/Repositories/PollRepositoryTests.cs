@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using FluentAssertions;
+using Microsoft.AspNet.Identity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SimpleVoter.Core;
@@ -31,7 +32,7 @@ namespace SimpleVoter.Tests.Persistence.Repositories
         [TestMethod]
         public void Get_PollDoesntExist_ShouldThrowNullReferenceException()
         {
-            _pollRepository.Invoking(m => m.Get(1)).ShouldThrow<NullReferenceException>();
+            _pollRepository.Invoking(m => m.GetSingle(1)).ShouldThrow<NullReferenceException>();
         }
 
         [TestMethod]
@@ -40,7 +41,7 @@ namespace SimpleVoter.Tests.Persistence.Repositories
             var poll = new Poll { Id = 1, Question = "Question1" };
             _mockPolls.SetSource(new[] { poll });
 
-            var pollFromDb = _pollRepository.Get(1);
+            var pollFromDb = _pollRepository.GetSingle(1);
 
             pollFromDb.Should().NotBeNull();
             pollFromDb.Should().Be(poll);
@@ -77,7 +78,7 @@ namespace SimpleVoter.Tests.Persistence.Repositories
             var poll4 = new Poll { Id = 4, Question = "Question3", UserId = "3" };
             _mockPolls.SetSource(new[] { poll1, poll2, poll3, poll4 });
 
-            var allPolls = _pollRepository.GetAll("2");
+            var allPolls = _pollRepository.Get("2");
 
             allPolls.Should().NotBeNull();
             allPolls.Should().HaveCount(2);
@@ -92,10 +93,36 @@ namespace SimpleVoter.Tests.Persistence.Repositories
             var poll4 = new Poll { Id = 4, Question = "Question3", UserId = "3" };
             _mockPolls.SetSource(new[] { poll1, poll2, poll3, poll4 });
 
-            var allPolls = _pollRepository.GetAll("4");
+            var allPolls = _pollRepository.Get("4");
 
             allPolls.Should().NotBeNull();
             allPolls.Should().HaveCount(0);
+        }
+
+        [TestMethod]
+        public void GetAllFiltered_ValidRequest_ShouldReturnFittingPolls()
+        {
+            var poll1 = new Poll { Id = 1, Question = "What is it?", User = new ApplicationUser { Id = "1", UserName = "JohnHansen1@gmail.com" } };
+            var poll2 = new Poll { Id = 2, Question = "What is your favorite color?", User = new ApplicationUser { Id = "2", UserName = "test@test.com" } };
+            var poll3 = new Poll { Id = 3, Question = "Do you like winter?", User = new ApplicationUser { Id = "2", UserName = "Anonymous" } };
+            var poll4 = new Poll { Id = 4, Question = "Is it better or worse?", User = new ApplicationUser { Id = "3", UserName = "noemail123@email.com" } };
+            _mockPolls.SetSource(new[] { poll1, poll2, poll3, poll4 });
+
+            var polls = _pollRepository.GetAll("4");
+            polls.Should().HaveCount(1);
+
+            polls = _pollRepository.GetAll("Anonymous");
+            polls.Should().HaveCount(1);
+
+            polls = _pollRepository.GetAll("2");
+            polls.Should().NotBeNull();
+            polls.Should().HaveCount(2);
+
+            polls = _pollRepository.GetAll("What is");
+            polls.Should().HaveCount(2);
+
+            polls = _pollRepository.GetAll("is");
+            polls.Should().HaveCount(2);
         }
 
         [TestMethod]

@@ -421,6 +421,7 @@
     <Compile Include="Core\ViewModels\IndexViewModel.cs" />
     <Compile Include="Core\ViewModels\LoginViewModel.cs" />
     <Compile Include="Core\ViewModels\ManageLoginsViewModel.cs" />
+    <Compile Include="Core\ViewModels\PollListViewModel.cs" />
     <Compile Include="Core\ViewModels\RegisterViewModel.cs" />
     <Compile Include="Core\ViewModels\ResetPasswordViewModel.cs" />
     <Compile Include="Core\ViewModels\SendCodeViewModel.cs" />
@@ -443,6 +444,10 @@
     <Compile Include="Persistence\Migrations\201707161812071_AddMultipleAnswersColumnToPollsTable.cs" />
     <Compile Include="Persistence\Migrations\201707161812071_AddMultipleAnswersColumnToPollsTable.Designer.cs">
       <DependentUpon>201707161812071_AddMultipleAnswersColumnToPollsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\Migrations\201707251859023_AddPollCreationAndUpdateDateColumns.cs" />
+    <Compile Include="Persistence\Migrations\201707251859023_AddPollCreationAndUpdateDateColumns.Designer.cs">
+      <DependentUpon>201707251859023_AddPollCreationAndUpdateDateColumns.cs</DependentUpon>
     </Compile>
     <Compile Include="Persistence\Migrations\Configuration.cs" />
     <Compile Include="Persistence\ApplicationDbContext.cs" />
@@ -550,11 +555,12 @@
     <Content Include="Views\Account\NewAccountCheckEmail.cshtml" />
     <Content Include="Views\Account\ErrorEmailAlreadyConfirmed.cshtml" />
     <Content Include="Views\Manage\EnableGoogleAuthenticator.cshtml" />
-    <Content Include="Views\Polls\ShowAll.cshtml" />
     <Content Include="Views\Polls\Details.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Shared\_Navbar.cshtml" />
     <Content Include="Views\Polls\Create.cshtml" />
+    <Content Include="Views\Polls\PollList.cshtml" />
+    <Content Include="Views\Polls\_PollsTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -586,6 +592,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Persistence\Migrations\201707161812071_AddMultipleAnswersColumnToPollsTable.resx">
       <DependentUpon>201707161812071_AddMultipleAnswersColumnToPollsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201707251859023_AddPollCreationAndUpdateDateColumns.resx">
+      <DependentUpon>201707251859023_AddPollCreationAndUpdateDateColumns.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

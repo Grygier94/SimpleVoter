@@ -10,11 +10,11 @@
                 @Html.ActionLink("New Poll", "Create", "Polls", null, new { @class = "btn btn-custom btn-white" })
                 @if (Request.IsAuthenticated)
                 {
-                    @Html.ActionLink("My Polls", "ShowAll", "Polls", null, new { @class = "btn btn-custom btn-white" })
+                    @Html.ActionLink("My Polls", "ShowUserPolls", "Polls", null, new { @class = "btn btn-custom btn-white" })
                 }
                 else
                 {
-                    @Html.ActionLink("Sing Up", "Register", "Account", null, new { @class = "btn btn-custom btn-white" })
+                    @Html.ActionLink("Browse polls", "ShowAll", "Polls", null, new { @class = "btn btn-custom btn-white" })
                 }
             </div>
         </header>

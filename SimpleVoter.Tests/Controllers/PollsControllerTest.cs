@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using FluentAssertions;
+using Microsoft.AspNet.Identity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SimpleVoter.Controllers;
@@ -43,7 +45,19 @@ namespace SimpleVoter.Tests.Controllers
         [TestMethod]
         public void Create_ValidRequest_ShouldCreatePollAndReturnView()
         {
-            var poll = new CreateViewModel { Question = "Test question?", UserId = "1" };
+            var controllerContext = new Mock<ControllerContext>();
+            var principal = new  Mock<IPrincipal>();
+            principal.Setup(p => p.IsInRole("Administrator")).Returns(true);
+            principal.SetupGet(x => x.Identity.Name).Returns("test");
+            controllerContext.SetupGet(x => x.HttpContext.User).Returns(principal.Object);
+            _pollsController.ControllerContext = controllerContext.Object;
+
+            var poll = new CreateViewModel
+            {
+                Question = "Test question?",
+                AllowMultipleAnswers = true,
+                Answers = new List<Answer> { new Answer { Id = 1, Content = "content", PollId = 1} }
+            };
 
             var result = _pollsController.Create(poll) as RedirectToRouteResult;
 

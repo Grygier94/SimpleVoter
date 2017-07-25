@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "PollList";
+}
+
+<header class="main-header text-center">
+    <h1 class="main-title">Poll list</h1>
+    <p class="main-description">List of all public polls made by users around the world.</p>
+</header>
+
+<section id="pollListSection">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="input-group search-bar">
+            <span class="input-group-btn" data-toggle="tooltip" title="Clear search" data-placement="top">
+                <button id="clearSearch" class="btn btn-blue" type="button"><i class="fa fa-close" aria-hidden="true"></i></button>
+            </span>
+            <input id="inputSearch" type="text" class="form-control" placeholder="Search for...">
+            <span class="input-group-btn" data-toggle="tooltip" title="Search" data-placement="top">
+                <button id="btnSearch" class="btn btn-blue" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
+            </span>
+        </div>
+        <div id="pollTableContainer">
+            @{ Html.RenderAction("RenderPollTable");}
+        </div>
+    </div>
+</section>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+
+            $("#pollTableContainer").on("click", "tr", function (e) {
+                window.location.href = "/Polls/Details/" + e.currentTarget.id;
+            });
+
+            $("#inputSearch").keypress(function(e) {
+                if (e.which == 13) 
+                    reloadPolls();
+            });
+
+            $("#btnSearch").click(function() {
+                reloadPolls();
+            });
+
+            $("#clearSearch").click(function() {
+                $("#inputSearch").val("");
+
+                reloadPolls();
+            });
+
+            function reloadPolls() {
+                var searchText = $("#inputSearch").val();
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/Polls/RenderPollTable',
+                    data: { searchText: searchText }
+                }).done(function(partialViewResult) {
+                    $("#pollTableContainer").html(partialViewResult);
+                });
+            }
+        });
+    </script>
+}

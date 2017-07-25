@@ -18,8 +18,6 @@ namespace SimpleVoter.Core.ViewModels
         [Display(Name = "Allow Multiple Answers")]
         public bool AllowMultipleAnswers { get; set; }
 
-        public string UserId { get; set; }
-
         [EnsureMinimumElements(2, "Question must contains at least 2 different answers!")]
         public ICollection<Answer> Answers { get; set; }
 

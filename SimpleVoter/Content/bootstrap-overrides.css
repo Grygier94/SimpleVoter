@@ -17,14 +17,83 @@
 
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus {
-    color: #4394b9;
+    color: #0084b4;
     background-color: transparent;
 }
 
 .navbar-default .navbar-nav > li > a:hover, 
 .navbar-default .navbar-nav > li > a:focus {
     color: #fff;
-    background-color: #4394b9;
+    background-color: #0084b4;
+}
+
+.btn-blue {
+    color: #fff;
+    background-color: #0084b4;
+    border-color: #0084b4;
+}
+
+    .btn-blue:focus,
+    .btn-blue.focus {
+        color: #fff;
+        background-color: #0099d1;
+        border-color: #1b6d85;
+    }
+
+    .btn-blue:hover {
+        color: #fff;
+        background-color: #0099d1;
+        border-color: #269abc;
+    }
+
+    .btn-blue:active,
+    .btn-blue.active,
+    .open > .dropdown-toggle.btn-blue {
+        color: #fff;
+        background-color: #0084b4;
+        border-color: #269abc;
+    }
+
+        .btn-blue:active:hover,
+        .btn-blue.active:hover,
+        .open > .dropdown-toggle.btn-blue:hover,
+        .btn-blue:active:focus,
+        .btn-blue.active:focus,
+        .open > .dropdown-toggle.btn-blue:focus,
+        .btn-blue:active.focus,
+        .btn-blue.active.focus,
+        .open > .dropdown-toggle.btn-blue.focus {
+            color: #fff;
+            background-color: #269abc;
+            border-color: #1b6d85;
+        }
+
+    .btn-blue:active,
+    .btn-blue.active,
+    .open > .dropdown-toggle.btn-blue {
+        background-image: none;
+    }
+
+    .btn-blue.disabled:hover,
+    .btn-blue[disabled]:hover,
+    fieldset[disabled] .btn-blue:hover,
+    .btn-blue.disabled:focus,
+    .btn-blue[disabled]:focus,
+    fieldset[disabled] .btn-blue:focus,
+    .btn-blue.disabled.focus,
+    .btn-blue[disabled].focus,
+    fieldset[disabled] .btn-blue.focus {
+        background-color: #5bc0de;
+        border-color: #46b8da;
+    }
+
+    .btn-blue .badge {
+        color: #5bc0de;
+        background-color: #fff;
+    }
+
+.btn:focus, .btn:active:focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn.active.focus {
+    outline-color: #66afe9;
 }
 
 @media (min-width: 768px) {

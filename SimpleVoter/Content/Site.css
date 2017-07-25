@@ -16,7 +16,7 @@ body {
 
 .main-header {
     padding: 50px 30px;
-    background-color: #4394b9;
+    background-color: #0084b4;
 }
 
 .main-title {
@@ -55,8 +55,39 @@ body {
     height: 250px;
 }
 
+#pollListSection {
+    padding-top: 40px;
+}
+
+#pollTable th {
+    background-color: #0084b4;
+    font-weight: bold;
+    color: #fff;
+}
+
+    #pollTable th :not(:first-child):not(:last-child) {
+        border-left-color: #fff;
+        border-right-color: #fff;
+    }
+
+#pollTable tr:not(:first-child):hover {
+    background-color: #c3e3f2;
+    cursor: pointer;
+}
+
+#pollTable td,
+#pollTable th {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
 /* UNIVERSAL */
-.transition {
+    .transition {
     -webkit-transition: 0.4s ease-in-out;
     -moz-transition: 0.4s ease-in-out;
     -o-transition: 0.4s ease-in-out;
@@ -96,9 +127,9 @@ fieldset {
     text-align: center;
 }
 
-.new-poll-fieldset label {
-    display: block;
-}
+    .new-poll-fieldset label {
+        display: block;
+    }
 
 .left-login-fieldset {
     border: 1px solid silver;
@@ -118,12 +149,6 @@ fieldset {
     border-bottom-right-radius: 20px;
     width: 80%;
 }
-
-/*fieldset label {
-    display: block;
-    text-align: left;
-    margin-bottom: 5px;
-}*/
 
 fieldset input[type="text"],
 fieldset input[type="email"],
@@ -207,11 +232,31 @@ fieldset input[type="password"] {
         box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
     }
 
+.pagination-box {
+    width: 32px;
+    text-align: center;
+    border: 1px solid silver;
+    -ms-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.max-page-number {
+    font-size: 18px;
+    color: #909090;
+}
+
+.search-bar {
+    margin-bottom: 10px;
+}
 /* CUSTOM BUTTON */
+.btn-blue {
+    background-color: #0084b4;
+}
+
 .btn-custom {
     background-color: #eeeeee;
     border: solid 1px lightblue;
-    color: #4394b9;
+    color: #0084b4;
     padding: 20px 32px;
     text-align: center;
     text-decoration: none;
@@ -238,7 +283,7 @@ fieldset input[type="password"] {
     .btn-custom.btn-white:hover,
     .btn-custom.btn-white:focus {
         background-color: #eeeeee;
-        color: #4394b9;
+        color: #0084b4;
     }
 
     .btn-custom.btn--green:hover,
@@ -254,7 +299,7 @@ fieldset input[type="password"] {
 }
 
 .dashboard-buttons a {
-    width: 200px;  
+    width: 200px;
 }
 
 .new-poll-fieldset .btn-custom {
@@ -368,7 +413,6 @@ footer {
     .main-title {
         letter-spacing: 5px;
     }
-
 }
 
 @media (min-width: 992px) {

@@ -29,7 +29,6 @@ E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\Microsoft.AspNet.Identit
 E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\Microsoft.AspNet.Identity.Owin.dll
 E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\Microsoft.Owin.Security.dll
 E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\Owin.dll
-E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
 E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\Ninject.Web.Common.dll
 E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\Ninject.dll
 E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\Ninject.Extensions.Conventions.dll
@@ -75,6 +74,9 @@ E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\Microsoft.Owin.Security.
 E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\OtpSharp.dll
 E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\Base32.dll
 E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\OtpSharp.xml
+E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\WebGrease.dll
+E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\Antlr3.Runtime.dll
+E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\Antlr3.Runtime.pdb
 E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\roslyn\csc.exe
 E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\roslyn\csc.exe.config
 E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\roslyn\csc.rsp
@@ -101,6 +103,3 @@ E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\roslyn\vbc.exe.config
 E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\roslyn\vbc.rsp
 E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\roslyn\VBCSCompiler.exe
 E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\roslyn\VBCSCompiler.exe.config
-E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\WebGrease.dll
-E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\Antlr3.Runtime.dll
-E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\Antlr3.Runtime.pdb

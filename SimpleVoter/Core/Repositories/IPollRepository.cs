@@ -9,9 +9,10 @@ namespace SimpleVoter.Core.Repositories
 {
     public interface IPollRepository
     {
-        Poll Get(int id);
+        Poll GetSingle(int id);
         IEnumerable<Poll> GetAll();
-        IEnumerable<Poll> GetAll(string userId);
+        IEnumerable<Poll> Get(string userId);
+        IEnumerable<Poll> GetAll(string searchWord);
         void Add(Poll poll);
         void Remove(Poll poll);
         int Count();

@@ -285,3 +285,4 @@ E:\Repositories\simplevoter\SimpleVoter\obj\Debug\SimpleVoter.Migrations.AddGoog
 E:\Repositories\simplevoter\SimpleVoter\bin\Microsoft.IdentityModel.Logging.xml
 E:\Repositories\simplevoter\SimpleVoter\obj\Debug\SimpleVoter.Migrations.AddAdminRole.resources
 E:\Repositories\simplevoter\SimpleVoter\obj\Debug\SimpleVoter.Migrations.AddMultipleAnswersColumnToPollsTable.resources
+E:\Repositories\simplevoter\SimpleVoter\obj\Debug\SimpleVoter.Migrations.AddPollCreationAndUpdateDateColumns.resources
