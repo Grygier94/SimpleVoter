@@ -39,7 +39,6 @@ namespace SimpleVoter.Tests.Controllers
 
             result.Should().NotBe(null);
             result.Should().BeOfType<ViewResult>();
-            result.Model.Should().NotBe(null);
         }
 
         [TestMethod]

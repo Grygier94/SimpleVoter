@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using SimpleVoter.Core;
+using SimpleVoter.Core.Enums;
 using SimpleVoter.Core.Models;
 using SimpleVoter.Core.ViewModels;
 
@@ -21,7 +23,7 @@ namespace SimpleVoter.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        //TODO: utworzyc polllist view model z imieniem uzytkownika i tytulem polla oraz poll id
+        //TODO: dodac tooltipy do search bara, wyswietlic message jesli brak wyników
         [AllowAnonymous]
         public ActionResult ShowAll()
         {
@@ -29,10 +31,12 @@ namespace SimpleVoter.Controllers
         }
 
         [AllowAnonymous]
-        //[ChildActionOnly]
-        public ActionResult RenderPollTable(string searchText = "")
+        public ActionResult RenderPollTable(PollTableInfo tableInfo)
         {
-            var polls = _unitOfWork.Polls.GetAll(searchText);
+            var polls = tableInfo.SearchText.IsNullOrWhiteSpace()
+                ? _unitOfWork.Polls.GetAll(tableInfo.SortBy, tableInfo.SortDirection)
+                : _unitOfWork.Polls.GetAll(tableInfo.SearchText);
+
             var viewModelList = new List<PollListViewModel>();
             var userManager = Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
 

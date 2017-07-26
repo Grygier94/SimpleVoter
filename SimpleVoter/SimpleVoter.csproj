@@ -404,7 +404,10 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PollsController.cs" />
+    <Compile Include="Core\Enums\SortBy.cs" />
     <Compile Include="Core\Extensions\AllowAnonymousOnlyAttribute.cs" />
+    <Compile Include="Core\Models\PagingInfo.cs" />
+    <Compile Include="Core\Models\PollTableInfo.cs" />
     <Compile Include="Core\Validators\EnsureMinimumElementsAttribute.cs" />
     <Compile Include="Core\Extensions\GoogleAuthenticatorTokneProvider.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
