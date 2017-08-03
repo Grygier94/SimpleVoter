@@ -1,6 +1,10 @@
-﻿@using SimpleVoter.Core.Enums
+﻿@using Newtonsoft.Json
+@using SimpleVoter.Core.Enums
+@using SimpleVoter.Core.Models
+@model SimpleVoter.Core.Models.PagingInfo
 @{
     ViewBag.Title = "PollList";
+    var jsonData = JsonConvert.SerializeObject(new PollTableInfo {PagingInfo = Model});
 }
 
 <header class="main-header text-center">
@@ -20,7 +24,7 @@
             </span>
         </div>
         <div id="pollTableContainer">
-            @{ Html.RenderAction("RenderPollTable");}
+            @{ Html.RenderAction("RenderPollTable", "Polls", new { json = jsonData});}
         </div>
     </div>
 </section>
@@ -28,91 +32,136 @@
 @section scripts
 {
     <script>
-        $(document).ready(function () {
+        _sortBy = 0;
+        _sortDirection = 0;
+        _currentPage = @Model.CurrentPage;
 
-            //$("#pollTableContainer").on("click", "tr", function (e) {
-            //    window.location.href = "/Polls/Details/" + e.currentTarget.id;
-            //});
-
-            $("#pollTableContainer").on("click", "th:first-child", function (e) {
-
-                var icon = e.currentTarget.children[0];
-                if (icon.classList.contains("fa-sort-amount-asc")) {
-                    getSortedPolls(0, 1);
-                }
-                else {
-                    getSortedPolls(0, 0);
-                }
+        $(document).ready(function() {
+            $("#pollTableContainer").on("click", "tr", function (e) {
+                window.location.href = "/Polls/Details/" + e.currentTarget.id;
             });
 
-            $("#pollTableContainer").on("click", "th:nth-child(2)", function (e) {
+            $("#pollTableContainer").on("click",
+                "th:first-child",
+                function(e) {
 
-                var icon = e.currentTarget.children[0];
-                if (icon.classList.contains("fa-sort-amount-asc")) {
-                    getSortedPolls(1, 1);
-                }
-                else {
-                    getSortedPolls(1, 0);
-                }
-            });
+                    var icon = e.currentTarget.children[0];
+                    if (icon.classList.contains("fa-sort-amount-asc")) {
+                        _sortBy = 0;
+                        _sortDirection = 1;
+                        getSortedPolls(1);
+                    } else {
+                        _sortBy = 0;
+                        _sortDirection = 0;
+                        getSortedPolls(1);
+                    }
+                });
 
-            $("#pollTableContainer").on("click", "th:last-child", function (e) {
+            $("#pollTableContainer").on("click",
+                "th:nth-child(2)",
+                function(e) {
 
-                var icon = e.currentTarget.children[0];
-                if (icon.classList.contains("fa-sort-amount-asc")) {
-                    getSortedPolls(2, 1);
-                }
-                else {
-                    getSortedPolls(2, 0);
-                }
-            });
+                    var icon = e.currentTarget.children[0];
+                    if (icon.classList.contains("fa-sort-amount-asc")) {
+                        _sortBy = 1;
+                        _sortDirection = 1;
+                        getSortedPolls(1);
+                    } else {
+                        _sortBy = 1;
+                        _sortDirection = 0;
+                        getSortedPolls(1);
+                    }
+                });
 
-            $("#inputSearch").keypress(function (e) {
+            $("#pollTableContainer").on("click",
+                "th:last-child",
+                function(e) {
+
+                    var icon = e.currentTarget.children[0];
+                    if (icon.classList.contains("fa-sort-amount-asc")) {
+                        _sortBy = 2;
+                        _sortDirection = 1;
+                        getSortedPolls(1);
+                    } else {
+                        _sortBy = 2;
+                        _sortDirection = 0;
+                        getSortedPolls(1);
+                    }
+                });
+
+            $("#inputSearch").keypress(function(e) {
                 if (e.which == 13)
                     getFilteredPolls();
             });
 
-            $("#btnSearch").click(function () {
+            $("#btnSearch").click(function() {
                 getFilteredPolls();
             });
 
-            $("#clearSearch").click(function () {
+            $("#clearSearch").click(function() {
                 $("#inputSearch").val("");
 
                 getFilteredPolls();
             });
 
-            function getSortedPolls(sortby, sortDirection) {
+            $(".pager").on("click",
+                ".previous",
+                function() {
+                    var page = parseInt($(".pagination-box").attr('placeholder')) - 1;
+                    getSortedPolls(page);
+                });
+
+            $(".pager").on("click",
+                ".next",
+                function() {
+                    var page = parseInt($(".pagination-box").attr('placeholder')) + 1;
+                    getSortedPolls(page);
+                });
+
+            function getSortedPolls(page) {
                 $("#inputSearch").val("");
+                var jsonData = {
+                    "SortBy": 2, //_sortBy,
+                    "SortDirection": _sortDirection,
+                    "PagingInfo": {
+                        "ItemsPerPage" : 1,
+                        "AllItems": 1,
+                        "CurrentPage": 1,
+                        "AllPages": 1
+                    }
+                };
+
                 $.ajax({
-                    type: 'GET',
                     url: '/Polls/RenderPollTable',
-                    data: { sortBy: sortby, sortDirection: sortDirection }
-                }).done(function (partialViewResult) {
+                    type: 'GET',
+                    dataType: 'json',
+                    contentType: "application/json; charset=utf-8",
+                    data: jsonData
+                }).done(function(partialViewResult) {
                     $("#pollTableContainer").html(partialViewResult);
 
-                    switch (sortby) {
-                        case 0:
-                            sortDirection == 0
-                                ? $("#pollTable tr th:first-child i").removeClass("fa-sort-amount-desc")
-                                    .addClass("fa-sort-amount-asc").css("color", "yellow")
-                                : $("#pollTable tr th:first-child i").removeClass("fa-sort-amount-asc")
-                                    .addClass("fa-sort-amount-desc").css("color", "yellow");
-                            break;
-                        case 1:
-                            sortDirection == 0
-                                ? $("#pollTable tr th:nth-child(2) i").removeClass("fa-sort-amount-desc")
-                                    .addClass("fa-sort-amount-asc").css("color", "yellow")
-                                : $("#pollTable tr th:nth-child(2) i").removeClass("fa-sort-amount-asc")
-                                    .addClass("fa-sort-amount-desc").css("color", "yellow");
-                            break;
-                        case 2:
-                            sortDirection == 0
-                                ? $("#pollTable tr th:last-child i").removeClass("fa-sort-amount-desc")
-                                    .addClass("fa-sort-amount-asc").css("color", "yellow")
-                                : $("#pollTable tr th:last-child i").removeClass("fa-sort-amount-asc")
-                                    .addClass("fa-sort-amount-desc").css("color", "yellow");
-                            break;
+                    switch (_sortBy) {
+                    case 0:
+                        sortDirection == 0
+                            ? $("#pollTable tr th:first-child i").removeClass("fa-sort-amount-desc")
+                            .addClass("fa-sort-amount-asc").css("color", "yellow")
+                            : $("#pollTable tr th:first-child i").removeClass("fa-sort-amount-asc")
+                            .addClass("fa-sort-amount-desc").css("color", "yellow");
+                        break;
+                    case 1:
+                        sortDirection == 0
+                            ? $("#pollTable tr th:nth-child(2) i").removeClass("fa-sort-amount-desc")
+                            .addClass("fa-sort-amount-asc").css("color", "yellow")
+                            : $("#ollTable tr th:nth-child(2) i").removeClass("fa-sort-amount-asc")
+                            .addClass("fa-sort-amount-desc").css("color", "yellow");
+                        break;
+                    case 2:
+                        sortDirection == 0
+                            ? $("#pollTable tr th:last-child i").removeClass("fa-sort-amount-desc")
+                            .addClass("fa-sort-amount-asc").css("color", "yellow")
+                            : $("#pollTable tr th:last-child i").removeClass("fa-sort-amount-asc")
+                            .addClass("fa-sort-amount-desc").css("color", "yellow");
+                        break;
                     }
                 });
             }
@@ -124,7 +173,7 @@
                     type: 'GET',
                     url: '/Polls/RenderPollTable',
                     data: { searchText: searchText }
-                }).done(function (partialViewResult) {
+                }).done(function(partialViewResult) {
                     $("#pollTableContainer").html(partialViewResult);
                 });
             }

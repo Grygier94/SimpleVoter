@@ -77,6 +77,8 @@ E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\OtpSharp.xml
 E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\WebGrease.dll
 E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\Antlr3.Runtime.dll
 E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\Antlr3.Runtime.pdb
+E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\Newtonsoft.Json.dll
+E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\Newtonsoft.Json.xml
 E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\roslyn\csc.exe
 E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\roslyn\csc.exe.config
 E:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\roslyn\csc.rsp

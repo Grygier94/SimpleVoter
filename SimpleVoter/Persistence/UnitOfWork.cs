@@ -13,13 +13,13 @@ namespace SimpleVoter.Persistence
         private readonly ApplicationDbContext _context;
 
         public IPollRepository Polls { get; }
-        public IAnswerRepository Answer { get; }
+        public IAnswerRepository Answers { get; }
 
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
             Polls = new PollRepository(_context);
-            Answer = new AnswerRepository(_context);
+            Answers = new AnswerRepository(_context);
         }
 
         public void Complete()

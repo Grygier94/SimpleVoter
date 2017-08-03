@@ -9,7 +9,7 @@ namespace SimpleVoter.Core
     public interface IUnitOfWork
     {
         IPollRepository Polls { get; }
-        IAnswerRepository Answer { get; }
+        IAnswerRepository Answers { get; }
         void Complete();
     }
 }

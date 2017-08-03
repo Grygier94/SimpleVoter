@@ -21,14 +21,18 @@ namespace SimpleVoter.Tests.Controllers
     public class PollsControllerTest
     {
         private PollsController _pollsController;
-        private Mock<IPollRepository> _mockRepository;
+        private Mock<IPollRepository> _mockPollRepository;
+        private Mock<IAnswerRepository> _mockAnswerRepository;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            _mockRepository = new Mock<IPollRepository>();
+            _mockPollRepository = new Mock<IPollRepository>();
+            _mockAnswerRepository = new Mock<IAnswerRepository>();
             var _mockUoW = new Mock<IUnitOfWork>();
-            _mockUoW.SetupGet(u => u.Polls).Returns(_mockRepository.Object);
+
+            _mockUoW.SetupGet(u => u.Polls).Returns(_mockPollRepository.Object);
+            _mockUoW.SetupGet(u => u.Answers).Returns(_mockAnswerRepository.Object);
             _pollsController = new PollsController(_mockUoW.Object);
         }
 

@@ -10,8 +10,8 @@ namespace SimpleVoter.Core.Models
     public class PollTableInfo
     {
         public string SearchText { get; set; }
-        public SortBy SortBy { get; set; }
-        public SortDirection SortDirection { get; set; }
+        public SortBy SortBy { get; set; } = SortBy.Id;
+        public SortDirection SortDirection { get; set; } = SortDirection.Ascending;
         public PagingInfo PagingInfo { get; set; }
     }
 }

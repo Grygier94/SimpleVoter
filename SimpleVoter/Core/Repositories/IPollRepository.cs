@@ -12,7 +12,7 @@ namespace SimpleVoter.Core.Repositories
     public interface IPollRepository
     {
         Poll GetSingle(int id);
-        IEnumerable<Poll> GetAll(SortBy sortBy = SortBy.Id, SortDirection sortDirection = SortDirection.Ascending);
+        IEnumerable<Poll> GetAll(PollTableInfo tableInfo);
         IEnumerable<Poll> Get(string userId);
         IEnumerable<Poll> GetAll(string searchWord);
         void Add(Poll poll);

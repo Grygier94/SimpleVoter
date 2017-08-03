@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Newtonsoft.Json;
 using SimpleVoter.Core;
 using SimpleVoter.Core.Enums;
 using SimpleVoter.Core.Models;
@@ -24,17 +26,30 @@ namespace SimpleVoter.Controllers
         }
 
         //TODO: dodac tooltipy do search bara, wyswietlic message jesli brak wyników
+        //TODO: dodac tooltipy do numeru glosow 'votes'
+        //TODO: przy tworzeniu możliwość wybrania typu wykresu (tylko zalogowani)
+        //TODO: automatyczne usuwanie polla po czasie (wybor okresu przy tworzeniu, niezalogowani - zawsze po 24h)
+        //TODO: możliwość wyboru public/private dla zalogowanych (private = dostep tylko przy pomocy linku)
+
         [AllowAnonymous]
         public ActionResult ShowAll()
         {
-            return View("PollList");
+            var pagingInfo = new PagingInfo
+            {
+                ItemsPerPage = Int32.Parse(WebConfigurationManager.AppSettings["PollsPerPage"]),
+                CurrentPage = 1
+            };
+
+            return View("PollList", pagingInfo);
         }
 
-        [AllowAnonymous]
-        public ActionResult RenderPollTable(PollTableInfo tableInfo)
+        [AllowAnonymous]    
+        public ActionResult RenderPollTable(string json)
         {
+            PollTableInfo tableInfo = JsonConvert.DeserializeObject<PollTableInfo>(json);
+
             var polls = tableInfo.SearchText.IsNullOrWhiteSpace()
-                ? _unitOfWork.Polls.GetAll(tableInfo.SortBy, tableInfo.SortDirection)
+                ? _unitOfWork.Polls.GetAll(tableInfo)
                 : _unitOfWork.Polls.GetAll(tableInfo.SearchText);
 
             var viewModelList = new List<PollListViewModel>();
@@ -50,8 +65,31 @@ namespace SimpleVoter.Controllers
                 });
             }
 
-            return PartialView("_PollsTable", viewModelList);
+            return PartialView("_PollsTable", new Tuple<IEnumerable<PollListViewModel>, PagingInfo>(viewModelList, tableInfo.PagingInfo));
         }
+
+        //[AllowAnonymous]
+        //public ActionResult RenderPollTable(PollTableInfo tableInfo)
+        //{
+        //    var polls = tableInfo.SearchText.IsNullOrWhiteSpace()
+        //        ? _unitOfWork.Polls.GetAll(tableInfo)
+        //        : _unitOfWork.Polls.GetAll(tableInfo.SearchText);
+
+        //    var viewModelList = new List<PollListViewModel>();
+        //    var userManager = Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
+
+        //    foreach (var poll in polls)
+        //    {
+        //        viewModelList.Add(new PollListViewModel
+        //        {
+        //            PollId = poll.Id,
+        //            Question = poll.Question,
+        //            UserName = poll.UserId == null ? "Anonymous" : userManager.Users.Single(u => u.Id == poll.UserId).UserName
+        //        });
+        //    }
+
+        //    return PartialView("_PollsTable", new Tuple<IEnumerable<PollListViewModel>, PagingInfo>(viewModelList, tableInfo.PagingInfo));
+        //}
 
         public ActionResult ShowUserPolls()
         {
@@ -59,10 +97,21 @@ namespace SimpleVoter.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Details(int id = 1)
+        public ActionResult Details(int id)
         {
             var poll = _unitOfWork.Polls.GetSingle(id);
             return View(poll);
+        }
+
+        [AllowAnonymous]
+        public void Vote(int[] ids)
+        {
+            foreach (var id in ids)
+            {
+                var answer = _unitOfWork.Answers.Get(id);
+                answer.Votes++;
+                _unitOfWork.Complete();
+            }
         }
 
         [AllowAnonymous]

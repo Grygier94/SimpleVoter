@@ -1,34 +1,168 @@
-﻿@model SimpleVoter.Core.Models.Poll
+﻿@using CsQuery.Implementation
+@using Newtonsoft.Json
+@model SimpleVoter.Core.Models.Poll
 
 @{
     ViewBag.Title = "Details";
+    var userName = Model.UserId == null ? "Anonymous" : Model.User.UserName;
+    var answerInputType = Model.AllowMultipleAnswers ? "checkbox" : "radio";
+    var multipleAnswers = Model.AllowMultipleAnswers ? "allowed" : "not allowed";
+    var noVotesYet = !Model.Answers.Select(a => a.Votes).Any(v => v > 0);
 }
 
-<h2>Details</h2>
+<header class="main-header text-center hidden-xs">
+    <h1 class="main-title">Simple Voter</h1>
+    <p class="main-description">Create custom polls with live results.</p>
+    <div class="dashboard-buttons">
+        @Html.ActionLink("New Poll", "Create", "Polls", null, new { @class = "btn btn-custom btn-white" })
+        @if (Request.IsAuthenticated)
+        {
+            @Html.ActionLink("My Polls", "ShowUserPolls", "Polls", null, new { @class = "btn btn-custom btn-white" })
+        }
+        else
+        {
+            @Html.ActionLink("Browse polls", "ShowAll", "Polls", null, new { @class = "btn btn-custom btn-white" })
+        }
+    </div>
+</header>
 
-<div>
-    <h4>Poll</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Question)
-        </dt>
+<section class="mid-section">
+    <div class="col-sm-12 col-md-10 col-md-offset-1">
+        <h3 class="text-center">@Model.Question</h3>
+        <hr />
+        <div class="col-sm-4 col-sm-push-4 poll-details-container text-center">
 
-        <dd>
-            @Html.DisplayFor(model => model.Question)
-        </dd>
+            <div class="option-container">
+                @foreach (var answer in Model.Answers)
+                {
 
-        <dt>
-            @Html.DisplayNameFor(model => model.UserId)
-        </dt>
+                    <div class="form-group">
+                        <input type="@answerInputType" name="@answerInputType" id="@answerInputType-@answer.Id" autocomplete="off"/>
+                        <div class="btn-group">
+                            <label for="@answerInputType-@answer.Id" class="btn btn-default @answerInputType-answer-content">
+                                @answer.Content
+                            </label>
+                            <label for="@answerInputType-@answer.Id" class="btn btn-default @answerInputType-answer-votes">
+                                @answer.Votes
+                            </label>
+                            <label for="@answerInputType-@answer.Id" class="btn btn-info @answerInputType-answer-check">
+                                <span class="glyphicon glyphicon-ok" id="@answer.Id"></span>
+                                <span> </span>
+                            </label>
+                        </div>
+                    </div>
+                }
+            </div>
+            <button class="btn btn-custom btn-white" id="voteButton">Vote!</button>
+        </div>
+        <div class="col-sm-4 col-sm-push-4 poll-details-container">
+            @if (noVotesYet)
+            {
+                <div class="poll-info">
+                    <h3 class="text-center"> No one has voted yet. Don't hesitate, be the first one!</h3>
+                </div>
+            }
+            else
+            {
+                <canvas id="votesChart"></canvas>
+            }
 
-        <dd>
-            @Html.DisplayFor(model => model.UserId)
-        </dd>
+        </div>
+        <div class="col-sm-pull-8 col-sm-4 text-center poll-details-container">
+            <div class="poll-info">
+                <p> Author:<br class="visible-xs"/> @userName</p>
+                <p> Multiple answers:<br class="visible-xs" /> @multipleAnswers</p>
+                <p> Visibility:<br class="visible-xs" /> public</p>
+                <p> Creation time:<br class="visible-xs" /> @Model.DateAdded</p>
+                <p> Expiration time:<br class="visible-xs" /> 04/10/2017 18:56</p>
+            </div>
+        </div>
+    </div>
+</section>
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+@section scripts
+{
+    <script>
+        $(document).ready(function() {
+            showChart();
+        });
+
+        $("#voteButton").on("click",
+            function() {
+                var checkedOptions = $(".btn-group").find("span.glyphicon.glyphicon-ok")
+                    .filter(function(index) {
+                        return $(this).css("display") === "inline-block";
+                    });
+
+                if (checkedOptions.length == 0) {
+                    toastr.error('No option has been chosen.', 'Choose something!');
+                    return;
+                }
+
+                var answerIds = [];
+                checkedOptions.each(function() {
+                    answerIds.push(this.id);
+                });
+
+                jQuery.ajaxSettings.traditional = true;
+                $.ajax({
+                    url: '/Polls/Vote',
+                    type: 'POST',
+                    data: {ids: answerIds }
+                }).done(function(partialViewResult) {
+                    location.reload();
+                });
+            });
+
+        showChart = function() {
+            if (@noVotesYet.ToString().ToLower())
+                return;
+
+            var ctx = document.getElementById("votesChart").getContext('2d');
+
+            var labels = [];
+            var data = [];
+            @foreach (var d in Model.Answers)
+            {
+                @:labels.push("@d.Content");
+                @:data.push("@d.Votes");
+            }
+
+            var myChart = new Chart(ctx,
+            {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Votes',
+                            data: data,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderColor: [
+                                'rgba(255,99,132,1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1
+                        }
+                    ],
+                    options: {
+                        animation: {
+                            animateRotate: true
+                        }
+                    }
+                }
+            });
+        };
+    </script>
+}

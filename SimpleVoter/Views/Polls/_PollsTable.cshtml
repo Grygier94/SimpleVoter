@@ -1,22 +1,25 @@
-﻿@model IEnumerable<SimpleVoter.Core.ViewModels.PollListViewModel>
+﻿@model Tuple<IEnumerable<SimpleVoter.Core.ViewModels.PollListViewModel>, SimpleVoter.Core.Models.PagingInfo>
 
 <table id="pollTable" class="table table-responsive table-striped table-bordered">
     <tr>
         <th class="hidden-xs">
-            @Html.DisplayNameFor(model => model.PollId)
+            @*@Html.DisplayNameFor(model => model.PollId)*@
+            Number
             <i class="fa fa-sort-amount-asc pull-right" aria-hidden="true"></i>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Question)
+            @*@Html.DisplayNameFor(model => model.Question)*@
+            Question
             <i class="fa fa-sort-amount-asc pull-right" aria-hidden="true"></i>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UserName)
+            @*@Html.DisplayNameFor(model => model.UserName)*@
+            User
             <i class="fa fa-sort-amount-asc pull-right" aria-hidden="true"></i>
         </th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.Item1)
             {
         <tr id="@item.PollId">
             <td class="hidden-xs">
@@ -32,11 +35,20 @@
     }
 </table>
 
-<nav aria-label="pagination">
-    <ul class="pager">
-        <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Older</a></li>
-        <li><input maxlength="3" type="text" class="pagination-box" /></li>
-        <li class="max-page-number">/10</li>
-        <li class="next"><a href="#">Newer <span aria-hidden="true">&rarr;</span></a></li>
-    </ul>
-</nav>
+@if (Model.Item2.AllPages != 1)
+{
+    <nav aria-label="pagination">
+        <ul class="pager">
+            @if (Model.Item2.CurrentPage != 1)
+            {
+                <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Older</a></li>
+            }
+            <li><input maxlength="3" type="text" class="pagination-box" placeholder="@Model.Item2.CurrentPage" /></li>
+            <li class="max-page-number">/@Model.Item2.AllPages</li>
+            @if (Model.Item2.CurrentPage != Model.Item2.AllPages)
+            {
+                <li class="next"><a href="#">Newer <span aria-hidden="true">&rarr;</span></a></li>
+            }
+        </ul>
+    </nav>
+}

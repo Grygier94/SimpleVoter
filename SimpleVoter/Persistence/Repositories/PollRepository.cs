@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
@@ -22,38 +23,44 @@ namespace SimpleVoter.Persistence.Repositories
 
         public Poll GetSingle(int id)
         {
-            return Context.Polls.Single(a => a.Id == id);
+            return Context.Polls.Include(p => p.User).Include(p => p.Answers).Single(a => a.Id == id);
         }
 
         public IEnumerable<Poll> Get(string userId)
         {
-            return Context.Polls.Where(p => p.UserId == userId).ToList();
+            return Context.Polls.Where(p => p.UserId == userId).Include(p => p.User).ToList();
         }
 
-        public IEnumerable<Poll> GetAll(SortBy sortBy = SortBy.Id, SortDirection sortDirection = SortDirection.Ascending)
+        public IEnumerable<Poll> GetAll(PollTableInfo tableInfo)
         {
             IEnumerable<Poll> polls = null;
 
-            switch (sortBy)
+            switch (tableInfo.SortBy)
             {
                 case SortBy.Id:
-                    polls = sortDirection == SortDirection.Ascending
+                    polls = tableInfo.SortDirection == SortDirection.Ascending
                         ? Context.Polls.OrderBy(p => p.Id)
                         : Context.Polls.OrderByDescending(p => p.Id);
                     break;
                     case SortBy.Question:
-                    polls = sortDirection == SortDirection.Ascending 
+                    polls = tableInfo.SortDirection == SortDirection.Ascending 
                         ? Context.Polls.OrderBy(p => p.Question)
                         : Context.Polls.OrderByDescending(p => p.Question);
                     break;
                     case SortBy.UserName:
-                    polls = sortDirection == SortDirection.Ascending
+                    polls = tableInfo.SortDirection == SortDirection.Ascending
                         ? Context.Polls.OrderBy(p => p.User.UserName)
                         : Context.Polls.OrderByDescending(p => p.User.UserName);
                     break;
             }
 
-            return polls.ToList();
+            tableInfo.PagingInfo.AllItems = polls.Count();
+            tableInfo.PagingInfo.AllPages =
+                (int) Math.Ceiling((double)tableInfo.PagingInfo.AllItems / tableInfo.PagingInfo.ItemsPerPage);
+            return polls
+                .Skip((tableInfo.PagingInfo.CurrentPage-1) * tableInfo.PagingInfo.ItemsPerPage)
+                .Take(tableInfo.PagingInfo.ItemsPerPage)
+                .ToList();
         }
 
         public IEnumerable<Poll> GetAll(string searchWord)
