@@ -347,8 +347,8 @@ fieldset input[type="password"] {
 
 .form-group input[type="checkbox"] + .btn-group > label:nth-child(2),
 .form-group input[type="radio"] + .btn-group > label:nth-child(2),
-.form-group input[type="checkbox"] + .btn-group > label:nth-child(3),
-.form-group input[type="radio"] + .btn-group > label:nth-child(3) {
+.form-group input[type="checkbox"] + .btn-group > label:last-child,
+.form-group input[type="radio"] + .btn-group > label:last-child {
     width: 50%;
 }
 

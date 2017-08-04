@@ -42,7 +42,7 @@
                             <label for="@answerInputType-@answer.Id" class="btn btn-default @answerInputType-answer-content">
                                 @answer.Content
                             </label>
-                            <label for="@answerInputType-@answer.Id" class="btn btn-default @answerInputType-answer-votes">
+                            <label for="@answerInputType-@answer.Id" class="btn btn-default @answerInputType-answer-votes" data-placement="bottom" data-toggle="tooltip" title="@answer.Votes votes">
                                 @answer.Votes
                             </label>
                             <label for="@answerInputType-@answer.Id" class="btn btn-info @answerInputType-answer-check">
@@ -66,7 +66,6 @@
             {
                 <canvas id="votesChart"></canvas>
             }
-
         </div>
         <div class="col-sm-pull-8 col-sm-4 text-center poll-details-container">
             <div class="poll-info">
@@ -85,7 +84,8 @@
 @section scripts
 {
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
             showChart();
         });
 

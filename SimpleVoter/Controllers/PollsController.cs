@@ -29,11 +29,15 @@ namespace SimpleVoter.Controllers
         //      | z szukanym tekstem - 'No results for given criteria' 
         //      | bez wyszukiwania (anonim) - 'No public polls created for anonymous users yet. You can create poll -here- or -login- to be able to see more polls.
         //      | bez wyszukiwania (zalogowany - 'No public polls craeted yet. Be the first one and create your own poll here!
-        //TODO: dodac tooltipy do search bara
-        //TODO: dodac tooltipy do numeru glosow 'votes'
         //TODO: przy tworzeniu możliwość wybrania typu wykresu (tylko zalogowani)
         //TODO: automatyczne usuwanie polla po czasie (wybor okresu przy tworzeniu, niezalogowani - zawsze po 24h)
         //TODO: możliwość wyboru public/private dla zalogowanych (private = dostep tylko przy pomocy linku)
+        //TODO: losowanie kolorow wykresu niezaleznie od ilosci odpowiedzi
+        //TODO: kolor odpowiedzi = kolorowi na wykresie
+        //TODO: widok z listą polli danego uzytkownika
+        //TODO: panel admina
+        //      - lista użytkowników
+        //      - możliwość edycji podstawowych danych / zablokowania / usunięcia użytkownika
 
         [AllowAnonymous]
         public ActionResult ShowAll()

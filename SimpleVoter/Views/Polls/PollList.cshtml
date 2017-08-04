@@ -37,6 +37,7 @@
         _searchText = "";
 
         $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip(); 
             $("#pollTable tr th:first-child i").css("color", "yellow");
 
             $("#pollTableContainer").on("click",
@@ -53,11 +54,11 @@
                     if (icon.classList.contains("fa-sort-amount-asc")) {
                         _sortBy = 0;
                         _sortDirection = 1;
-                        getPolls(1);
+                        getPolls();
                     } else {
                         _sortBy = 0;
                         _sortDirection = 0;
-                        getPolls(1);
+                        getPolls();
                     }
                 });
 
@@ -69,11 +70,11 @@
                     if (icon.classList.contains("fa-sort-amount-asc")) {
                         _sortBy = 1;
                         _sortDirection = 1;
-                        getPolls(1);
+                        getPolls();
                     } else {
                         _sortBy = 1;
                         _sortDirection = 0;
-                        getPolls(1);
+                        getPolls();
                     }
                 });
 
@@ -85,31 +86,31 @@
                     if (icon.classList.contains("fa-sort-amount-asc")) {
                         _sortBy = 2;
                         _sortDirection = 1;
-                        getPolls(1);
+                        getPolls();
                     } else {
                         _sortBy = 2;
                         _sortDirection = 0;
-                        getPolls(1);
+                        getPolls();
                     }
                 });
 
             $("#inputSearch").keypress(function (e) {
                 if (e.which == 13) {
                     _searchText = $("#inputSearch").val();
-                    getPolls(1);
+                    getPolls();
                 }
             });
 
             $("#btnSearch").click(function () {
                 _searchText = $("#inputSearch").val();
-                getPolls(1);
+                getPolls();
             });
 
             $("#clearSearch").click(function () {
                 $("#inputSearch").val("");
                 _searchText = "";
 
-                getFilteredPolls();
+                getPolls();
             });
 
             $("body").on("click",
@@ -126,7 +127,7 @@
                     getPolls(page);
                 });
 
-            function getPolls(page) {
+            function getPolls(page = 1) {
                 var jsonData = {
                     "SortBy": _sortBy,
                     "SortDirection": _sortDirection,
