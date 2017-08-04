@@ -33,24 +33,30 @@ namespace SimpleVoter.Persistence.Repositories
 
         public IEnumerable<Poll> GetAll(PollTableInfo tableInfo)
         {
+            IQueryable<Poll> pollQuery = Context.Polls.Where(p =>
+                p.Question.Contains(tableInfo.SearchText) ||
+                p.User.UserName.Contains(tableInfo.SearchText) ||
+                p.Id.ToString().Contains(tableInfo.SearchText) ||
+                tableInfo.SearchText == ""
+            );
             IEnumerable<Poll> polls = null;
 
             switch (tableInfo.SortBy)
             {
                 case SortBy.Id:
                     polls = tableInfo.SortDirection == SortDirection.Ascending
-                        ? Context.Polls.OrderBy(p => p.Id)
-                        : Context.Polls.OrderByDescending(p => p.Id);
+                        ? pollQuery.OrderBy(p => p.Id)
+                        : pollQuery.OrderByDescending(p => p.Id);
                     break;
                     case SortBy.Question:
                     polls = tableInfo.SortDirection == SortDirection.Ascending 
-                        ? Context.Polls.OrderBy(p => p.Question)
-                        : Context.Polls.OrderByDescending(p => p.Question);
+                        ? pollQuery.OrderBy(p => p.Question)
+                        : pollQuery.OrderByDescending(p => p.Question);
                     break;
                     case SortBy.UserName:
                     polls = tableInfo.SortDirection == SortDirection.Ascending
-                        ? Context.Polls.OrderBy(p => p.User.UserName)
-                        : Context.Polls.OrderByDescending(p => p.User.UserName);
+                        ? pollQuery.OrderBy(p => p.User.UserName)
+                        : pollQuery.OrderByDescending(p => p.User.UserName);
                     break;
             }
 

@@ -37,7 +37,7 @@
                 {
 
                     <div class="form-group">
-                        <input type="@answerInputType" name="@answerInputType" id="@answerInputType-@answer.Id" autocomplete="off"/>
+                        <input type="@answerInputType" name="@answerInputType" id="@answerInputType-@answer.Id" autocomplete="off" />
                         <div class="btn-group">
                             <label for="@answerInputType-@answer.Id" class="btn btn-default @answerInputType-answer-content">
                                 @answer.Content
@@ -70,9 +70,11 @@
         </div>
         <div class="col-sm-pull-8 col-sm-4 text-center poll-details-container">
             <div class="poll-info">
-                <p> Author:<br class="visible-xs"/> @userName</p>
+                <p> Visibility:<br class="visible-xs" /> public/private/super private?(only invited users can view)</p>
+                <p> Author:<br class="visible-xs" /> @userName</p>
                 <p> Multiple answers:<br class="visible-xs" /> @multipleAnswers</p>
-                <p> Visibility:<br class="visible-xs" /> public</p>
+                <p> Only logged in users can vote:<br class="visible-xs" /> yes/no</p>
+                <p> Only logged in users can display:<br class="visible-xs" /> yes/no (if yes - 'only logged in users can vote will' be checked as well)</p>
                 <p> Creation time:<br class="visible-xs" /> @Model.DateAdded</p>
                 <p> Expiration time:<br class="visible-xs" /> 04/10/2017 18:56</p>
             </div>

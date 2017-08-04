@@ -25,7 +25,11 @@ namespace SimpleVoter.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        //TODO: dodac tooltipy do search bara, wyswietlic message jesli brak wyników
+        //TODO: wyswietlic teksty jesli brak wynikow:
+        //      | z szukanym tekstem - 'No results for given criteria' 
+        //      | bez wyszukiwania (anonim) - 'No public polls created for anonymous users yet. You can create poll -here- or -login- to be able to see more polls.
+        //      | bez wyszukiwania (zalogowany - 'No public polls craeted yet. Be the first one and create your own poll here!
+        //TODO: dodac tooltipy do search bara
         //TODO: dodac tooltipy do numeru glosow 'votes'
         //TODO: przy tworzeniu możliwość wybrania typu wykresu (tylko zalogowani)
         //TODO: automatyczne usuwanie polla po czasie (wybor okresu przy tworzeniu, niezalogowani - zawsze po 24h)
@@ -43,14 +47,12 @@ namespace SimpleVoter.Controllers
             return View("PollList", pagingInfo);
         }
 
-        [AllowAnonymous]    
+        [AllowAnonymous]
         public ActionResult RenderPollTable(string json)
         {
             PollTableInfo tableInfo = JsonConvert.DeserializeObject<PollTableInfo>(json);
 
-            var polls = tableInfo.SearchText.IsNullOrWhiteSpace()
-                ? _unitOfWork.Polls.GetAll(tableInfo)
-                : _unitOfWork.Polls.GetAll(tableInfo.SearchText);
+            var polls = _unitOfWork.Polls.GetAll(tableInfo);
 
             var viewModelList = new List<PollListViewModel>();
             var userManager = Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
@@ -67,29 +69,6 @@ namespace SimpleVoter.Controllers
 
             return PartialView("_PollsTable", new Tuple<IEnumerable<PollListViewModel>, PagingInfo>(viewModelList, tableInfo.PagingInfo));
         }
-
-        //[AllowAnonymous]
-        //public ActionResult RenderPollTable(PollTableInfo tableInfo)
-        //{
-        //    var polls = tableInfo.SearchText.IsNullOrWhiteSpace()
-        //        ? _unitOfWork.Polls.GetAll(tableInfo)
-        //        : _unitOfWork.Polls.GetAll(tableInfo.SearchText);
-
-        //    var viewModelList = new List<PollListViewModel>();
-        //    var userManager = Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
-
-        //    foreach (var poll in polls)
-        //    {
-        //        viewModelList.Add(new PollListViewModel
-        //        {
-        //            PollId = poll.Id,
-        //            Question = poll.Question,
-        //            UserName = poll.UserId == null ? "Anonymous" : userManager.Users.Single(u => u.Id == poll.UserId).UserName
-        //        });
-        //    }
-
-        //    return PartialView("_PollsTable", new Tuple<IEnumerable<PollListViewModel>, PagingInfo>(viewModelList, tableInfo.PagingInfo));
-        //}
 
         public ActionResult ShowUserPolls()
         {
