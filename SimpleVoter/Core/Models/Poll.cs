@@ -15,8 +15,9 @@ namespace SimpleVoter.Core.Models
         public ApplicationUser User { get; set; }
         public string UserId { get; set; }
         public ICollection<Answer> Answers { get; set; }
-        public DateTime DateAdded { get; set; }
-        public DateTime DateUpdated { get; set; }
+        public DateTime CreationDate { get; set; }
+        public DateTime UpdateDate { get; set; }
+        public DateTime ExpirationDate { get; set; }
 
         public Poll()
         {

@@ -452,6 +452,10 @@
     <Compile Include="Persistence\Migrations\201707251859023_AddPollCreationAndUpdateDateColumns.Designer.cs">
       <DependentUpon>201707251859023_AddPollCreationAndUpdateDateColumns.cs</DependentUpon>
     </Compile>
+    <Compile Include="Persistence\Migrations\201708050956044_AddExpirationDateColumnToPollsTable.cs" />
+    <Compile Include="Persistence\Migrations\201708050956044_AddExpirationDateColumnToPollsTable.Designer.cs">
+      <DependentUpon>201708050956044_AddExpirationDateColumnToPollsTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Persistence\Migrations\Configuration.cs" />
     <Compile Include="Persistence\ApplicationDbContext.cs" />
     <Compile Include="Core\Models\Poll.cs" />
@@ -606,6 +610,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Persistence\Migrations\201707251859023_AddPollCreationAndUpdateDateColumns.resx">
       <DependentUpon>201707251859023_AddPollCreationAndUpdateDateColumns.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201708050956044_AddExpirationDateColumnToPollsTable.resx">
+      <DependentUpon>201708050956044_AddExpirationDateColumnToPollsTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

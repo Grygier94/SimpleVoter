@@ -36,7 +36,7 @@
                 @foreach (var answer in Model.Answers)
                 {
 
-                    <div class="form-group">
+                    <div class="form-group answer-group">
                         <input type="@answerInputType" name="@answerInputType" id="@answerInputType-@answer.Id" autocomplete="off" />
                         <div class="btn-group">
                             <label for="@answerInputType-@answer.Id" class="btn btn-default @answerInputType-answer-content">
@@ -74,8 +74,8 @@
                 <p> Multiple answers:<br class="visible-xs" /> @multipleAnswers</p>
                 <p> Only logged in users can vote:<br class="visible-xs" /> yes/no</p>
                 <p> Only logged in users can display:<br class="visible-xs" /> yes/no (if yes - 'only logged in users can vote will' be checked as well)</p>
-                <p> Creation time:<br class="visible-xs" /> @Model.DateAdded</p>
-                <p> Expiration time:<br class="visible-xs" /> 04/10/2017 18:56</p>
+                <p> Creation time:<br class="visible-xs" /> @Model.CreationDate</p>
+                <p> Expiration time:<br class="visible-xs" /> @Model.ExpirationDate</p>
             </div>
         </div>
     </div>

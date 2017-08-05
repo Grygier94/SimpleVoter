@@ -145,31 +145,41 @@
                 }).done(function(partialViewResult) {
                     $("#pollTableContainer").html(partialViewResult);
 
-                    switch (_sortBy) {
+                    var noPollsTextElement = $(".no-polls-info-text");
+                    if (noPollsTextElement.length != 0) {
+                        if (_searchText != "")
+                            noPollsTextElement.html("No results for given criteria.");
+                    } else {
+                        changeSortIcon();
+                    }
+                });
+            }
+
+            function changeSortIcon() {
+                switch (_sortBy) {
                     case 0:
                         _sortDirection == 0
                             ? $("#pollTable tr th:first-child i").removeClass("fa-sort-amount-desc")
-                            .addClass("fa-sort-amount-asc").css("color", "yellow")
+                                .addClass("fa-sort-amount-asc").css("color", "yellow")
                             : $("#pollTable tr th:first-child i").removeClass("fa-sort-amount-asc")
-                            .addClass("fa-sort-amount-desc").css("color", "yellow");
+                                .addClass("fa-sort-amount-desc").css("color", "yellow");
                         break;
                     case 1:
                         var iElement = $("#pollTable tr th:nth-child(2)").children("i");
                         _sortDirection == 0
                             ? iElement.removeClass("fa-sort-amount-desc")
-                            .addClass("fa-sort-amount-asc").css("color", "yellow")
+                                .addClass("fa-sort-amount-asc").css("color", "yellow")
                             : iElement.removeClass("fa-sort-amount-asc")
-                            .addClass("fa-sort-amount-desc").css("color", "yellow");
+                                .addClass("fa-sort-amount-desc").css("color", "yellow");
                         break;
                     case 2:
                         _sortDirection == 0
                             ? $("#pollTable tr th:last-child i").removeClass("fa-sort-amount-desc")
-                            .addClass("fa-sort-amount-asc").css("color", "yellow")
+                                .addClass("fa-sort-amount-asc").css("color", "yellow")
                             : $("#pollTable tr th:last-child i").removeClass("fa-sort-amount-asc")
-                            .addClass("fa-sort-amount-desc").css("color", "yellow");
+                                .addClass("fa-sort-amount-desc").css("color", "yellow");
                         break;
-                    }
-                });
+                }
             }
         });
     </script>

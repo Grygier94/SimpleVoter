@@ -25,10 +25,6 @@ namespace SimpleVoter.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        //TODO: wyswietlic teksty jesli brak wynikow:
-        //      | z szukanym tekstem - 'No results for given criteria' 
-        //      | bez wyszukiwania (anonim) - 'No public polls created for anonymous users yet. You can create poll -here- or -login- to be able to see more polls.
-        //      | bez wyszukiwania (zalogowany - 'No public polls craeted yet. Be the first one and create your own poll here!
         //TODO: przy tworzeniu możliwość wybrania typu wykresu (tylko zalogowani)
         //TODO: automatyczne usuwanie polla po czasie (wybor okresu przy tworzeniu, niezalogowani - zawsze po 24h)
         //TODO: możliwość wyboru public/private dla zalogowanych (private = dostep tylko przy pomocy linku)
@@ -116,7 +112,10 @@ namespace SimpleVoter.Controllers
                     UserId = User.Identity.GetUserId(),
                     Answers = viewModel.Answers
                                 .Where(a => !string.IsNullOrWhiteSpace(a.Content))
-                                .DistinctBy(a => a.Content).ToList()
+                                .DistinctBy(a => a.Content).ToList(),
+                    CreationDate = DateTime.Now,
+                    UpdateDate = DateTime.Now,
+                    ExpirationDate = DateTime.Now.AddDays(1)
                 };
 
                 _unitOfWork.Polls.Add(poll);

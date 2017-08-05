@@ -1,51 +1,70 @@
 ﻿@model Tuple<IEnumerable<SimpleVoter.Core.ViewModels.PollListViewModel>, SimpleVoter.Core.Models.PagingInfo>
 
-<table id="pollTable" class="table table-responsive table-striped table-bordered">
-    <tr>
-        <th class="hidden-xs">
-            Number
-            <i class="fa fa-sort-amount-asc pull-right" aria-hidden="true"></i>
-        </th>
-        <th>
-            Question
-            <i class="fa fa-sort-amount-asc pull-right" aria-hidden="true"></i>
-        </th>
-        <th>
-            User
-            <i class="fa fa-sort-amount-asc pull-right" aria-hidden="true"></i>
-        </th>
-    </tr>
 
-    @foreach (var item in Model.Item1)
-            {
-        <tr id="@item.PollId">
-            <td class="hidden-xs">
-                @Html.DisplayFor(modelItem => item.PollId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Question)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-        </tr>
-    }
-</table>
-
-@if (Model.Item2.AllPages != 1)
+@if (Model.Item1.Any())
 {
-    <nav aria-label="pagination">
-        <ul class="pager">
-            @if (Model.Item2.CurrentPage != 1)
-            {
-                <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Older</a></li>
-            }
-            <li><input maxlength="3" type="text" class="pagination-box" placeholder="@Model.Item2.CurrentPage" /></li>
-            <li class="max-page-number">/@Model.Item2.AllPages</li>
-            @if (Model.Item2.CurrentPage != Model.Item2.AllPages)
-            {
-                <li class="next"><a href="#">Newer <span aria-hidden="true">&rarr;</span></a></li>
-            }
-        </ul>
-    </nav>
+    <table id="pollTable" class="table table-responsive table-striped table-bordered">
+        <tr>
+            <th class="hidden-xs">
+                Number
+                <i class="fa fa-sort-amount-asc pull-right" aria-hidden="true"></i>
+            </th>
+            <th>
+                Question
+                <i class="fa fa-sort-amount-asc pull-right" aria-hidden="true"></i>
+            </th>
+            <th>
+                User
+                <i class="fa fa-sort-amount-asc pull-right" aria-hidden="true"></i>
+            </th>
+        </tr>
+
+        @foreach (var item in Model.Item1)
+        {
+            <tr id="@item.PollId">
+                <td class="hidden-xs">
+                    @Html.DisplayFor(modelItem => item.PollId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Question)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+            </tr>
+        }
+    </table>
+
+    if (Model.Item2.AllPages != 1)
+    {
+        <nav aria-label="pagination">
+            <ul class="pager">
+                @if (Model.Item2.CurrentPage != 1)
+                {
+                    <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Older</a></li>
+                }
+                <li><input maxlength="3" type="text" class="pagination-box" placeholder="@Model.Item2.CurrentPage" /></li>
+                <li class="max-page-number">/@Model.Item2.AllPages</li>
+                @if (Model.Item2.CurrentPage != Model.Item2.AllPages)
+                {
+                    <li class="next"><a href="#">Newer <span aria-hidden="true">&rarr;</span></a></li>
+                }
+            </ul>
+        </nav>
+    }
+}
+else
+{
+    if (User.Identity.IsAuthenticated)
+    {
+        <h3 class="no-polls-info-text">No public polls created yet. Be the first one and create your own poll @Html.ActionLink("-here-", "Create", "Polls") !</h3>
+    }
+    else
+    {
+        <h3 class="no-polls-info-text">
+            No public polls created for anonymous users yet.<br/>
+            You can create poll @Html.ActionLink("-here-", "Create", "Polls")
+            or @Html.ActionLink("-login-", "Login", "Account") to be able to see more polls.
+        </h3>
+    }
 }

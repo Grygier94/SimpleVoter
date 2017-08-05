@@ -265,6 +265,14 @@ fieldset input[type="password"] {
     padding: 15px;
 }
 
+.no-polls-info-text {
+    text-align: center;
+    border: 1px solid silver;
+    border-radius: 4px;
+    padding: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
 /* CUSTOM BUTTON */
 .btn-blue {
     background-color: #0084b4;
@@ -328,47 +336,47 @@ fieldset input[type="password"] {
 }
 
 /* CUSTOM CHECKBOX/RADIO */
-.form-group input[type="checkbox"],
-.form-group input[type="radio"] {
+.answer-group input[type="checkbox"],
+.answer-group input[type="radio"] {
     display: none;
 }
 
-.form-group .btn-group,
-.form-group .btn-group {
+.answer-group .btn-group,
+.answer-group .btn-group {
     width: 100%;
 }
 
-.form-group input[type="checkbox"] + .btn-group > label:first-child,
-.form-group input[type="radio"] + .btn-group > label:first-child {
+.answer-group input[type="checkbox"] + .btn-group > label:first-child,
+.answer-group input[type="radio"] + .btn-group > label:first-child {
     width: 100%;
     white-space: normal;
     word-wrap: break-word;
 }
 
-.form-group input[type="checkbox"] + .btn-group > label:nth-child(2),
-.form-group input[type="radio"] + .btn-group > label:nth-child(2),
-.form-group input[type="checkbox"] + .btn-group > label:last-child,
-.form-group input[type="radio"] + .btn-group > label:last-child {
+.answer-group input[type="checkbox"] + .btn-group > label:nth-child(2),
+.answer-group input[type="radio"] + .btn-group > label:nth-child(2),
+.answer-group input[type="checkbox"] + .btn-group > label:last-child,
+.answer-group input[type="radio"] + .btn-group > label:last-child {
     width: 50%;
 }
 
-.form-group input[type="checkbox"] + .btn-group > label span:first-child,
-.form-group input[type="radio"] + .btn-group > label span:first-child {
+.answer-group input[type="checkbox"] + .btn-group > label span:first-child,
+.answer-group input[type="radio"] + .btn-group > label span:first-child {
     display: none;
 }
 
-.form-group input[type="checkbox"] + .btn-group > label span:last-child,
-.form-group input[type="radio"] + .btn-group > label span:last-child {
+.answer-group input[type="checkbox"] + .btn-group > label span:last-child,
+.answer-group input[type="radio"] + .btn-group > label span:last-child {
     display: inline-block;
 }
 
-.form-group input[type="checkbox"]:checked + .btn-group > label span:first-child,
-.form-group input[type="radio"]:checked + .btn-group > label span:first-child {
+.answer-group input[type="checkbox"]:checked + .btn-group > label span:first-child,
+.answer-group input[type="radio"]:checked + .btn-group > label span:first-child {
     display: inline-block;
 }
 
-.form-group input[type="checkbox"]:checked + .btn-group > label span:last-child,
-.form-group input[type="radio"]:checked + .btn-group > label span:last-child {
+.answer-group input[type="checkbox"]:checked + .btn-group > label span:last-child,
+.answer-group input[type="radio"]:checked + .btn-group > label span:last-child {
     display: none;
 }
 
