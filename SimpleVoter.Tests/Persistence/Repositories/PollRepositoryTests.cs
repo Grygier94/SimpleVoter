@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Web.Helpers;
 using FluentAssertions;
 using Microsoft.AspNet.Identity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SimpleVoter.Core;
+using SimpleVoter.Core.Enums;
 using SimpleVoter.Core.Models;
 using SimpleVoter.Persistence;
 using SimpleVoter.Persistence.Repositories;
@@ -50,9 +52,22 @@ namespace SimpleVoter.Tests.Persistence.Repositories
         [TestMethod]
         public void GetAll_NoPollExists_ShouldReturnEmptyIEnumerable()
         {
-            //_mockPolls.SetSource(new List<Poll>());
-            //var allPolls = _pollRepository.GetAll();
-            //allPolls.Should().HaveCount(0);
+            _mockPolls.SetSource(new List<Poll>());
+
+            var pollTableInfo = new PollTableInfo
+            {
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = 1,
+                    ItemsPerPage = 20
+                },
+                SearchText = "",
+                SortBy = SortBy.Id,
+                SortDirection = SortDirection.Ascending
+            };
+
+            var allPolls = _pollRepository.GetAll(pollTableInfo);
+            allPolls.Should().HaveCount(0);
         }
 
         [TestMethod]
@@ -63,10 +78,22 @@ namespace SimpleVoter.Tests.Persistence.Repositories
             var poll3 = new Poll { Id = 3, Question = "Question3" };
             _mockPolls.SetSource(new[] { poll1, poll2, poll3 });
 
-            //var allPolls = _pollRepository.GetAll();
+            var pollTableInfo = new PollTableInfo
+            {
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = 1,
+                    ItemsPerPage = 20
+                },
+                SearchText = "",
+                SortBy = SortBy.Id,
+                SortDirection = SortDirection.Ascending
+            };
 
-            //allPolls.Should().NotBeNull();
-            //allPolls.Should().HaveCount(3);
+            var allPolls = _pollRepository.GetAll(pollTableInfo);
+
+            allPolls.Should().NotBeNull();
+            allPolls.Should().HaveCount(3);
         }
 
         [TestMethod]
@@ -78,7 +105,19 @@ namespace SimpleVoter.Tests.Persistence.Repositories
             var poll4 = new Poll { Id = 4, Question = "Question3", UserId = "3" };
             _mockPolls.SetSource(new[] { poll1, poll2, poll3, poll4 });
 
-            var allPolls = _pollRepository.Get("2");
+            var pollTableInfo = new PollTableInfo
+            {
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = 1,
+                    ItemsPerPage = 20
+                },
+                SearchText = "",
+                SortBy = SortBy.Id,
+                SortDirection = SortDirection.Ascending
+            };
+
+            var allPolls = _pollRepository.GetAll(pollTableInfo, "2");
 
             allPolls.Should().NotBeNull();
             allPolls.Should().HaveCount(2);
@@ -93,7 +132,19 @@ namespace SimpleVoter.Tests.Persistence.Repositories
             var poll4 = new Poll { Id = 4, Question = "Question3", UserId = "3" };
             _mockPolls.SetSource(new[] { poll1, poll2, poll3, poll4 });
 
-            var allPolls = _pollRepository.Get("4");
+            var pollTableInfo = new PollTableInfo
+            {
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = 1,
+                    ItemsPerPage = 20
+                },
+                SearchText = "",
+                SortBy = SortBy.Id,
+                SortDirection = SortDirection.Ascending
+            };
+
+            var allPolls = _pollRepository.GetAll(pollTableInfo, "4");
 
             allPolls.Should().NotBeNull();
             allPolls.Should().HaveCount(0);

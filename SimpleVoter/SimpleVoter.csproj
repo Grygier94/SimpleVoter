@@ -576,6 +576,8 @@
     <Content Include="Views\Polls\Create.cshtml" />
     <Content Include="Views\Polls\PollList.cshtml" />
     <Content Include="Views\Polls\_PollsTable.cshtml" />
+    <Content Include="Views\Polls\UserPollList.cshtml" />
+    <Content Include="Views\Polls\_UserPollsTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

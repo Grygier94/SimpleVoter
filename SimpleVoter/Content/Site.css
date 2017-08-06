@@ -169,7 +169,8 @@ fieldset input[type="password"] {
     border-radius: 3px;
 }
 
-    fieldset input[type="text"].answer {
+    fieldset input[type="text"].answer,
+    #ExpirationDate {
         width: 50%;
         margin: 5px auto;
     }
@@ -333,6 +334,16 @@ fieldset input[type="password"] {
     margin: 10px auto;
     padding-left: 0px;
     padding-right: 0px;
+}
+
+.label-with-comment {
+    margin-bottom: 0px;
+}
+
+.additional-comment {
+    font-size: 0.8em;
+    margin-top: 0;
+    padding-top: 0;
 }
 
 /* CUSTOM CHECKBOX/RADIO */

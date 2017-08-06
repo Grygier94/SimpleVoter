@@ -26,11 +26,14 @@ namespace SimpleVoter.Controllers
         }
 
         //TODO: przy tworzeniu możliwość wybrania typu wykresu (tylko zalogowani)
+
         //TODO: automatyczne usuwanie polla po czasie (wybor okresu przy tworzeniu, niezalogowani - zawsze po 24h)
+        //Expiration date checkbox - not checked will never expire
         //TODO: możliwość wyboru public/private dla zalogowanych (private = dostep tylko przy pomocy linku)
+
         //TODO: losowanie kolorow wykresu niezaleznie od ilosci odpowiedzi
         //TODO: kolor odpowiedzi = kolorowi na wykresie
-        //TODO: widok z listą polli danego uzytkownika
+
         //TODO: panel admina
         //      - lista użytkowników
         //      - możliwość edycji podstawowych danych / zablokowania / usunięcia użytkownika
@@ -72,7 +75,35 @@ namespace SimpleVoter.Controllers
 
         public ActionResult ShowUserPolls()
         {
-            return View(_unitOfWork.Polls.Get(User.Identity.GetUserId()));
+            var pagingInfo = new PagingInfo
+            {
+                ItemsPerPage = Int32.Parse(WebConfigurationManager.AppSettings["PollsPerPage"]),
+                CurrentPage = 1
+            };
+
+            return View("UserPollList", pagingInfo);
+        }
+
+        public ActionResult RenderUserPollTable(string json)
+        {
+            PollTableInfo tableInfo = JsonConvert.DeserializeObject<PollTableInfo>(json);
+
+            var polls = _unitOfWork.Polls.GetAll(tableInfo, User.Identity.GetUserId());
+
+            var viewModelList = new List<PollListViewModel>();
+            var userManager = Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
+
+            foreach (var poll in polls)
+            {
+                viewModelList.Add(new PollListViewModel
+                {
+                    PollId = poll.Id,
+                    Question = poll.Question,
+                    UserName = poll.UserId == null ? "Anonymous" : userManager.Users.Single(u => u.Id == poll.UserId).UserName
+                });
+            }
+
+            return PartialView("_UserPollsTable", new Tuple<IEnumerable<PollListViewModel>, PagingInfo>(viewModelList, tableInfo.PagingInfo));
         }
 
         [AllowAnonymous]

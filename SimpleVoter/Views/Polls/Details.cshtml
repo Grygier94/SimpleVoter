@@ -17,11 +17,12 @@
         @Html.ActionLink("New Poll", "Create", "Polls", null, new { @class = "btn btn-custom btn-white" })
         @if (Request.IsAuthenticated)
         {
+            @Html.ActionLink("Public Polls", "ShowAll", "Polls", null, new { @class = "btn btn-custom btn-white" })
             @Html.ActionLink("My Polls", "ShowUserPolls", "Polls", null, new { @class = "btn btn-custom btn-white" })
         }
         else
         {
-            @Html.ActionLink("Browse polls", "ShowAll", "Polls", null, new { @class = "btn btn-custom btn-white" })
+            @Html.ActionLink("Browse Polls", "ShowAll", "Polls", null, new { @class = "btn btn-custom btn-white" })
         }
     </div>
 </header>
@@ -35,7 +36,6 @@
             <div class="option-container">
                 @foreach (var answer in Model.Answers)
                 {
-
                     <div class="form-group answer-group">
                         <input type="@answerInputType" name="@answerInputType" id="@answerInputType-@answer.Id" autocomplete="off" />
                         <div class="btn-group">
