@@ -7,7 +7,15 @@
     var userName = Model.UserId == null ? "Anonymous" : Model.User.UserName;
     var answerInputType = Model.AllowMultipleAnswers ? "checkbox" : "radio";
     var multipleAnswers = Model.AllowMultipleAnswers ? "allowed" : "not allowed";
-    var noVotesYet = !Model.Answers.Select(a => a.Votes).Any(v => v > 0);
+    var hasNoVotes = !Model.Answers.Select(a => a.Votes).Any(v => v > 0);
+    var expirationDate = Model.ExpirationDate == null ? "does not expire" : Model.ExpirationDate.ToString();
+    var hasExpired = DateTime.Now >= Model.ExpirationDate.Value;
+    var chartClasses = hasExpired
+        ? hasNoVotes
+            ? "col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2"
+            : "col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 poll-details-container"
+        : "col-sm-4 col-sm-push-4 poll-details-container";
+    var updated = Model.UpdateDate > Model.CreationDate;
 }
 
 <header class="main-header text-center hidden-xs">
@@ -31,53 +39,87 @@
     <div class="col-sm-12 col-md-10 col-md-offset-1">
         <h3 class="text-center">@Model.Question</h3>
         <hr />
-        <div class="col-sm-4 col-sm-push-4 poll-details-container text-center">
-
-            <div class="option-container">
-                @foreach (var answer in Model.Answers)
-                {
-                    <div class="form-group answer-group">
-                        <input type="@answerInputType" name="@answerInputType" id="@answerInputType-@answer.Id" autocomplete="off" />
-                        <div class="btn-group">
-                            <label for="@answerInputType-@answer.Id" class="btn btn-default @answerInputType-answer-content">
-                                @answer.Content
-                            </label>
-                            <label for="@answerInputType-@answer.Id" class="btn btn-default @answerInputType-answer-votes" data-placement="bottom" data-toggle="tooltip" title="@answer.Votes votes">
-                                @answer.Votes
-                            </label>
-                            <label for="@answerInputType-@answer.Id" class="btn btn-info @answerInputType-answer-check">
-                                <span class="glyphicon glyphicon-ok" id="@answer.Id"></span>
-                                <span> </span>
-                            </label>
+        @if (!hasExpired)
+        {
+            <div class="col-sm-4 col-sm-push-4 poll-details-container text-center">
+                <div class="option-container">
+                    @foreach (var answer in Model.Answers)
+                    {
+                        <div class="form-group answer-group">
+                            <input type="@answerInputType" name="@answerInputType" id="@answerInputType-@answer.Id" autocomplete="off" />
+                            <div class="btn-group">
+                                <label for="@answerInputType-@answer.Id" class="btn btn-default @answerInputType-answer-content">
+                                    @answer.Content
+                                </label>
+                                <label for="@answerInputType-@answer.Id" class="btn btn-default @answerInputType-answer-votes" data-placement="bottom" data-toggle="tooltip" title="@answer.Votes votes">
+                                    @answer.Votes
+                                </label>
+                                <label for="@answerInputType-@answer.Id" class="btn btn-default @answerInputType-answer-check">
+                                    <span class="glyphicon glyphicon-ok" id="@answer.Id"></span>
+                                    <span> </span>
+                                </label>
+                            </div>
                         </div>
+                    }
+                </div>
+                <button class="btn btn-custom btn-white" id="voteButton">Vote!</button>
+            </div>
+        }
+
+        <div class="@chartClasses">
+            @if (hasNoVotes)
+            {
+                if (!hasExpired)
+                {
+                    <div class="poll-info">
+                        <h3 class="text-center">No one has voted yet. Don't hesitate, be the first one!</h3>
                     </div>
                 }
-            </div>
-            <button class="btn btn-custom btn-white" id="voteButton">Vote!</button>
-        </div>
-        <div class="col-sm-4 col-sm-push-4 poll-details-container">
-            @if (noVotesYet)
-            {
-                <div class="poll-info">
-                    <h3 class="text-center"> No one has voted yet. Don't hesitate, be the first one!</h3>
-                </div>
             }
             else
             {
                 <canvas id="votesChart"></canvas>
             }
         </div>
-        <div class="col-sm-pull-8 col-sm-4 text-center poll-details-container">
-            <div class="poll-info">
-                <p> Visibility:<br class="visible-xs" /> public/private/super private?(only invited users can view)</p>
-                <p> Author:<br class="visible-xs" /> @userName</p>
-                <p> Multiple answers:<br class="visible-xs" /> @multipleAnswers</p>
-                <p> Only logged in users can vote:<br class="visible-xs" /> yes/no</p>
-                <p> Only logged in users can display:<br class="visible-xs" /> yes/no (if yes - 'only logged in users can vote will' be checked as well)</p>
-                <p> Creation time:<br class="visible-xs" /> @Model.CreationDate</p>
-                <p> Expiration time:<br class="visible-xs" /> @Model.ExpirationDate</p>
+
+        @if (!hasExpired)
+        {
+            <div class="col-sm-pull-8 col-sm-4 text-center poll-details-container">
+                <div class="poll-info">
+                    <p>
+                        Visibility:<br class="visible-xs" /> public/private/super private?(only invited users can view)
+                    </p>
+                    <p> Author:<br class="visible-xs" /> @userName</p>
+                    <p> Multiple answers:<br class="visible-xs" /> @multipleAnswers</p>
+                    <p>
+                        Only logged in users can vote:<br class="visible-xs" /> yes/no
+                    </p>
+                    <p>
+                        Only logged in users can display:<br class="visible-xs" /> yes/no (if yes - 'only logged in users can vote will' be checked as well)
+                    </p>
+                    <p> Creation time:<br class="visible-xs" /> @Model.CreationDate</p>
+                    @if (updated)
+                    { <p class="last-update"> Last update:<br class="visible-xs" /> @Model.CreationDate</p> }
+                    <p> Expiration time:<br class="visible-xs" /> @expirationDate</p>
+                </div>
             </div>
-        </div>
+        }
+        else
+        {
+            <div class="text-center poll-details-container col-sm-8 col-sm-offset-2 col-xs-12">
+                <div class="poll-info">
+                    @if (hasNoVotes)
+                    {
+                        <h3 class="text-center">There were no votes for this poll.</h3>
+                    }
+                    <p>This poll has ended. You can @Html.ActionLink("create your own poll", "Create", "Polls") or @Html.ActionLink("browse other polls", "ShowAll", "Polls").</p>
+                    <p>Poll by @userName</p>
+                    <p class="expiration-date">Expired: @Model.ExpirationDate</p>
+                </div>
+            </div>
+        }
+
+
     </div>
 </section>
 
@@ -87,6 +129,30 @@
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
             showChart();
+
+            if (sessionStorage.voted == 'true') {
+                sessionStorage.setItem('voted', 'false');
+                toastr.success('Your vote has been added.', 'Voted!');
+            }
+               
+
+            var options = $(".option-container").children();
+
+            for (var i = 0; i < options.length; i++) {
+                var colors = getColors(options.length);
+
+                $(options[i])
+                    .find(".checkbox-answer-content, .checkbox-answer-votes")
+                    .css("border-left", "20px " + colors[i] + " solid");
+
+                $(options[i])
+                    .find(".checkbox-answer-content, .checkbox-answer-check")
+                    .css("border-right", "20px " + colors[i] + " solid");
+
+                $(options[i])
+                    .find(".checkbox-answer-votes, .checkbox-answer-check")
+                    .css("background-color", colors[i]);
+            }
         });
 
         $("#voteButton").on("click",
@@ -110,14 +176,15 @@
                 $.ajax({
                     url: '/Polls/Vote',
                     type: 'POST',
-                    data: {ids: answerIds }
+                    data: { ids: answerIds }
                 }).done(function(partialViewResult) {
+                    sessionStorage.setItem('voted', 'true');
                     location.reload();
                 });
             });
 
         showChart = function() {
-            if (@noVotesYet.ToString().ToLower())
+            if (@hasNoVotes.ToString().ToLower())
                 return;
 
             var ctx = document.getElementById("votesChart").getContext('2d');
@@ -139,22 +206,8 @@
                         {
                             label: 'Votes',
                             data: data,
-                            backgroundColor: [
-                                'rgba(255, 99, 132, 1)',
-                                'rgba(54, 162, 235, 1)',
-                                'rgba(255, 206, 86, 1)',
-                                'rgba(75, 192, 192, 1)',
-                                'rgba(153, 102, 255, 1)',
-                                'rgba(255, 159, 64, 1)'
-                            ],
-                            borderColor: [
-                                'rgba(255,99,132,1)',
-                                'rgba(54, 162, 235, 1)',
-                                'rgba(255, 206, 86, 1)',
-                                'rgba(75, 192, 192, 1)',
-                                'rgba(153, 102, 255, 1)',
-                                'rgba(255, 159, 64, 1)'
-                            ],
+                            backgroundColor: getColors(data.length),
+                            borderColor: getColors(data.length),
                             borderWidth: 1
                         }
                     ],
@@ -166,5 +219,22 @@
                 }
             });
         };
+
+        function getColors(numberOfElements) {
+            var arrayOfColors = [
+                'rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)',
+                '#e84c3d', '#9a59b5', '#95a5a5', '#a5c63b', '#e67f22', '#3a6f81', '#345f41',
+                '#f47cc3', '#ffcd02', '#3697de', '#745dc5', '#79302a', '#f0dfb4', '#2dcc70',
+                '#5f4534', '#a28671', '#34495e', '#1bbc9b', '#5e335e', '#b7c9f1', '#2b2b2b',
+                '#ef727a', '#5165a2'
+            ];
+
+            while (numberOfElements > arrayOfColors.length)
+                arrayOfColors = arrayOfColors.concat(arrayOfColors);
+
+            var resultArray = arrayOfColors.slice(0, numberOfElements);
+            return resultArray;
+        }
     </script>
 }

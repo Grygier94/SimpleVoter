@@ -19,7 +19,7 @@ namespace SimpleVoter.Core.ViewModels
         public bool AllowMultipleAnswers { get; set; }
 
         [Display(Name = "Expiration Date")]
-        public DateTime ExpirationDate { get; set; }
+        public DateTime? ExpirationDate { get; set; }
 
         [EnsureMinimumElements(2, "Question must contains at least 2 different answers!")]
         public ICollection<Answer> Answers { get; set; }

@@ -175,6 +175,10 @@ fieldset input[type="password"] {
         margin: 5px auto;
     }
 
+.expiration-date-container {
+    display: none;
+}
+
 #register {
     display: block;
     margin: 10px auto 0 auto;
@@ -274,6 +278,15 @@ fieldset input[type="password"] {
     margin-left: 10px;
     margin-right: 10px;
 }
+
+.expiration-date {
+    color: red;
+}
+
+.last-update {
+    color: green;
+}
+
 /* CUSTOM BUTTON */
 .btn-blue {
     background-color: #0084b4;
@@ -405,8 +418,12 @@ fieldset input[type="password"] {
     border-bottom: none;
 }
 
-.checkbox-answer-votes, 
-    .radio-answer-votes {
+.checkbox-answer-votes,
+.radio-answer-votes {
+    border-top: none;
+    border-right-color: #fff;
+    color: #fff;
+    font-weight: bold;
     margin: 0 !important;
     -ms-border-bottom-left-radius: 4px !important;
     border-bottom-left-radius: 4px !important;
@@ -431,22 +448,33 @@ fieldset input[type="password"] {
     border-top-right-radius: 0px !important;
 }
 
-.checkbox-answer-content:active,
 .checkbox-answer-votes:active,
-.radio-answer-content:active,
 .radio-answer-votes:active,
-.checkbox-answer-content:focus,
 .checkbox-answer-votes:focus,
-.radio-answer-content:focus,
 .radio-answer-votes:focus,
-.checkbox-answer-content:hover,
 .checkbox-answer-votes:hover,
-.radio-answer-content:hover,
 .radio-answer-votes:hover {
-    color: #333 !important;
-    background-color: #fff !important;
-    border-color: #ccc !important;
+    border-right-color: #fff !important;
+    color: #fff !important;
     box-shadow: none;
+}
+
+.checkbox-answer-content:active,
+.radio-answer-content:active,
+.checkbox-answer-content:focus,
+.radio-answer-content:focus,
+.checkbox-answer-content:hover,
+.radio-answer-content:hover {
+    background-color: #fff !important;
+    border-top-color: #ccc !important;
+    box-shadow: none;
+}
+
+.checkbox-answer-check,
+.radio-answer-check {
+    border-top: none;
+    color: #fff;
+    border-left-color: #fff;
 }
 
 .checkbox-answer-check:hover,
@@ -454,8 +482,7 @@ fieldset input[type="password"] {
 .checkbox-answer-check:active,
 .radio-answer-check:active {
     color: #fff !important;
-    background-color: #5bc0de !important;
-    border-color: #46b8da !important;
+    border-left-color: #fff !important;
     box-shadow: none;
 }
 

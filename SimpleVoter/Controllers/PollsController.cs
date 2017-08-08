@@ -25,18 +25,16 @@ namespace SimpleVoter.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        //TODO: przy tworzeniu możliwość wybrania typu wykresu (tylko zalogowani)
-
-        //TODO: automatyczne usuwanie polla po czasie (wybor okresu przy tworzeniu, niezalogowani - zawsze po 24h)
-        //Expiration date checkbox - not checked will never expire
         //TODO: możliwość wyboru public/private dla zalogowanych (private = dostep tylko przy pomocy linku)
-
-        //TODO: losowanie kolorow wykresu niezaleznie od ilosci odpowiedzi
-        //TODO: kolor odpowiedzi = kolorowi na wykresie
-
+        //TODO: automatyczne zablokowanie możlowości głosowania po wygaśnięciu polla - zalogowani użytkownicy
+        //          - założyciel może edytować i przedłużyć datę wygaśnięcia
+        //          - założyciel może usunąć wygaśniety poll
+        //TODO: dodać typ ankiety 'personal' tylko zaproszeni użytkownicy mogą głosować
         //TODO: panel admina
         //      - lista użytkowników
         //      - możliwość edycji podstawowych danych / zablokowania / usunięcia użytkownika
+        //TODO: przy tworzeniu możliwość wybrania typu wykresu (tylko zalogowani)
+        //TODO: automatyczne usuwanie polla po 24h - niezalogowani (sql server agent - job schedule)
 
         [AllowAnonymous]
         public ActionResult ShowAll()
@@ -134,6 +132,9 @@ namespace SimpleVoter.Controllers
         [AllowAnonymous]
         public ActionResult Create(CreateViewModel viewModel)
         {
+            if (!User.Identity.IsAuthenticated)
+                viewModel.ExpirationDate = DateTime.Now.AddDays(1);
+
             if (viewModel != null && ModelState.IsValid)
             {
                 var poll = new Poll
@@ -146,7 +147,7 @@ namespace SimpleVoter.Controllers
                                 .DistinctBy(a => a.Content).ToList(),
                     CreationDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
-                    ExpirationDate = DateTime.Now.AddDays(1)
+                    ExpirationDate = viewModel.ExpirationDate
                 };
 
                 _unitOfWork.Polls.Add(poll);

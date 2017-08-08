@@ -456,6 +456,10 @@
     <Compile Include="Persistence\Migrations\201708050956044_AddExpirationDateColumnToPollsTable.Designer.cs">
       <DependentUpon>201708050956044_AddExpirationDateColumnToPollsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Persistence\Migrations\201708062244335_MakePollExpirationDateNullable.cs" />
+    <Compile Include="Persistence\Migrations\201708062244335_MakePollExpirationDateNullable.Designer.cs">
+      <DependentUpon>201708062244335_MakePollExpirationDateNullable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Persistence\Migrations\Configuration.cs" />
     <Compile Include="Persistence\ApplicationDbContext.cs" />
     <Compile Include="Core\Models\Poll.cs" />
@@ -475,6 +479,8 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-datetimepicker.css" />
+    <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-overrides.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -512,6 +518,8 @@
     <Content Include="Content\toastr.scss" />
     <Content Include="Content\toastr.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap-toggle.js" />
     <Content Include="Scripts\bootstrap-toggle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -527,6 +535,10 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\toastr.js" />
@@ -615,6 +627,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Persistence\Migrations\201708050956044_AddExpirationDateColumnToPollsTable.resx">
       <DependentUpon>201708050956044_AddExpirationDateColumnToPollsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201708062244335_MakePollExpirationDateNullable.resx">
+      <DependentUpon>201708062244335_MakePollExpirationDateNullable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

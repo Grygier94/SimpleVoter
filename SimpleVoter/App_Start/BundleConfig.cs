@@ -24,6 +24,8 @@ namespace SimpleVoter
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js",
                       "~/Scripts/bootstrap-toggle.js",
+                      "~/Scripts/moment.js",
+                      "~/Scripts/bootstrap-datetimepicker.js",
                       "~/Scripts/toastr.js",
                       "~/Scripts/chart.js"));
 
@@ -34,6 +36,7 @@ namespace SimpleVoter
                       "~/Content/bootstrap.css",
                       "~/Content/bootstrap-overrides.css",
                       "~/Content/bootstrap-toggle.css",
+                      "~/Content/bootstrap-datetimepicker.css",
                       "~/Content/toastr.css",
                       "~/Content/site.css"));
         }

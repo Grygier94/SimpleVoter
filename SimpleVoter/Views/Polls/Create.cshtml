@@ -38,7 +38,7 @@
                             <input type="text" name="Answers[0].Content" class="form-control answer" id="answer1" data-val="true" data-val-ensureminimumelements="Question must contains at least 2 answers!" data-val-ensureminimumelements-minelements="2" />
                         </div>
                     </div>
-                    
+
                     @if (User.Identity.IsAuthenticated)
                     {
                         <div class="form-group">
@@ -49,9 +49,10 @@
                             </div>
                         </div>
 
-                        <div class="form-group expiration-date-container" style="display: none">
+
+                        <div class="form-group expiration-date-container">
                             @Html.LabelFor(model => model.ExpirationDate)
-                            @Html.TextBoxFor(model => model.ExpirationDate, htmlAttributes: new { @class = "form-control" } )
+                            <input type='text' name="ExpirationDate" id="ExpirationDate" class="form-control"/>
                         </div>
                     }
 
@@ -70,10 +71,14 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
+            $('#ExpirationDate').datetimepicker({
+                format: 'YYYY-MM-DD HH:mm'
+            });
+
             $('.answers').on('input',
                 '.answer',
-                function(e) {
+                function (e) {
                     var numberOfAnswers = $(".answers input").length;
                     if (!/\S/.test(this.value) && this.id == "answer" + (numberOfAnswers - 1))
                         while (!/\S/.test($("#answer" + (numberOfAnswers - 1)).val())) {
@@ -82,20 +87,22 @@
                         }
                     else if (this.id == "answer" + numberOfAnswers && /\S/.test(this.value)) {
                         $('<input type="text" class="form-control answer" id="answer' +
-                                (numberOfAnswers + 1) +
-                                '" name="Answers[' +
-                                numberOfAnswers +
-                                '].Content"/>')
+                            (numberOfAnswers + 1) +
+                            '" name="Answers[' +
+                            numberOfAnswers +
+                            '].Content"/>')
                             .insertAfter($(this));
                     }
                 });
         });
 
-        $('#WillExpire').change(function() {
+        $('#WillExpire').change(function () {
             if ($(this).is(":checked")) {
                 $(".expiration-date-container").css("display", "block");
+                $("#ExpirationDate").val("@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd hh:mm")");
             } else {
                 $(".expiration-date-container").css("display", "none");
+                $("#ExpirationDate").val("");
             }
         });
     </script>
