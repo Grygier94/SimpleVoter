@@ -283,6 +283,10 @@ fieldset input[type="password"] {
     color: red;
 }
 
+.expired {
+    color: red;
+}
+
 .last-update {
     color: green;
 }

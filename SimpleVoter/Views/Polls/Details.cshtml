@@ -142,15 +142,15 @@
                 var colors = getColors(options.length);
 
                 $(options[i])
-                    .find(".checkbox-answer-content, .checkbox-answer-votes")
+                    .find(".checkbox-answer-content, .checkbox-answer-votes, .radio-answer-content, .radio-answer-votes")
                     .css("border-left", "20px " + colors[i] + " solid");
 
                 $(options[i])
-                    .find(".checkbox-answer-content, .checkbox-answer-check")
+                    .find(".checkbox-answer-content, .checkbox-answer-check, .radio-answer-content, .radio-answer-check")
                     .css("border-right", "20px " + colors[i] + " solid");
 
                 $(options[i])
-                    .find(".checkbox-answer-votes, .checkbox-answer-check")
+                    .find(".checkbox-answer-votes, .checkbox-answer-check, .radio-answer-votes, .radio-answer-check")
                     .css("background-color", colors[i]);
             }
         });
@@ -176,10 +176,15 @@
                 $.ajax({
                     url: '/Polls/Vote',
                     type: 'POST',
-                    data: { ids: answerIds }
-                }).done(function(partialViewResult) {
-                    sessionStorage.setItem('voted', 'true');
-                    location.reload();
+                    data: { ids: answerIds, expirationDate: '@Model.ExpirationDate' },
+                    success: function (data) {
+                        if (data.success) {
+                            sessionStorage.setItem('voted', 'true');
+                            location.reload();
+                        } else {
+                            toastr.error(data.responseText, 'Error!');
+                        }
+                    }
                 });
             });
 

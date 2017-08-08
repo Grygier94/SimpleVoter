@@ -16,5 +16,7 @@ namespace SimpleVoter.Core.ViewModels
 
         [Display(Name = "User")]
         public string UserName { get; set; }
+
+        public DateTime ExpirationDate { get; set; }
     }
 }

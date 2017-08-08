@@ -21,7 +21,7 @@
 
         @foreach (var item in Model.Item1)
         {
-            <tr id="@item.PollId">
+            <tr id="@item.PollId" class="@(item.ExpirationDate < DateTime.Now ? "expired" : "")">
                 <td class="hidden-xs">
                     @Html.DisplayFor(modelItem => item.PollId)
                 </td>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Helpers;
@@ -11,6 +12,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Newtonsoft.Json;
 using SimpleVoter.Core;
 using SimpleVoter.Core.Enums;
+using SimpleVoter.Core.Extensions;
 using SimpleVoter.Core.Models;
 using SimpleVoter.Core.ViewModels;
 
@@ -25,10 +27,11 @@ namespace SimpleVoter.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        //TODO: Dodać listę odpowiedzi wraz z uzyskanymi punktami na wygaśniętych pollach
         //TODO: możliwość wyboru public/private dla zalogowanych (private = dostep tylko przy pomocy linku)
         //TODO: automatyczne zablokowanie możlowości głosowania po wygaśnięciu polla - zalogowani użytkownicy
-        //          - założyciel może edytować i przedłużyć datę wygaśnięcia
-        //          - założyciel może usunąć wygaśniety poll
+        //          - założyciel może edytować i przedłużyć datę wygaśnięcia (zmienić tabele pollow uzytkownika oraz widok polla wygaśniętego i nie wygaśnietego)
+        //          - założyciel może usunąć wygaśniety poll (zmienić tabele pollow uzytkownika oraz widok polla wygaśniętego i nie wygaśnietego)
         //TODO: dodać typ ankiety 'personal' tylko zaproszeni użytkownicy mogą głosować
         //TODO: panel admina
         //      - lista użytkowników
@@ -86,7 +89,7 @@ namespace SimpleVoter.Controllers
         {
             PollTableInfo tableInfo = JsonConvert.DeserializeObject<PollTableInfo>(json);
 
-            var polls = _unitOfWork.Polls.GetAll(tableInfo, User.Identity.GetUserId());
+            var polls = _unitOfWork.Polls.GetAll(tableInfo, User.Identity.GetUserId(), true);
 
             var viewModelList = new List<PollListViewModel>();
             var userManager = Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
@@ -97,7 +100,8 @@ namespace SimpleVoter.Controllers
                 {
                     PollId = poll.Id,
                     Question = poll.Question,
-                    UserName = poll.UserId == null ? "Anonymous" : userManager.Users.Single(u => u.Id == poll.UserId).UserName
+                    UserName = poll.UserId == null ? "Anonymous" : userManager.Users.Single(u => u.Id == poll.UserId).UserName,
+                    ExpirationDate = poll.ExpirationDate.Value
                 });
             }
 
@@ -112,14 +116,18 @@ namespace SimpleVoter.Controllers
         }
 
         [AllowAnonymous]
-        public void Vote(int[] ids)
+        public ActionResult Vote(int[] ids, DateTime expirationDate)
         {
+            if (DateTime.Now > expirationDate)
+                return Json(new { success = false, responseText = "Poll has expired." });
+
             foreach (var id in ids)
             {
                 var answer = _unitOfWork.Answers.Get(id);
                 answer.Votes++;
                 _unitOfWork.Complete();
             }
+            return Json(new { success = true });
         }
 
         [AllowAnonymous]
