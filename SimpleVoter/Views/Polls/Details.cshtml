@@ -9,7 +9,7 @@
     var multipleAnswers = Model.AllowMultipleAnswers ? "allowed" : "not allowed";
     var hasNoVotes = !Model.Answers.Select(a => a.Votes).Any(v => v > 0);
     var expirationDate = Model.ExpirationDate == null ? "does not expire" : Model.ExpirationDate.ToString();
-    var hasExpired = DateTime.Now >= Model.ExpirationDate.Value;
+    var hasExpired = Model.ExpirationDate != null && DateTime.Now >= Model.ExpirationDate.Value;
     var chartClasses = hasExpired
         ? hasNoVotes
             ? "col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2"
@@ -39,6 +39,7 @@
     <div class="col-sm-12 col-md-10 col-md-offset-1">
         <h3 class="text-center">@Model.Question</h3>
         <hr />
+
         @if (!hasExpired)
         {
             <div class="col-sm-4 col-sm-push-4 poll-details-container text-center">
@@ -63,6 +64,22 @@
                     }
                 </div>
                 <button class="btn btn-custom btn-white" id="voteButton">Vote!</button>
+            </div>
+        }
+        else
+        {
+            <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                @foreach (var answer in Model.Answers)
+                {
+                    <div class="expired-answer">
+                        <span class="expired-answer-content">
+                            @answer.Content
+                        </span>
+                        <span class="expired-answer-votes" data-placement="bottom" data-toggle="tooltip" title="@answer.Votes votes">
+                            @answer.Votes
+                        </span>
+                    </div>
+                }
             </div>
         }
 
@@ -134,24 +151,33 @@
                 sessionStorage.setItem('voted', 'false');
                 toastr.success('Your vote has been added.', 'Voted!');
             }
-               
 
-            var options = $(".option-container").children();
+
+            var options = @hasExpired.ToString().ToLower() ? $(".expired-answer") : $(".option-container").children();
 
             for (var i = 0; i < options.length; i++) {
                 var colors = getColors(options.length);
 
-                $(options[i])
-                    .find(".checkbox-answer-content, .checkbox-answer-votes, .radio-answer-content, .radio-answer-votes")
-                    .css("border-left", "20px " + colors[i] + " solid");
+                @if (hasExpired)
+                {
+                    @:$(options[i]).css("background-color", colors[i]);
+                }
+                else
+                {
+                    <text>
+                        $(options[i])
+                            .find(".checkbox-answer-content, .checkbox-answer-votes, .radio-answer-content, .radio-answer-votes")
+                            .css("border-left", "20px " + colors[i] + " solid");
 
-                $(options[i])
-                    .find(".checkbox-answer-content, .checkbox-answer-check, .radio-answer-content, .radio-answer-check")
-                    .css("border-right", "20px " + colors[i] + " solid");
+                        $(options[i])
+                            .find(".checkbox-answer-content, .checkbox-answer-check, .radio-answer-content, .radio-answer-check")
+                            .css("border-right", "20px " + colors[i] + " solid");
 
-                $(options[i])
-                    .find(".checkbox-answer-votes, .checkbox-answer-check, .radio-answer-votes, .radio-answer-check")
-                    .css("background-color", colors[i]);
+                        $(options[i])
+                            .find(".checkbox-answer-votes, .checkbox-answer-check, .radio-answer-votes, .radio-answer-check")
+                            .css("background-color", colors[i]);
+                    </text>
+                }
             }
         });
 

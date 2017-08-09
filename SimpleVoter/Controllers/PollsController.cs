@@ -26,8 +26,7 @@ namespace SimpleVoter.Controllers
         {
             _unitOfWork = unitOfWork;
         }
-
-        //TODO: Dodać listę odpowiedzi wraz z uzyskanymi punktami na wygaśniętych pollach
+ 
         //TODO: możliwość wyboru public/private dla zalogowanych (private = dostep tylko przy pomocy linku)
         //TODO: automatyczne zablokowanie możlowości głosowania po wygaśnięciu polla - zalogowani użytkownicy
         //          - założyciel może edytować i przedłużyć datę wygaśnięcia (zmienić tabele pollow uzytkownika oraz widok polla wygaśniętego i nie wygaśnietego)
@@ -116,9 +115,9 @@ namespace SimpleVoter.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Vote(int[] ids, DateTime expirationDate)
+        public ActionResult Vote(int[] ids, DateTime? expirationDate)
         {
-            if (DateTime.Now > expirationDate)
+            if (expirationDate != null && DateTime.Now > expirationDate.Value)
                 return Json(new { success = false, responseText = "Poll has expired." });
 
             foreach (var id in ids)

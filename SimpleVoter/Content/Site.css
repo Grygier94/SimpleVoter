@@ -287,6 +287,37 @@ fieldset input[type="password"] {
     color: red;
 }
 
+.expired-answer {
+    width: 100%;
+    text-align: center;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    -ms-align-items: center;
+    -o-align-items: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+.expired-answer-content {
+    flex: 6;
+    display: inline-block;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-right: 1px white dashed;
+}
+
+.expired-answer-votes {
+    flex: 1;
+    display: inline-block;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-weight: bold;
+    
+}
+
 .last-update {
     color: green;
 }
