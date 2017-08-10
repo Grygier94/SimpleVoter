@@ -25,8 +25,15 @@
     <div class="dashboard-buttons">
         @if (!string.IsNullOrWhiteSpace(Model.UserId) && Model.UserId == User.Identity.GetUserId())
         {
-            <button class="btn btn-custom btn-white danger-hover" data-toggle="modal" data-target="#endPollModal">End Poll</button>
-            @Html.ActionLink("Update Poll", "ShowUserPolls", "Polls", null, new {@class = "btn btn-custom btn-white danger-hover" })
+            if (!hasExpired)
+            {
+                <button class="btn btn-custom btn-white danger-hover" data-toggle="modal" data-target="#endPollModal">End Poll</button>
+                @Html.ActionLink("Update Poll", "ShowUserPolls", "Polls", null, new {@class = "btn btn-custom btn-white danger-hover"})
+            }
+            else
+            {
+                <button class="btn btn-custom btn-white danger-hover" data-toggle="modal" data-target="#renewPollModal">Renew Poll</button>
+            }
             <button class="btn btn-custom btn-white error-hover" data-toggle="modal" data-target="#deleteModal">Delete Poll</button>
         }
         else
@@ -142,6 +149,8 @@
                     <p>This poll has ended. You can @Html.ActionLink("create your own poll", "Create", "Polls") or @Html.ActionLink("browse other polls", "ShowAll", "Polls").</p>
                     <p>Poll by @userName</p>
                     <p class="expiration-date">Expired: @Model.ExpirationDate</p>
+                    @if (Model.EndedByOwner)
+                    { <p class="expiration-date">(Ended by owner)</p> }
                 </div>
             </div>
         }
@@ -167,7 +176,7 @@
                     <p>Are you sure you want to delete this poll? Poll will be deleted permanently.</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
+                    <button id="poll-delete-button" type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
@@ -186,7 +195,7 @@
                     <p>Are you sure you want to end this poll? Poll will not disappear from your dashboard and still you will be able to see the results but people won't be able to vote anymore.</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-warning" data-dismiss="modal">End</button>
+                    <button id="poll-end-button" type="button" class="btn btn-warning" data-dismiss="modal">End</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
@@ -207,6 +216,10 @@
                 toastr.success('Your vote has been added.', 'Voted!');
             }
 
+            if (sessionStorage.ended == 'true') {
+                sessionStorage.setItem('ended', 'false');
+                toastr.warning('Poll ended successfully.', 'Poll ended!');
+            }
 
             var options = @hasExpired.ToString().ToLower() ? $(".expired-answer") : $(".option-container").children();
 
@@ -235,6 +248,40 @@
                 }
             }
         });
+
+        $("#poll-delete-button").on("click",
+            function() {
+                $.ajax({
+                    url: '/Polls/Delete',
+                    type: 'POST',
+                    data: { id: @Model.Id },
+                    success: function(data) {
+                        if (data.success) {
+                            sessionStorage.setItem('deleted', 'true');
+                            window.location.replace('@Url.Action("ShowUserPolls", "Polls")');
+                        } else {
+                            toastr.error(data.responseText, 'Error!');
+                        }
+                    }
+                });
+            });
+
+        $("#poll-end-button").on("click",
+            function() {
+                $.ajax({
+                    url: '/Polls/End',
+                    type: 'POST',
+                    data: { id: @Model.Id },
+                    success: function(data) {
+                        if (data.success) {
+                            sessionStorage.setItem('ended', 'true');
+                            window.location.reload();
+                        } else {
+                            toastr.error(data.responseText, 'Error!');
+                        }
+                    }
+                });
+            });
 
         $("#voteButton").on("click",
             function() {

@@ -15,6 +15,7 @@ namespace SimpleVoter.Core.Models
         public bool AllowMultipleAnswers { get; set; }
         public ApplicationUser User { get; set; }
         public string UserId { get; set; }
+        public bool EndedByOwner { get; set; }
         public Visibility Visibility { get; set; }
         public ICollection<Answer> Answers { get; set; }
         public DateTime CreationDate { get; set; }

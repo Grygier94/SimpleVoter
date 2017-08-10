@@ -28,11 +28,9 @@ namespace SimpleVoter.Controllers
         }
 
         //TODO: automatyczne zablokowanie możlowości głosowania po wygaśnięciu polla - zalogowani użytkownicy
-        //          - zaimplementować usuwanie polla
-        //          - zaimplementowac konczenie polla
         //          - zaimplementowac aktualizacje polla
         //          - zaktualizować przyciski na wygaśniętym pollu (Przedluz, Usun)
-        //          - zaimplementowac akcje "Przedluz" zmieniajaca date wygasniecia polla na podana przez uzytkownika
+        //          - zaimplementowac akcje "Przedluz" zmieniajaca date wygasniecia polla na podana przez uzytkownika - w oknie modalnym
         //          - założyciel może usunąć wygaśniety poll (zmienić tabele pollow uzytkownika oraz widok polla wygaśniętego i nie wygaśnietego)
         //TODO: _UserPollsTable - sortowanie po visibiity oraz osobne wyszukiwanie dla tabeli w panelu uzytkownika
         //TODO: walidacja daty wygasniecia (expiration date > datetime.now) przy tworzeniu polla przez zalogowanego uzytkownika oraz przy aktualizacji/przedluzeniu daty wygsniecia
@@ -122,6 +120,28 @@ namespace SimpleVoter.Controllers
             return View(poll);
         }
 
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            var poll = _unitOfWork.Polls.GetSingle(id);
+            _unitOfWork.Polls.Remove(poll);
+            _unitOfWork.Complete();
+
+            return Json(new { success = true });
+        }
+
+        [HttpPost]
+        public ActionResult End(int id)
+        {
+            var poll = _unitOfWork.Polls.GetSingle(id);
+            poll.ExpirationDate = DateTime.Now;
+            poll.UpdateDate = DateTime.Now;
+            poll.EndedByOwner = true;
+            _unitOfWork.Complete();
+
+            return Json(new { success = true });
+        }
+
         [AllowAnonymous]
         public ActionResult Vote(int[] ids, DateTime? expirationDate)
         {
@@ -151,7 +171,7 @@ namespace SimpleVoter.Controllers
             {
                 viewModel.ExpirationDate = DateTime.Now.AddDays(1);
                 viewModel.Visibility = Visibility.Public;
-            }              
+            }
 
             if (viewModel != null && ModelState.IsValid)
             {

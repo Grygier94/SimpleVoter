@@ -400,6 +400,11 @@ fieldset input[type="password"] {
     padding-top: 0;
 }
 
+.success-hover:hover {
+    /*color: white !important;*/
+    background-color: #c7e1ba !important;
+}
+
 .danger-hover:hover {
     background-color: #ffffb3 !important;
 }

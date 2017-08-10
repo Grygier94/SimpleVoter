@@ -40,6 +40,11 @@
             $('[data-toggle="tooltip"]').tooltip(); 
             $("#pollTable tr th:first-child i").css("color", "yellow");
 
+            if (sessionStorage.deleted == 'true') {
+                sessionStorage.setItem('deleted', 'false');
+                toastr.warning('Your poll has been deleted.', 'Poll deleted!');
+            }
+
             $("#pollTableContainer").on("click",
                 "tr:not(:first-child)",
                 function (e) {

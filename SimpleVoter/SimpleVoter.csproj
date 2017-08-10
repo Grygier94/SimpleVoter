@@ -465,6 +465,10 @@
     <Compile Include="Persistence\Migrations\201708100917381_AddVisibilityColumnToPollTable.Designer.cs">
       <DependentUpon>201708100917381_AddVisibilityColumnToPollTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Persistence\Migrations\201708101511406_AddEndedByOwnerColumn.cs" />
+    <Compile Include="Persistence\Migrations\201708101511406_AddEndedByOwnerColumn.Designer.cs">
+      <DependentUpon>201708101511406_AddEndedByOwnerColumn.cs</DependentUpon>
+    </Compile>
     <Compile Include="Persistence\Migrations\Configuration.cs" />
     <Compile Include="Persistence\ApplicationDbContext.cs" />
     <Compile Include="Core\Models\Poll.cs" />
@@ -638,6 +642,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Persistence\Migrations\201708100917381_AddVisibilityColumnToPollTable.resx">
       <DependentUpon>201708100917381_AddVisibilityColumnToPollTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201708101511406_AddEndedByOwnerColumn.resx">
+      <DependentUpon>201708101511406_AddEndedByOwnerColumn.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
