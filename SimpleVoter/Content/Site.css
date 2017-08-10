@@ -322,6 +322,12 @@ fieldset input[type="password"] {
     color: green;
 }
 
+#Visibility {
+    width: 90%;
+    margin: 5px auto;
+} 
+    
+
 /* CUSTOM BUTTON */
 .btn-blue {
     background-color: #0084b4;
@@ -392,6 +398,15 @@ fieldset input[type="password"] {
     font-size: 0.8em;
     margin-top: 0;
     padding-top: 0;
+}
+
+.danger-hover:hover {
+    background-color: #ffffb3 !important;
+}
+
+.error-hover:hover {
+    color: white !important;
+    background-color: #fe8585 !important;
 }
 
 /* CUSTOM CHECKBOX/RADIO */
@@ -617,6 +632,11 @@ footer {
         width: 50%;
     }
 
+    #Visibility {
+        width: 50%;
+        margin: 5px auto;
+    } 
+    
     .new-poll-fieldset .btn-custom {
         width: 45%;
         display: block;

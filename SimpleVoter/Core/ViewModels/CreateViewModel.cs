@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using SimpleVoter.Core.Enums;
 using SimpleVoter.Core.Extensions;
 using SimpleVoter.Core.Models;
 using SimpleVoter.Core.Validators;
@@ -17,6 +18,8 @@ namespace SimpleVoter.Core.ViewModels
 
         [Display(Name = "Allow Multiple Answers")]
         public bool AllowMultipleAnswers { get; set; }
+
+        public Visibility Visibility { get; set; }
 
         [Display(Name = "Expiration Date")]
         public DateTime? ExpirationDate { get; set; }

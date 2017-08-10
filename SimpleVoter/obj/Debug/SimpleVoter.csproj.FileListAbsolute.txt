@@ -288,3 +288,4 @@ E:\Repositories\simplevoter\SimpleVoter\obj\Debug\SimpleVoter.Migrations.AddMult
 E:\Repositories\simplevoter\SimpleVoter\obj\Debug\SimpleVoter.Migrations.AddPollCreationAndUpdateDateColumns.resources
 E:\Repositories\simplevoter\SimpleVoter\obj\Debug\SimpleVoter.Migrations.AddExpirationDateColumnToPollsTable.resources
 E:\Repositories\simplevoter\SimpleVoter\obj\Debug\SimpleVoter.Migrations.MakePollExpirationDateNullable.resources
+E:\Repositories\simplevoter\SimpleVoter\obj\Debug\SimpleVoter.Migrations.AddVisibilityColumnToPollTable.resources

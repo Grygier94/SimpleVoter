@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using SimpleVoter.Core.Enums;
 
 namespace SimpleVoter.Core.Models
 {
@@ -14,6 +15,7 @@ namespace SimpleVoter.Core.Models
         public bool AllowMultipleAnswers { get; set; }
         public ApplicationUser User { get; set; }
         public string UserId { get; set; }
+        public Visibility Visibility { get; set; }
         public ICollection<Answer> Answers { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime UpdateDate { get; set; }

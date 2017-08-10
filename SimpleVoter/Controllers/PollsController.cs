@@ -26,16 +26,23 @@ namespace SimpleVoter.Controllers
         {
             _unitOfWork = unitOfWork;
         }
- 
-        //TODO: możliwość wyboru public/private dla zalogowanych (private = dostep tylko przy pomocy linku)
+
         //TODO: automatyczne zablokowanie możlowości głosowania po wygaśnięciu polla - zalogowani użytkownicy
-        //          - założyciel może edytować i przedłużyć datę wygaśnięcia (zmienić tabele pollow uzytkownika oraz widok polla wygaśniętego i nie wygaśnietego)
+        //          - zaimplementować usuwanie polla
+        //          - zaimplementowac konczenie polla
+        //          - zaimplementowac aktualizacje polla
+        //          - zaktualizować przyciski na wygaśniętym pollu (Przedluz, Usun)
+        //          - zaimplementowac akcje "Przedluz" zmieniajaca date wygasniecia polla na podana przez uzytkownika
         //          - założyciel może usunąć wygaśniety poll (zmienić tabele pollow uzytkownika oraz widok polla wygaśniętego i nie wygaśnietego)
-        //TODO: dodać typ ankiety 'personal' tylko zaproszeni użytkownicy mogą głosować
+        //TODO: _UserPollsTable - sortowanie po visibiity oraz osobne wyszukiwanie dla tabeli w panelu uzytkownika
+        //TODO: walidacja daty wygasniecia (expiration date > datetime.now) przy tworzeniu polla przez zalogowanego uzytkownika oraz przy aktualizacji/przedluzeniu daty wygsniecia
         //TODO: panel admina
         //      - lista użytkowników
         //      - możliwość edycji podstawowych danych / zablokowania / usunięcia użytkownika
         //TODO: przy tworzeniu możliwość wybrania typu wykresu (tylko zalogowani)
+        //TODO: dodać visibility 'personal?' gdzie tylko zaproszeni przez tworce uzytkownicy moga glosowac
+        //TODO: po kliknięciu scrollem na pozycje w tabeli - otworz w nowej karcie
+
         //TODO: automatyczne usuwanie polla po 24h - niezalogowani (sql server agent - job schedule)
 
         [AllowAnonymous]
@@ -88,7 +95,7 @@ namespace SimpleVoter.Controllers
         {
             PollTableInfo tableInfo = JsonConvert.DeserializeObject<PollTableInfo>(json);
 
-            var polls = _unitOfWork.Polls.GetAll(tableInfo, User.Identity.GetUserId(), true);
+            var polls = _unitOfWork.Polls.GetAll(tableInfo, User.Identity.GetUserId());
 
             var viewModelList = new List<PollListViewModel>();
             var userManager = Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
@@ -100,7 +107,8 @@ namespace SimpleVoter.Controllers
                     PollId = poll.Id,
                     Question = poll.Question,
                     UserName = poll.UserId == null ? "Anonymous" : userManager.Users.Single(u => u.Id == poll.UserId).UserName,
-                    ExpirationDate = poll.ExpirationDate.Value
+                    ExpirationDate = poll.ExpirationDate,
+                    Visibility = poll.Visibility
                 });
             }
 
@@ -140,7 +148,10 @@ namespace SimpleVoter.Controllers
         public ActionResult Create(CreateViewModel viewModel)
         {
             if (!User.Identity.IsAuthenticated)
+            {
                 viewModel.ExpirationDate = DateTime.Now.AddDays(1);
+                viewModel.Visibility = Visibility.Public;
+            }              
 
             if (viewModel != null && ModelState.IsValid)
             {
@@ -154,7 +165,8 @@ namespace SimpleVoter.Controllers
                                 .DistinctBy(a => a.Content).ToList(),
                     CreationDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
-                    ExpirationDate = viewModel.ExpirationDate
+                    ExpirationDate = viewModel.ExpirationDate,
+                    Visibility = viewModel.Visibility
                 };
 
                 _unitOfWork.Polls.Add(poll);

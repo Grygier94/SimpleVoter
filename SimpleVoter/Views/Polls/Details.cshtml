@@ -1,4 +1,5 @@
 ﻿@using CsQuery.Implementation
+@using Microsoft.AspNet.Identity
 @using Newtonsoft.Json
 @model SimpleVoter.Core.Models.Poll
 
@@ -22,15 +23,24 @@
     <h1 class="main-title">Simple Voter</h1>
     <p class="main-description">Create custom polls with live results.</p>
     <div class="dashboard-buttons">
-        @Html.ActionLink("New Poll", "Create", "Polls", null, new { @class = "btn btn-custom btn-white" })
-        @if (Request.IsAuthenticated)
+        @if (!string.IsNullOrWhiteSpace(Model.UserId) && Model.UserId == User.Identity.GetUserId())
         {
-            @Html.ActionLink("Public Polls", "ShowAll", "Polls", null, new { @class = "btn btn-custom btn-white" })
-            @Html.ActionLink("My Polls", "ShowUserPolls", "Polls", null, new { @class = "btn btn-custom btn-white" })
+            <button class="btn btn-custom btn-white danger-hover" data-toggle="modal" data-target="#endPollModal">End Poll</button>
+            @Html.ActionLink("Update Poll", "ShowUserPolls", "Polls", null, new {@class = "btn btn-custom btn-white danger-hover" })
+            <button class="btn btn-custom btn-white error-hover" data-toggle="modal" data-target="#deleteModal">Delete Poll</button>
         }
         else
         {
-            @Html.ActionLink("Browse Polls", "ShowAll", "Polls", null, new { @class = "btn btn-custom btn-white" })
+            @Html.ActionLink("New Poll", "Create", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
+            if (Request.IsAuthenticated)
+            {
+                @Html.ActionLink("Public Polls", "ShowAll", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
+                @Html.ActionLink("My Polls", "ShowUserPolls", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
+            }
+            else
+            {
+                @Html.ActionLink("Browse Polls", "ShowAll", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
+            }
         }
     </div>
 </header>
@@ -104,7 +114,7 @@
             <div class="col-sm-pull-8 col-sm-4 text-center poll-details-container">
                 <div class="poll-info">
                     <p>
-                        Visibility:<br class="visible-xs" /> public/private/super private?(only invited users can view)
+                        Visibility:<br class="visible-xs" /> @Model.Visibility
                     </p>
                     <p> Author:<br class="visible-xs" /> @userName</p>
                     <p> Multiple answers:<br class="visible-xs" /> @multipleAnswers</p>
@@ -135,8 +145,53 @@
                 </div>
             </div>
         }
+    </div>
+    
+    @if (!string.IsNullOrWhiteSpace(Model.UserId) && Model.UserId == User.Identity.GetUserId())
+    {
+        <div class="visible-xs text-center">
+            @Html.ActionLink("End Poll", "ShowAll", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
+            @Html.ActionLink("Update Poll", "ShowUserPolls", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
+            <button class="btn btn-custom btn-white error-hover" data-toggle="modal" data-target="#deleteModal">Delete Poll</button>
+        </div>
+    }
+    
+    <div id="deleteModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Delete Poll</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this poll? Poll will be deleted permanently.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
 
+        </div>
+    </div>
+    
+    <div id="endPollModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">End Poll</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to end this poll? Poll will not disappear from your dashboard and still you will be able to see the results but people won't be able to vote anymore.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">End</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
 
+        </div>
     </div>
 </section>
 

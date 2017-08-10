@@ -1,4 +1,5 @@
-﻿@model SimpleVoter.Core.ViewModels.CreateViewModel
+﻿@using SimpleVoter.Core.Enums
+@model SimpleVoter.Core.ViewModels.CreateViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -53,6 +54,13 @@
                         <div class="form-group expiration-date-container">
                             @Html.LabelFor(model => model.ExpirationDate)
                             <input type='text' name="ExpirationDate" id="ExpirationDate" class="form-control"/>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Visibility)
+                            @Html.DropDownList("Visibility",
+                            EnumHelper.GetSelectList(typeof(Visibility)),
+                                new { @class = "form-control" })
                         </div>
                     }
 

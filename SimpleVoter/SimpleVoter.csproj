@@ -405,6 +405,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PollsController.cs" />
     <Compile Include="Core\Enums\SortBy.cs" />
+    <Compile Include="Core\Enums\Visibility.cs" />
     <Compile Include="Core\Extensions\AllowAnonymousOnlyAttribute.cs" />
     <Compile Include="Core\Models\PagingInfo.cs" />
     <Compile Include="Core\Models\PollTableInfo.cs" />
@@ -459,6 +460,10 @@
     <Compile Include="Persistence\Migrations\201708062244335_MakePollExpirationDateNullable.cs" />
     <Compile Include="Persistence\Migrations\201708062244335_MakePollExpirationDateNullable.Designer.cs">
       <DependentUpon>201708062244335_MakePollExpirationDateNullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\Migrations\201708100917381_AddVisibilityColumnToPollTable.cs" />
+    <Compile Include="Persistence\Migrations\201708100917381_AddVisibilityColumnToPollTable.Designer.cs">
+      <DependentUpon>201708100917381_AddVisibilityColumnToPollTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Persistence\Migrations\Configuration.cs" />
     <Compile Include="Persistence\ApplicationDbContext.cs" />
@@ -630,6 +635,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Persistence\Migrations\201708062244335_MakePollExpirationDateNullable.resx">
       <DependentUpon>201708062244335_MakePollExpirationDateNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201708100917381_AddVisibilityColumnToPollTable.resx">
+      <DependentUpon>201708100917381_AddVisibilityColumnToPollTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
