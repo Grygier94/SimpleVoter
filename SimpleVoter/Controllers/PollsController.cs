@@ -145,13 +145,16 @@ namespace SimpleVoter.Controllers
             if (viewModel != null && ModelState.IsValid)
             {
                 var poll = _unitOfWork.Polls.GetSingle(viewModel.Id);
-                _unitOfWork.Answers.RemoveRange(poll.Answers.ToList());
+                if (poll.Answers.All(a => a.Votes == 0))
+                {
+                    poll.Question = viewModel.Question;
+                    _unitOfWork.Answers.RemoveRange(poll.Answers.ToList());
+                    poll.Answers = viewModel.Answers
+                        .Where(a => !string.IsNullOrWhiteSpace(a.Content))
+                        .DistinctBy(a => a.Content).ToList();
+                }
 
                 poll.AllowMultipleAnswers = viewModel.AllowMultipleAnswers;
-                poll.Question = viewModel.Question;
-                poll.Answers = viewModel.Answers
-                    .Where(a => !string.IsNullOrWhiteSpace(a.Content))
-                    .DistinctBy(a => a.Content).ToList();
                 poll.UpdateDate = DateTime.Now;
                 poll.ExpirationDate = viewModel.ExpirationDate;
                 poll.Visibility = viewModel.Visibility;
