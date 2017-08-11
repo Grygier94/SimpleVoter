@@ -1,0 +1,139 @@
+﻿@using SimpleVoter.Core.Enums
+@model SimpleVoter.Core.ViewModels.UpdateViewModel
+
+@{
+    ViewBag.Title = "Update";
+    var willExpire = Model.ExpirationDate != null;
+}
+
+<header class="main-header text-center">
+    <h1 class="main-title">Update poll</h1>
+    <p class="main-description">Make sure your poll is up-to-date.</p>
+</header>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <section class="mid-section">
+        <div class="col-md-offset-3 col-md-6">
+            <fieldset class="new-poll-fieldset">
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <div>
+                            @Html.LabelFor(model => model.Question)
+                            @Html.TextAreaFor(model => model.Question, new { htmlAttributes = new { @class = "form-control question-area" } })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AllowMultipleAnswers)
+                        <div class="checkbox">
+                            @Html.CheckBoxFor(model => model.AllowMultipleAnswers, htmlAttributes: new { data_toggle = "toggle" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                            @Html.LabelFor(model => model.Answers)
+                            <div class="answers">
+                                @*<input type="text" name="Answers[0].Content" class="form-control answer" id="answer1" data-val="true" data-val-ensureminimumelements="Question must contains at least 2 answers!" data-val-ensureminimumelements-minelements="2" />*@
+                            @for(var i = 0; i < Model.Answers.Count; i++)
+                            {
+                                <input type="text" name="Answers[@i].Content" class="form-control answer" id="answer@(i+1)" value="@Model.Answers[i].Content" 
+                                       @*@(i == 0 ? "data-val-ensureminimumelements='Question must contains at least 2 answers!' data-val-ensureminimumelements-minelements='2'" : "")*@/>
+                            }
+                            </div>
+                        </div>
+
+                    <div class="form-group">
+                        <label class="label-with-comment" for="WillExpire">Will Expire</label>
+                        <span class="additional-comment">(Voting will be closed after specified time)</span>
+                        <div class="checkbox">
+                            <input name="WillExpire" id="WillExpire" type="checkbox" data-toggle="toggle" checked="@willExpire">
+                        </div>
+                    </div>
+
+                    <div class="form-group expiration-date-container">
+                        @Html.LabelFor(model => model.ExpirationDate)
+                        <input type='text' name="ExpirationDate" id="ExpirationDate" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Visibility)
+                        @Html.DropDownList("Visibility",
+                            EnumHelper.GetSelectList(typeof(Visibility)),
+                            new { @class = "form-control" })
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Update" class="btn btn-custom btn-white" />
+                        @Html.ActionLink("Cancel", "Details", new { id = Model.Id }, new { @class = "btn btn-custom btn-white" })
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </section>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            $('#ExpirationDate').datetimepicker({
+                format: 'YYYY-MM-DD HH:mm'
+            });
+
+            toggleExpirationDateField();
+
+            
+            addEmptyAnswerField();
+        });
+
+        var numberOfAnswers = $(".answers input").length;
+        $('.answers').on('input',
+            '.answer',
+            function (e) {
+                numberOfAnswers = $(".answers input").length;
+                if (!/\S/.test(this.value) && this.id == "answer" + (numberOfAnswers - 1))
+                    while (!/\S/.test($("#answer" + (numberOfAnswers - 1)).val())) {
+                        $("#answer" + numberOfAnswers).hide(250,
+                            function() {
+                                $(this).remove();
+                            });
+                        numberOfAnswers--;
+                    }
+                else if (this.id == "answer" + numberOfAnswers && /\S/.test(this.value)) {
+                    addEmptyAnswerField();
+                }
+            });
+
+        function addEmptyAnswerField() {
+            var inputToAppend = $('<input type="text" class="form-control answer"  style="display: none;" id="answer' +
+                (numberOfAnswers + 1) +
+                '" name="Answers[' +
+                numberOfAnswers +
+                '].Content"/>');
+
+
+            $('.answers').append(inputToAppend);
+            inputToAppend.show(500);
+        }
+
+        $('#WillExpire').change(function () {
+            toggleExpirationDateField();
+        });
+
+        function toggleExpirationDateField() {
+            if ($('#WillExpire').is(":checked")) {
+                $(".expiration-date-container").show(500);
+                $("#ExpirationDate").val("@(willExpire
+                    ? Model.ExpirationDate.Value.ToString("yyyy-MM-dd hh:mm")
+                    : DateTime.Now.AddDays(1).ToString("yyyy-MM-dd hh:mm"))");
+            } else {
+                $(".expiration-date-container").hide(500);
+                $("#ExpirationDate").val("");
+            }
+        }
+    </script>
+}

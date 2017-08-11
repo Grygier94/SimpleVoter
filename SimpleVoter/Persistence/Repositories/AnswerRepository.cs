@@ -25,5 +25,16 @@ namespace SimpleVoter.Persistence.Repositories
         {
             return Context.Answers.Single(a => a.Id == answerId).Votes;
         }
+
+        public void Remove(Answer answer)
+        {
+            Context.Answers.Remove(answer);
+        }
+
+        public void RemoveRange(List<Answer> answers)
+        {
+            for (var i = 0; i < answers.Count; i++)
+                Context.Answers.Remove(answers[i]);
+        }
     }
 }

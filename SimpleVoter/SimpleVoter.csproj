@@ -430,6 +430,7 @@
     <Compile Include="Core\ViewModels\ResetPasswordViewModel.cs" />
     <Compile Include="Core\ViewModels\SendCodeViewModel.cs" />
     <Compile Include="Core\ViewModels\SetPasswordViewModel.cs" />
+    <Compile Include="Core\ViewModels\UpdateViewModel.cs" />
     <Compile Include="Core\ViewModels\VerifyCodeViewModel.cs" />
     <Compile Include="Core\ViewModels\VerifyPhoneNumberViewModel.cs" />
     <Compile Include="Core\IApplicationDbContext.cs" />
@@ -599,6 +600,7 @@
     <Content Include="Views\Polls\_PollsTable.cshtml" />
     <Content Include="Views\Polls\UserPollList.cshtml" />
     <Content Include="Views\Polls\_UserPollsTable.cshtml" />
+    <Content Include="Views\Polls\Update.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

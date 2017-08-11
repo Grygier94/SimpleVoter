@@ -83,35 +83,44 @@
             $('#ExpirationDate').datetimepicker({
                 format: 'YYYY-MM-DD HH:mm'
             });
-
-            $('.answers').on('input',
-                '.answer',
-                function (e) {
-                    var numberOfAnswers = $(".answers input").length;
-                    if (!/\S/.test(this.value) && this.id == "answer" + (numberOfAnswers - 1))
-                        while (!/\S/.test($("#answer" + (numberOfAnswers - 1)).val())) {
-                            $("#answer" + numberOfAnswers).remove();
-                            numberOfAnswers--;
-                        }
-                    else if (this.id == "answer" + numberOfAnswers && /\S/.test(this.value)) {
-                        $('<input type="text" class="form-control answer" id="answer' +
-                            (numberOfAnswers + 1) +
-                            '" name="Answers[' +
-                            numberOfAnswers +
-                            '].Content"/>')
-                            .insertAfter($(this));
-                    }
-                });
         });
+
+        $('.answers').on('input',
+            '.answer',
+            function (e) {
+                var numberOfAnswers = $(".answers input").length;
+                if (!/\S/.test(this.value) && this.id == "answer" + (numberOfAnswers - 1))
+                    while (!/\S/.test($("#answer" + (numberOfAnswers - 1)).val())) {
+                        $("#answer" + numberOfAnswers).hide(250,
+                            function () {
+                                $(this).remove();
+                            });
+                        numberOfAnswers--;
+                    }
+                else if (this.id == "answer" + numberOfAnswers && /\S/.test(this.value)) {
+                    var inputToAppend = $('<input type="text" class="form-control answer"  style="display: none;" id="answer' +
+                        (numberOfAnswers + 1) +
+                        '" name="Answers[' +
+                        numberOfAnswers +
+                        '].Content"/>');
+
+                    $(inputToAppend).insertAfter($(this));
+                    inputToAppend.show(500);
+                }
+            });
 
         $('#WillExpire').change(function () {
-            if ($(this).is(":checked")) {
-                $(".expiration-date-container").css("display", "block");
+            toggleExpirationDateField();
+        });
+
+        function toggleExpirationDateField() {
+            if ($('#WillExpire').is(":checked")) {
+                $(".expiration-date-container").show(500);
                 $("#ExpirationDate").val("@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd hh:mm")");
             } else {
-                $(".expiration-date-container").css("display", "none");
+                $(".expiration-date-container").hide(500);
                 $("#ExpirationDate").val("");
             }
-        });
+        }
     </script>
 }

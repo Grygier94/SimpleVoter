@@ -28,7 +28,7 @@
             if (!hasExpired)
             {
                 <button class="btn btn-custom btn-white danger-hover" data-toggle="modal" data-target="#endPollModal">End Poll</button>
-                @Html.ActionLink("Update Poll", "ShowUserPolls", "Polls", null, new {@class = "btn btn-custom btn-white danger-hover"})
+                @Html.ActionLink("Update Poll", "Update", "Polls", new { id = Model.Id}, new {@class = "btn btn-custom btn-white danger-hover"})
             }
             else
             {
@@ -133,7 +133,7 @@
                     </p>
                     <p> Creation time:<br class="visible-xs" /> @Model.CreationDate</p>
                     @if (updated)
-                    { <p class="last-update"> Last update:<br class="visible-xs" /> @Model.CreationDate</p> }
+                    { <p class="last-update"> Last update:<br class="visible-xs" /> @Model.UpdateDate</p> }
                     <p> Expiration time:<br class="visible-xs" /> @expirationDate</p>
                 </div>
             </div>

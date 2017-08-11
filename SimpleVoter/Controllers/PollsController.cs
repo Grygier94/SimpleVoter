@@ -27,6 +27,7 @@ namespace SimpleVoter.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        //TODO: Przy aktualizacji - jesli jakas odpowiedz posiada glosy to brak mozliwosci zmiany odpowiedzi i pytania
         //TODO: automatyczne zablokowanie możlowości głosowania po wygaśnięciu polla - zalogowani użytkownicy
         //          - zaimplementowac aktualizacje polla
         //          - zaktualizować przyciski na wygaśniętym pollu (Przedluz, Usun)
@@ -37,6 +38,7 @@ namespace SimpleVoter.Controllers
         //TODO: panel admina
         //      - lista użytkowników
         //      - możliwość edycji podstawowych danych / zablokowania / usunięcia użytkownika
+        //TODO: kolor :hover przyciskow przy logowaniu zewnetrznym: fb, twitter etc
         //TODO: przy tworzeniu możliwość wybrania typu wykresu (tylko zalogowani)
         //TODO: dodać visibility 'personal?' gdzie tylko zaproszeni przez tworce uzytkownicy moga glosowac
         //TODO: po kliknięciu scrollem na pozycje w tabeli - otworz w nowej karcie
@@ -118,6 +120,47 @@ namespace SimpleVoter.Controllers
         {
             var poll = _unitOfWork.Polls.GetSingle(id);
             return View(poll);
+        }
+
+        [HttpGet]
+        public ActionResult Update(int id)
+        {
+            var poll = _unitOfWork.Polls.GetSingle(id);
+            var viewModel = new UpdateViewModel
+            {
+                Id = poll.Id,
+                Question = poll.Question,
+                AllowMultipleAnswers = poll.AllowMultipleAnswers,
+                Answers = poll.Answers.ToList(),
+                ExpirationDate = poll.ExpirationDate,
+                Visibility = poll.Visibility
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Update(UpdateViewModel viewModel)
+        {
+            if (viewModel != null && ModelState.IsValid)
+            {
+                var poll = _unitOfWork.Polls.GetSingle(viewModel.Id);
+                _unitOfWork.Answers.RemoveRange(poll.Answers.ToList());
+
+                poll.AllowMultipleAnswers = viewModel.AllowMultipleAnswers;
+                poll.Question = viewModel.Question;
+                poll.Answers = viewModel.Answers
+                    .Where(a => !string.IsNullOrWhiteSpace(a.Content))
+                    .DistinctBy(a => a.Content).ToList();
+                poll.UpdateDate = DateTime.Now;
+                poll.ExpirationDate = viewModel.ExpirationDate;
+                poll.Visibility = viewModel.Visibility;
+
+                _unitOfWork.Complete();
+                return RedirectToAction("Details", new { id = poll.Id });
+            }
+
+            return View(viewModel);
         }
 
         [HttpPost]
