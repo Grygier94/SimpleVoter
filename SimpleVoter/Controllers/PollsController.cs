@@ -27,14 +27,12 @@ namespace SimpleVoter.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        //TODO: Przy aktualizacji - jesli jakas odpowiedz posiada glosy to brak mozliwosci zmiany odpowiedzi i pytania
         //TODO: automatyczne zablokowanie możlowości głosowania po wygaśnięciu polla - zalogowani użytkownicy
-        //          - zaimplementowac aktualizacje polla
-        //          - zaktualizować przyciski na wygaśniętym pollu (Przedluz, Usun)
-        //          - zaimplementowac akcje "Przedluz" zmieniajaca date wygasniecia polla na podana przez uzytkownika - w oknie modalnym
         //          - założyciel może usunąć wygaśniety poll (zmienić tabele pollow uzytkownika oraz widok polla wygaśniętego i nie wygaśnietego)
+        //TODO: Paginacja poprzez wpisanie strony
         //TODO: _UserPollsTable - sortowanie po visibiity oraz osobne wyszukiwanie dla tabeli w panelu uzytkownika
-        //TODO: walidacja daty wygasniecia (expiration date > datetime.now) przy tworzeniu polla przez zalogowanego uzytkownika oraz przy aktualizacji/przedluzeniu daty wygsniecia
+        //TODO: walidacja daty wygasniecia (expiration date > datetime.now) przy tworzeniu polla przez zalogowanego uzytkownika oraz przy aktualizacji i przedluzeniu daty wygsniecia
+        //TODO: ustawic min width dla number i visibility w tabeli uzytkownika oraz number i user w tabeli publicznej
         //TODO: panel admina
         //      - lista użytkowników
         //      - możliwość edycji podstawowych danych / zablokowania / usunięcia użytkownika
@@ -122,6 +120,7 @@ namespace SimpleVoter.Controllers
             return View(poll);
         }
 
+
         [HttpGet]
         public ActionResult Update(int id)
         {
@@ -166,7 +165,6 @@ namespace SimpleVoter.Controllers
             return View(viewModel);
         }
 
-        [HttpPost]
         public ActionResult Delete(int id)
         {
             var poll = _unitOfWork.Polls.GetSingle(id);
@@ -176,13 +174,22 @@ namespace SimpleVoter.Controllers
             return Json(new { success = true });
         }
 
-        [HttpPost]
         public ActionResult End(int id)
         {
             var poll = _unitOfWork.Polls.GetSingle(id);
             poll.ExpirationDate = DateTime.Now;
             poll.UpdateDate = DateTime.Now;
             poll.EndedByOwner = true;
+            _unitOfWork.Complete();
+
+            return Json(new { success = true });
+        }
+
+        public ActionResult Renew(int id, DateTime expirationDate)
+        {
+            var poll = _unitOfWork.Polls.GetSingle(id);
+            poll.ExpirationDate = expirationDate;
+            poll.UpdateDate = DateTime.Now;
             _unitOfWork.Complete();
 
             return Json(new { success = true });

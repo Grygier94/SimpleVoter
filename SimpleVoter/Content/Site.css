@@ -330,7 +330,12 @@ fieldset input[type="password"] {
 #Visibility {
     width: 90%;
     margin: 5px auto;
-} 
+}
+
+.renew-expiration-date {
+    display: block;
+    text-align: center;
+}
     
 
 /* CUSTOM BUTTON */
