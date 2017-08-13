@@ -118,6 +118,20 @@
                 getPolls();
             });
 
+            $("body").on("keypress",
+                ".pagination-box",
+                function (e) {
+                    if (e.which == 13) {
+                        var page = parseInt($(".pagination-box").val());
+                        var maxPage = parseInt($('.max-page-number').text().substring(1));
+
+                        if (page > maxPage) page = maxPage;
+                        if (page < 1) page = 1;
+
+                        getPolls(page);
+                    }
+                });
+
             $("body").on("click",
                 ".previous",
                 function () {

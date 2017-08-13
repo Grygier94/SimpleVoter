@@ -4,7 +4,7 @@
 @model SimpleVoter.Core.Models.PagingInfo
 @{
     ViewBag.Title = "PollList";
-    var jsonData = JsonConvert.SerializeObject(new PollTableInfo { PagingInfo = Model, SearchText = ""});
+    var jsonData = JsonConvert.SerializeObject(new PollTableInfo { PagingInfo = Model, SearchText = "" });
 }
 
 <header class="main-header text-center">
@@ -37,7 +37,7 @@
         _searchText = "";
 
         $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip(); 
+            $('[data-toggle="tooltip"]').tooltip();
             $("#pollTable tr th:first-child i").css("color", "yellow");
 
             $("#pollTableContainer").on("click",
@@ -94,6 +94,7 @@
                     }
                 });
 
+
             $("#inputSearch").keypress(function (e) {
                 if (e.which == 13) {
                     _searchText = $("#inputSearch").val();
@@ -126,6 +127,20 @@
                     var page = parseInt($(".pagination-box").attr('placeholder')) + 1;
                     getPolls(page);
                 });
+
+            $("body").on("keypress",
+                ".pagination-box",
+                function (e) {
+                    if (e.which == 13) {
+                        var page = parseInt($(".pagination-box").val());
+                        var maxPage = parseInt($('.max-page-number').text().substring(1));
+
+                        if (page > maxPage) page = maxPage;
+                        if (page < 1) page = 1;
+
+                        getPolls(page);
+                    }
+            });
 
             function getPolls(page = 1) {
                 var jsonData = {

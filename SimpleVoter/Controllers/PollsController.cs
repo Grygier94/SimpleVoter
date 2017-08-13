@@ -31,6 +31,7 @@ namespace SimpleVoter.Controllers
         //TODO: _UserPollsTable - sortowanie po visibiity oraz osobne wyszukiwanie dla tabeli w panelu uzytkownika
         //TODO: walidacja daty wygasniecia (expiration date > datetime.now) przy tworzeniu polla przez zalogowanego uzytkownika oraz przy aktualizacji i przedluzeniu daty wygsniecia
         //TODO: ustawic min width dla number i visibility w tabeli uzytkownika oraz number i user w tabeli publicznej
+        //TODO: zmiana przyciskow next/previous na buttony - po kliknieciu scrolluje na poczatek tabeli, zmienic wyglad przyciskow
         //TODO: panel admina
         //      - lista użytkowników
         //      - lista polli
