@@ -26,13 +26,12 @@
                             @Html.LabelFor(model => model.Question)
                             @if (pollContainsAnyVotes)
                             {
-                                @Html.TextAreaFor(model => model.Question, new { @class = "form-control question-area", disabled = "disabled" })
-                                @Html.HiddenFor(model => model.Question)
+                                @Html.TextAreaFor(model => model.Question, new { @class = "form-control question-area", @readonly = "readonly", data_toggle = "tooltip", title = "You can't change the question because there are already votes", data_placement = "top" })
                             }
                             else
                             {
                                 @Html.TextAreaFor(model => model.Question, new { @class = "form-control question-area" })
-                            }                            
+                            }
                         </div>
                     </div>
 
@@ -46,11 +45,25 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.Answers)
                         <div class="answers">
-                            @*<input type="text" name="Answers[0].Content" class="form-control answer" id="answer1" data-val="true" data-val-ensureminimumelements="Question must contains at least 2 answers!" data-val-ensureminimumelements-minelements="2" />*@
-                            @for (var i = 0; i < Model.Answers.Count; i++)
+                            @if (pollContainsAnyVotes)
                             {
-                                <input @(pollContainsAnyVotes ? "disabled='disabled'" : "") type="text" name="Answers[@i].Content" class="form-control answer" id="answer@(i+1)" value="@Model.Answers[i].Content"
-                                       @*@(i == 0 ? "data-val-ensureminimumelements='Question must contains at least 2 answers!' data-val-ensureminimumelements-minelements='2'" : "")*@ />
+                                <input readonly type="text" name="Answers[0].Content" class="form-control answer" id="answer1" value="@Model.Answers[0].Content"
+                                       data-toggle = "tooltip" title = "You can't change the answer because there are already votes" data-placement = "top"/>
+                                for (var i = 1; i < Model.Answers.Count; i++)
+                                {
+                                    <input readonly type="text" name="Answers[@i].Content" class="form-control answer" id="answer@(i + 1)" value="@Model.Answers[i].Content"
+                                           data-toggle = "tooltip" title = "You can't change the answer because there are already votes" data-placement = "top" />
+                                }
+                            }
+                            else
+                            {
+                                <input type="text" name="Answers[0].Content" class="form-control answer" id="answer1" value="@Model.Answers[0].Content"
+                                       data-val="true" data-val-ensureminimumelements="Question must contains at least 2 answers!" data-val-ensureminimumelements-minelements="2" />
+
+                                for (var i = 1; i < Model.Answers.Count; i++)
+                                {
+                                    <input type="text" name="Answers[@i].Content" class="form-control answer" id="answer@(i + 1)" value="@Model.Answers[i].Content" />
+                                }
                             }
                         </div>
                     </div>
@@ -89,6 +102,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script>
         $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip(); 
             $('#ExpirationDate').datetimepicker({
                 format: 'YYYY-MM-DD HH:mm'
             });

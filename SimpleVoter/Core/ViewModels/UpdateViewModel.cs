@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using SimpleVoter.Core.Enums;
 using SimpleVoter.Core.Models;
+using SimpleVoter.Core.Validators;
 
 namespace SimpleVoter.Core.ViewModels
 {
@@ -21,6 +22,7 @@ namespace SimpleVoter.Core.ViewModels
 
         public Visibility Visibility { get; set; }
 
+        [EnsureMinimumElements(2, "Question must contains at least 2 different answers!")]
         public List<Answer> Answers { get; set; }
 
         [Display(Name = "Expiration Date")]

@@ -406,7 +406,6 @@
     <Compile Include="Controllers\PollsController.cs" />
     <Compile Include="Core\Enums\SortBy.cs" />
     <Compile Include="Core\Enums\Visibility.cs" />
-    <Compile Include="Core\Extensions\AllowAnonymousOnlyAttribute.cs" />
     <Compile Include="Core\Models\PagingInfo.cs" />
     <Compile Include="Core\Models\PollTableInfo.cs" />
     <Compile Include="Core\Validators\EnsureMinimumElementsAttribute.cs" />
@@ -469,6 +468,10 @@
     <Compile Include="Persistence\Migrations\201708101511406_AddEndedByOwnerColumn.cs" />
     <Compile Include="Persistence\Migrations\201708101511406_AddEndedByOwnerColumn.Designer.cs">
       <DependentUpon>201708101511406_AddEndedByOwnerColumn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\Migrations\201708131241231_AddRenewingDateColumnToPollTable.cs" />
+    <Compile Include="Persistence\Migrations\201708131241231_AddRenewingDateColumnToPollTable.Designer.cs">
+      <DependentUpon>201708131241231_AddRenewingDateColumnToPollTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Persistence\Migrations\Configuration.cs" />
     <Compile Include="Persistence\ApplicationDbContext.cs" />
@@ -647,6 +650,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Persistence\Migrations\201708101511406_AddEndedByOwnerColumn.resx">
       <DependentUpon>201708101511406_AddEndedByOwnerColumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201708131241231_AddRenewingDateColumnToPollTable.resx">
+      <DependentUpon>201708131241231_AddRenewingDateColumnToPollTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

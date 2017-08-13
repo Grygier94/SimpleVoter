@@ -27,15 +27,15 @@ namespace SimpleVoter.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        //TODO: automatyczne zablokowanie możlowości głosowania po wygaśnięciu polla - zalogowani użytkownicy
-        //          - założyciel może usunąć wygaśniety poll (zmienić tabele pollow uzytkownika oraz widok polla wygaśniętego i nie wygaśnietego)
         //TODO: Paginacja poprzez wpisanie strony
         //TODO: _UserPollsTable - sortowanie po visibiity oraz osobne wyszukiwanie dla tabeli w panelu uzytkownika
         //TODO: walidacja daty wygasniecia (expiration date > datetime.now) przy tworzeniu polla przez zalogowanego uzytkownika oraz przy aktualizacji i przedluzeniu daty wygsniecia
         //TODO: ustawic min width dla number i visibility w tabeli uzytkownika oraz number i user w tabeli publicznej
         //TODO: panel admina
         //      - lista użytkowników
-        //      - możliwość edycji podstawowych danych / zablokowania / usunięcia użytkownika
+        //      - lista polli
+        //      - możliwość edycji podstawowych danych / zablokowania / usunięcia użytkownika oraz usuniecie/zablokowanie polla
+        //      - dashboard ze statystykami - wszyscy uzytkownicy | nowi uzytkownicy dzisiaj/w tygodniu/miesiacu | wszystkie polle | nowe polle
         //TODO: kolor :hover przyciskow przy logowaniu zewnetrznym: fb, twitter etc
         //TODO: przy tworzeniu możliwość wybrania typu wykresu (tylko zalogowani)
         //TODO: dodać visibility 'personal?' gdzie tylko zaproszeni przez tworce uzytkownicy moga glosowac
@@ -162,6 +162,9 @@ namespace SimpleVoter.Controllers
                 return RedirectToAction("Details", new { id = poll.Id });
             }
 
+            if (viewModel != null)
+                viewModel.Answers = viewModel.Answers.Where(a => !a.Content.IsNullOrWhiteSpace()).ToList();
+
             return View(viewModel);
         }
 
@@ -190,6 +193,7 @@ namespace SimpleVoter.Controllers
             var poll = _unitOfWork.Polls.GetSingle(id);
             poll.ExpirationDate = expirationDate;
             poll.UpdateDate = DateTime.Now;
+            poll.RenewingDate = DateTime.Now;
             _unitOfWork.Complete();
 
             return Json(new { success = true });
@@ -210,6 +214,7 @@ namespace SimpleVoter.Controllers
             return Json(new { success = true });
         }
 
+        [HttpGet]
         [AllowAnonymous]
         public ActionResult Create()
         {
