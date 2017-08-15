@@ -29,12 +29,14 @@ namespace SimpleVoter.Core.Validators
         //The metadata expressed for this rule will be used by the runtime to emit the HTML5 data-val custom attributes.
         public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
         {
-            string errorMessage = ErrorMessageString;
+            var errorMessage = ErrorMessageString;
 
             // Wartości te wykorzystywane są przez adapter jQuery
-            ModelClientValidationRule ensureMinimumElementsRule = new ModelClientValidationRule();
-            ensureMinimumElementsRule.ErrorMessage = errorMessage;
-            ensureMinimumElementsRule.ValidationType = "ensureminimumelements"; // nazwa której będzie używał jQuery adapter
+            var ensureMinimumElementsRule = new ModelClientValidationRule
+            {
+                ErrorMessage = errorMessage,
+                ValidationType = "ensureminimumelements"    // nazwa której będzie używał jQuery adapter
+            };
 
             //"minElements" jest nazwą parametru jQuery dla adaptera i musi składać się z małych liter.
             ensureMinimumElementsRule.ValidationParameters.Add("minelements", _minElements);

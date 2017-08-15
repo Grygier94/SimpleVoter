@@ -89,11 +89,11 @@
 
                     var icon = e.currentTarget.children[0];
                     if (icon.classList.contains("fa-sort-amount-asc")) {
-                        _sortBy = 2;
+                        _sortBy = 3;
                         _sortDirection = 1;
                         getPolls();
                     } else {
-                        _sortBy = 2;
+                        _sortBy = 3;
                         _sortDirection = 0;
                         getPolls();
                     }
@@ -191,7 +191,7 @@
                             : iElement.removeClass("fa-sort-amount-asc")
                                 .addClass("fa-sort-amount-desc").css("color", "yellow");
                         break;
-                    case 2:
+                    case 3:
                         _sortDirection == 0
                             ? $("#pollTable tr th:last-child i").removeClass("fa-sort-amount-desc")
                                 .addClass("fa-sort-amount-asc").css("color", "yellow")

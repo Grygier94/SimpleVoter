@@ -26,9 +26,7 @@ namespace SimpleVoter.Controllers
         {
             _unitOfWork = unitOfWork;
         }
-
-        //TODO: Paginacja poprzez wpisanie strony
-        //TODO: _UserPollsTable - sortowanie po visibiity oraz osobne wyszukiwanie dla tabeli w panelu uzytkownika
+ 
         //TODO: walidacja daty wygasniecia (expiration date > datetime.now) przy tworzeniu polla przez zalogowanego uzytkownika oraz przy aktualizacji i przedluzeniu daty wygsniecia
         //TODO: ustawic min width dla number i visibility w tabeli uzytkownika oraz number i user w tabeli publicznej
         //TODO: zmiana przyciskow next/previous na buttony - po kliknieciu scrolluje na poczatek tabeli, zmienic wyglad przyciskow
@@ -92,7 +90,7 @@ namespace SimpleVoter.Controllers
 
         public ActionResult RenderUserPollTable(string json)
         {
-            PollTableInfo tableInfo = JsonConvert.DeserializeObject<PollTableInfo>(json);
+            var tableInfo = JsonConvert.DeserializeObject<PollTableInfo>(json);
 
             var polls = _unitOfWork.Polls.GetAll(tableInfo, User.Identity.GetUserId());
 

@@ -9,6 +9,7 @@ namespace SimpleVoter.Core.Enums
     {
         Id,
         Question,
-        UserName
+        UserName,
+        Visibility
     }
 }

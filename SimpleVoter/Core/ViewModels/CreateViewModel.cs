@@ -21,6 +21,7 @@ namespace SimpleVoter.Core.ViewModels
 
         public Visibility Visibility { get; set; }
 
+        [CurrentDate]
         [Display(Name = "Expiration Date")]
         public DateTime? ExpirationDate { get; set; }
 
