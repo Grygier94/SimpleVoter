@@ -15,6 +15,7 @@ using SimpleVoter.Core.Enums;
 using SimpleVoter.Core.Extensions;
 using SimpleVoter.Core.Models;
 using SimpleVoter.Core.ViewModels;
+using SimpleVoter.Core.ViewModels.PollViewModels;
 
 namespace SimpleVoter.Controllers
 {
@@ -27,15 +28,13 @@ namespace SimpleVoter.Controllers
             _unitOfWork = unitOfWork;
         }
  
-        //TODO: walidacja daty wygasniecia (expiration date > datetime.now) przy tworzeniu polla przez zalogowanego uzytkownika oraz przy aktualizacji i przedluzeniu daty wygsniecia
-        //TODO: ustawic min width dla number i visibility w tabeli uzytkownika oraz number i user w tabeli publicznej
+        //TODO: walidacja daty wygasniecia po stronie klienta przy tworzeniu polla oraz przy aktualizacji
         //TODO: zmiana przyciskow next/previous na buttony - po kliknieciu scrolluje na poczatek tabeli, zmienic wyglad przyciskow
         //TODO: panel admina
         //      - lista użytkowników
         //      - lista polli
         //      - możliwość edycji podstawowych danych / zablokowania / usunięcia użytkownika oraz usuniecie/zablokowanie polla
         //      - dashboard ze statystykami - wszyscy uzytkownicy | nowi uzytkownicy dzisiaj/w tygodniu/miesiacu | wszystkie polle | nowe polle
-        //TODO: kolor :hover przyciskow przy logowaniu zewnetrznym: fb, twitter etc
         //TODO: przy tworzeniu możliwość wybrania typu wykresu (tylko zalogowani)
         //TODO: dodać visibility 'personal?' gdzie tylko zaproszeni przez tworce uzytkownicy moga glosowac
         //TODO: po kliknięciu scrollem na pozycje w tabeli - otworz w nowej karcie
@@ -189,6 +188,9 @@ namespace SimpleVoter.Controllers
 
         public ActionResult Renew(int id, DateTime expirationDate)
         {
+            if (expirationDate <= DateTime.Now)
+                return Json(new {success = false, responseText = "Date must be greater than current date!"});
+
             var poll = _unitOfWork.Polls.GetSingle(id);
             poll.ExpirationDate = expirationDate;
             poll.UpdateDate = DateTime.Now;

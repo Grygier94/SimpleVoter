@@ -50,11 +50,11 @@ body {
     .mid-section .poll-details-container {
         padding-top: 20px;
         padding-bottom: 20px;
-    }    
-    
-    .mid-section .poll-details-container:last-child {
-        padding-bottom: 0px;
     }
+
+        .mid-section .poll-details-container:last-child {
+            padding-bottom: 0px;
+        }
 
 .mid-login-section {
     display: block;
@@ -95,8 +95,12 @@ body {
                                   supported by Chrome and Opera */
 }
 
+#pollTable th {
+    min-width: 100px;
+}
+
 /* UNIVERSAL */
-    .transition {
+.transition {
     -webkit-transition: 0.4s ease-in-out;
     -moz-transition: 0.4s ease-in-out;
     -o-transition: 0.4s ease-in-out;
@@ -320,7 +324,6 @@ fieldset input[type="password"] {
     padding-top: 10px;
     padding-bottom: 10px;
     font-weight: bold;
-    
 }
 
 .last-update {
@@ -336,9 +339,7 @@ fieldset input[type="password"] {
     display: block;
     text-align: center;
 }
-    
 
-/* CUSTOM BUTTON */
 .btn-blue {
     background-color: #0084b4;
 }
@@ -470,8 +471,7 @@ fieldset input[type="password"] {
 }
 
 .checkbox-answer-content,
-.radio-answer-content
-{
+.radio-answer-content {
     -ms-border-bottom-left-radius: 0px !important;
     border-bottom-left-radius: 0px !important;
     -ms-border-bottom-right-radius: 0px !important;
@@ -542,14 +542,50 @@ fieldset input[type="password"] {
     border-left-color: #fff;
 }
 
-.checkbox-answer-check:hover,
-.radio-answer-check:hover,
-.checkbox-answer-check:active,
-.radio-answer-check:active {
-    color: #fff !important;
-    border-left-color: #fff !important;
-    box-shadow: none;
+    .checkbox-answer-check:hover,
+    .radio-answer-check:hover,
+    .checkbox-answer-check:active,
+    .radio-answer-check:active {
+        color: #fff !important;
+        border-left-color: #fff !important;
+        box-shadow: none;
+    }
+
+#socialLoginList .external-provider-button {
+    -ms-transition: background-color ease-in-out 0.2s, color ease-in-out 0.2s, border-color ease-in-out 0.2s, font-weight ease-in-out 0.2s;
+    -o-transition: background-color ease-in-out 0.2s, color ease-in-out 0.2s, border-color ease-in-out 0.2s, font-weight ease-in-out 0.2s;
+    -webkit-transition: background-color ease-in-out 0.2s, color ease-in-out 0.2s, border-color ease-in-out 0.2s, font-weight ease-in-out 0.2s;
+    transition: background-color ease-in-out 0.2s, color ease-in-out 0.2s, border-color ease-in-out 0.2s, font-weight ease-in-out 0.2s;
 }
+
+#socialLoginList #Facebook:hover {
+    font-weight: bold;
+    border-color: #3b5998;
+    background-color: #3b5998;
+    color: white;
+}
+
+#socialLoginList #Twitter:hover {
+    font-weight: bold;
+    border-color: #00aced;
+    background-color: #00aced;
+    color: white;
+}
+
+#socialLoginList #Google:hover {
+    font-weight: bold;
+    border-color: #d34836;
+    background-color: #d34836;
+    color: white;
+}
+
+#socialLoginList #GitHub:hover {
+    font-weight: bold;
+    border-color: #333;
+    background-color: #333;
+    color: white;
+}
+
 
 /* FOOTER */
 footer {
@@ -650,8 +686,8 @@ footer {
     #Visibility {
         width: 50%;
         margin: 5px auto;
-    } 
-    
+    }
+
     .new-poll-fieldset .btn-custom {
         width: 45%;
         display: block;

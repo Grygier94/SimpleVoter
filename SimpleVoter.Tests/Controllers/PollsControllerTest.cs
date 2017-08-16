@@ -14,6 +14,7 @@ using SimpleVoter.Core;
 using SimpleVoter.Core.Models;
 using SimpleVoter.Core.Repositories;
 using SimpleVoter.Core.ViewModels;
+using SimpleVoter.Core.ViewModels.PollViewModels;
 
 namespace SimpleVoter.Tests.Controllers
 {

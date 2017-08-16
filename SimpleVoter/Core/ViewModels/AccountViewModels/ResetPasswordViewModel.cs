@@ -1,14 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
 
-namespace SimpleVoter.Core.ViewModels
+namespace SimpleVoter.Core.ViewModels.AccountViewModels
 {
-    public class RegisterViewModel
+    public class ResetPasswordViewModel
     {
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
-        [Remote("IsEmailAvailable", "Account", ErrorMessage = "Account with given email alredy exists.")]
         public string Email { get; set; }
 
         [Required]
@@ -19,7 +17,9 @@ namespace SimpleVoter.Core.ViewModels
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public string Code { get; set; }
     }
 }

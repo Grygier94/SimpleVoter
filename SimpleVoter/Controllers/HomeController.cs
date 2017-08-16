@@ -33,5 +33,13 @@ namespace SimpleVoter.Controllers
 
             return View();
         }
+
+        [Authorize(Roles = "Administrator")]
+        public ActionResult AdminDashboard()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
     }
 }

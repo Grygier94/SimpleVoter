@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
-namespace SimpleVoter.Core.ViewModels
+namespace SimpleVoter.Core.ViewModels.AccountViewModels
 {
     public class ManageLoginsViewModel
     {

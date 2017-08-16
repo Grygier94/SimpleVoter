@@ -12,6 +12,7 @@ using Microsoft.Owin.Security;
 using SimpleVoter.Core.Extensions;
 using SimpleVoter.Core.Models;
 using SimpleVoter.Core.ViewModels;
+using SimpleVoter.Core.ViewModels.AccountViewModels;
 
 namespace SimpleVoter.Controllers
 {

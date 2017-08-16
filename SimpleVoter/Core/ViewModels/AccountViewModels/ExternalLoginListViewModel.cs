@@ -1,4 +1,4 @@
-﻿namespace SimpleVoter.Core.ViewModels
+﻿namespace SimpleVoter.Core.ViewModels.AccountViewModels
 {
     public class ExternalLoginListViewModel
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SimpleVoter.Core.ViewModels
+namespace SimpleVoter.Core.ViewModels.AccountViewModels
 {
     public class SendCodeViewModel
     {

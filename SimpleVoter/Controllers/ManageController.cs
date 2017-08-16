@@ -10,6 +10,8 @@ using Microsoft.Owin.Security;
 using OtpSharp;
 using SimpleVoter.Core.Models;
 using SimpleVoter.Core.ViewModels;
+using SimpleVoter.Core.ViewModels.AccountViewModels;
+using SimpleVoter.Core.ViewModels.PollViewModels;
 
 namespace SimpleVoter.Controllers
 {

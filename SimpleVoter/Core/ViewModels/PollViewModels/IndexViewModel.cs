@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNet.Identity;
 
-namespace SimpleVoter.Core.ViewModels
+namespace SimpleVoter.Core.ViewModels.PollViewModels
 {
     public class IndexViewModel
     {
