@@ -493,6 +493,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\AdminDashboard.css" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-overrides.css" />
@@ -605,6 +606,7 @@
     <Content Include="Views\Polls\UserPollList.cshtml" />
     <Content Include="Views\Polls\_UserPollsTable.cshtml" />
     <Content Include="Views\Polls\Update.cshtml" />
+    <Content Include="Views\Home\AdminDashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -33,8 +33,8 @@ namespace SimpleVoter.Controllers
         //TODO: panel admina
         //      - lista użytkowników
         //      - lista polli
-        //      - możliwość edycji podstawowych danych / zablokowania / usunięcia użytkownika oraz usuniecie/zablokowanie polla
-        //      - dashboard ze statystykami - wszyscy uzytkownicy | nowi uzytkownicy dzisiaj/w tygodniu/miesiacu | wszystkie polle | nowe polle
+        //      - możliwość zablokowania / usunięcia użytkownika oraz usuniecie polla
+        //      - dashboard ze statystykami - dodac wykres pokazujacy unikalne wizyty
         //TODO: przy tworzeniu możliwość wybrania typu wykresu (tylko zalogowani)
         //TODO: dodać visibility 'personal?' gdzie tylko zaproszeni przez tworce uzytkownicy moga glosowac
         //TODO: po kliknięciu scrollem na pozycje w tabeli - otworz w nowej karcie

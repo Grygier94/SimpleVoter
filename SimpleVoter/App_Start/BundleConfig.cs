@@ -38,7 +38,9 @@ namespace SimpleVoter
                       "~/Content/bootstrap-toggle.css",
                       "~/Content/bootstrap-datetimepicker.css",
                       "~/Content/toastr.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/AdminDashboard.css"
+                      ));
         }
     }
 }

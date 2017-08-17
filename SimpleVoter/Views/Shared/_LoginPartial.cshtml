@@ -5,12 +5,18 @@
     {
     @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            <a href="@Url.Action("Index", "Manage")" title="Manage" class="text-center">Account <i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()" class="text-center">Log off <i class="fa fa-sign-out" aria-hidden="true"></i></a></li>
-    </ul>
+        <ul class="nav navbar-nav navbar-right">
+            @if (User.IsInRole("Administrator"))
+            {
+                <li>
+                    <a href="@Url.Action("AdminDashboard", "Home")" class="text-center">Admin Dashboard <i class="fa fa-tachometer" aria-hidden="true"></i></a>
+                </li>
+            }
+            <li>
+                <a href="@Url.Action("Index", "Manage")" title="Manage" class="text-center">Account <i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()" class="text-center">Log off <i class="fa fa-sign-out" aria-hidden="true"></i></a></li>
+        </ul>
     }
 }
 else
