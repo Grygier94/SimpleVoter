@@ -3,7 +3,12 @@
 }
 
 <header class="main-header text-center">
-    <h1 class="main-title">Admin Dashboard</h1>
+    <h1 class="admin-title">Admin Dashboard</h1>
+    <div class="dashboard-buttons">
+        @Html.ActionLink("Users", "ShowAllPolls", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
+        @Html.ActionLink("Polls", "ShowAllPolls", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
+    </div>
+
 </header>
 
 <section class="mid-section">
@@ -18,7 +23,7 @@
                     <i class="fa fa-users" aria-hidden="true"></i>
                 </div>
                 <a href="#" class="small-box-footer">
-                    More info <i class="fa fa-arrow-circle-down"></i>
+                    Hide details <i class="fa fa-arrow-circle-up"></i>
                 </a>
             </div>
 
@@ -59,7 +64,7 @@
                     <i class="fa fa-sticky-note" aria-hidden="true"></i>
                 </div>
                 <a href="#" class="small-box-footer">
-                    More info <i class="fa fa-arrow-circle-down"></i>
+                    Hide details <i class="fa fa-arrow-circle-up"></i>
                 </a>
             </div>
 
@@ -100,7 +105,7 @@
                     <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
                 </div>
                 <a href="#" class="small-box-footer">
-                    More info <i class="fa fa-arrow-circle-down"></i>
+                    Hide details <i class="fa fa-arrow-circle-up"></i>
                 </a>
             </div>
 
@@ -141,7 +146,7 @@
                     <i class="fa fa-eye" aria-hidden="true"></i>
                 </div>
                 <a href="#" class="small-box-footer">
-                    More info <i class="fa fa-arrow-circle-down"></i>
+                    Hide details <i class="fa fa-arrow-circle-up"></i>
                 </a>
             </div>
 
@@ -179,7 +184,8 @@
 {
     <script>
         $(document).ready(function () {
-            $("#small-box-1 .small-box-footer").click(function () {
+            $("#small-box-1 .small-box-footer").click(function (e) {
+                e.preventDefault();
                 if ($("#small-box-details-1").css("display") == "none") {
                     $("#small-box-details-1").slideDown(400, function() {
                         $("#small-box-1 .small-box-footer").html("Hide details <i class='fa fa-arrow-circle-up'></i>");
@@ -191,25 +197,40 @@
                 }
             });
 
-            $("#small-box-2 .small-box-footer").click(function () {
+            $("#small-box-2 .small-box-footer").click(function (e) {
+                e.preventDefault();
                 if ($("#small-box-details-2").css("display") == "none")
-                    $("#small-box-details-2").slideDown(400);
+                    $("#small-box-details-2").slideDown(400, function () {
+                        $("#small-box-2 .small-box-footer").html("Hide details <i class='fa fa-arrow-circle-up'></i>");
+                    });
                 else
-                    $("#small-box-details-2").slideUp(400);
+                    $("#small-box-details-2").slideUp(400, function () {
+                        $("#small-box-2 .small-box-footer").html("Show details <i class='fa fa-arrow-circle-down'></i>");
+                    });
             });
 
-            $("#small-box-3 .small-box-footer").click(function () {
+            $("#small-box-3 .small-box-footer").click(function (e) {
+                e.preventDefault();
                 if ($("#small-box-details-3").css("display") == "none")
-                    $("#small-box-details-3").slideDown(400);
+                    $("#small-box-details-3").slideDown(400, function () {
+                        $("#small-box-3 .small-box-footer").html("Hide details <i class='fa fa-arrow-circle-up'></i>");
+                    });
                 else
-                    $("#small-box-details-3").slideUp(400);
+                    $("#small-box-details-3").slideUp(400, function () {
+                        $("#small-box-3 .small-box-footer").html("Show details <i class='fa fa-arrow-circle-down'></i>");
+                    });
             });
 
-            $("#small-box-4 .small-box-footer").click(function () {
+            $("#small-box-4 .small-box-footer").click(function (e) {
+                e.preventDefault();
                 if ($("#small-box-details-4").css("display") == "none")
-                    $("#small-box-details-4").slideDown(400);
+                    $("#small-box-details-4").slideDown(400, function () {
+                        $("#small-box-4 .small-box-footer").html("Hide details <i class='fa fa-arrow-circle-up'></i>");
+                    });
                 else
-                    $("#small-box-details-4").slideUp(400);
+                    $("#small-box-details-4").slideUp(400, function () {
+                        $("#small-box-4 .small-box-footer").html("Show details <i class='fa fa-arrow-circle-down'></i>");
+                    });
             });
         });
     </script>

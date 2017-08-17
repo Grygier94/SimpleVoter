@@ -607,6 +607,8 @@
     <Content Include="Views\Polls\_UserPollsTable.cshtml" />
     <Content Include="Views\Polls\Update.cshtml" />
     <Content Include="Views\Home\AdminDashboard.cshtml" />
+    <Content Include="Views\Polls\AdminPollList.cshtml" />
+    <Content Include="Views\Polls\_AdminPollsTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

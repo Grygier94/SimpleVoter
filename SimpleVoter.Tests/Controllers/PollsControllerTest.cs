@@ -40,7 +40,7 @@ namespace SimpleVoter.Tests.Controllers
         [TestMethod]
         public void ShowAll_ValidRequest_ShouldReturnView()
         {
-            var result = _pollsController.ShowAll() as ViewResult;
+            var result = _pollsController.ShowPublicPolls() as ViewResult;
 
             result.Should().NotBe(null);
             result.Should().BeOfType<ViewResult>();

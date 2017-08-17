@@ -26,7 +26,7 @@ namespace SimpleVoter.Persistence.Repositories
             return Context.Polls.Include(p => p.User).Include(p => p.Answers).Single(a => a.Id == id);
         }
 
-        public IEnumerable<Poll> GetAll(PollTableInfo tableInfo, string userId = "")
+        public IEnumerable<Poll> GetAll(PollTableInfo tableInfo, string userId = "", bool isAdmin = false)
         {
             IQueryable<Poll> pollQuery = Context.Polls
                 .Where(p => p.UserId == userId || userId == "")
@@ -37,7 +37,7 @@ namespace SimpleVoter.Persistence.Repositories
                     tableInfo.SearchText == ""
             );
 
-            if (userId == "")
+            if (userId == "" && !isAdmin)
                 pollQuery = pollQuery
                     .Where(p => 
                         (p.ExpirationDate != null 
@@ -45,7 +45,13 @@ namespace SimpleVoter.Persistence.Repositories
                             || p.ExpirationDate == null)
                         && p.Visibility == Visibility.Public);
 
-            IEnumerable<Poll> polls = null;
+            //if (isAdmin)
+            //    pollQuery = pollQuery
+            //        .Include(p => p.User)
+            //        .Where(p => 
+            //            p.User.UserName.Contains(tableInfo.SearchText) || tableInfo.SearchText == "");
+
+            IEnumerable <Poll> polls = null;
 
             switch (tableInfo.SortBy)
             {

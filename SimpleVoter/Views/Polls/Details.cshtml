@@ -41,12 +41,12 @@
             @Html.ActionLink("New Poll", "Create", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
             if (Request.IsAuthenticated)
             {
-                @Html.ActionLink("Public Polls", "ShowAll", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
+                @Html.ActionLink("Public Polls", "ShowPublicPolls", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
                 @Html.ActionLink("My Polls", "ShowUserPolls", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
             }
             else
             {
-                @Html.ActionLink("Browse Polls", "ShowAll", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
+                @Html.ActionLink("Browse Polls", "ShowPublicPolls", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
             }
         }
     </div>
@@ -148,7 +148,7 @@
                     {
                         <h3 class="text-center">There were no votes for this poll.</h3>
                     }
-                    <p>This poll has ended. You can @Html.ActionLink("create your own poll", "Create", "Polls") or @Html.ActionLink("browse other polls", "ShowAll", "Polls").</p>
+                    <p>This poll has ended. You can @Html.ActionLink("create your own poll", "Create", "Polls") or @(Html.ActionLink("browse other polls", "ShowPublicPolls", "Polls")).</p>
                     <p>Poll by @userName</p>
                     <p class="expiration-date">Expired: @Model.ExpirationDate</p>
                     @if (Model.EndedByOwner)
@@ -161,7 +161,7 @@
     @if (!string.IsNullOrWhiteSpace(Model.UserId) && Model.UserId == User.Identity.GetUserId())
     {
         <div class="visible-xs text-center">
-            @Html.ActionLink("End Poll", "ShowAll", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
+            @Html.ActionLink("End Poll", "ShowPublicPolls", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
             @Html.ActionLink("Update Poll", "ShowUserPolls", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
             <button class="btn btn-custom btn-white error-hover" data-toggle="modal" data-target="#deleteModal">Delete Poll</button>
         </div>

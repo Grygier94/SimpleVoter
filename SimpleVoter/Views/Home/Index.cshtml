@@ -10,12 +10,12 @@
                 @Html.ActionLink("New Poll", "Create", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
                 @if (Request.IsAuthenticated)
                 {
-                    @Html.ActionLink("Public Polls", "ShowAll", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
+                    @Html.ActionLink("Public Polls", "ShowPublicPolls", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
                     @Html.ActionLink("My Polls", "ShowUserPolls", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
                 }
                 else
                 {
-                    @Html.ActionLink("Browse Polls", "ShowAll", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
+                    @Html.ActionLink("Browse Polls", "ShowPublicPolls", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
                 }
             </div>
         </header>

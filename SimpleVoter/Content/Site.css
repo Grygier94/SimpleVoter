@@ -25,6 +25,7 @@ body {
     color: #eee;
     letter-spacing: 0px;
     font-weight: bold;
+    letter-spacing: 5px;
 }
 
 .main-description {
@@ -95,7 +96,7 @@ body {
                                   supported by Chrome and Opera */
 }
 
-#pollTable th {
+.min-header-width th {
     min-width: 100px;
 }
 
@@ -342,6 +343,17 @@ fieldset input[type="password"] {
 
 .btn-blue {
     background-color: #0084b4;
+}
+
+.table-delete-button {
+    background-color: #fff;
+    border: solid 2px lightblue;
+    color: #0084b4;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
 }
 
 .btn-custom {
@@ -694,10 +706,6 @@ footer {
         margin: 10px auto;
         padding-left: 0px;
         padding-right: 0px;
-    }
-
-    .main-title {
-        letter-spacing: 5px;
     }
 }
 

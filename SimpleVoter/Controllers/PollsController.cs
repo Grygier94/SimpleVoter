@@ -27,22 +27,22 @@ namespace SimpleVoter.Controllers
         {
             _unitOfWork = unitOfWork;
         }
- 
-        //TODO: walidacja daty wygasniecia po stronie klienta przy tworzeniu polla oraz przy aktualizacji
+
         //TODO: zmiana przyciskow next/previous na buttony - po kliknieciu scrolluje na poczatek tabeli, zmienic wyglad przyciskow
         //TODO: panel admina
         //      - lista użytkowników
-        //      - lista polli
         //      - możliwość zablokowania / usunięcia użytkownika oraz usuniecie polla
         //      - dashboard ze statystykami - dodac wykres pokazujacy unikalne wizyty
         //TODO: przy tworzeniu możliwość wybrania typu wykresu (tylko zalogowani)
         //TODO: dodać visibility 'personal?' gdzie tylko zaproszeni przez tworce uzytkownicy moga glosowac
         //TODO: po kliknięciu scrollem na pozycje w tabeli - otworz w nowej karcie
+        //TODO: walidacja daty wygasniecia po stronie klienta przy tworzeniu polla oraz przy aktualizacji
+        //TODO: admin - szukanie polli po userze
 
         //TODO: automatyczne usuwanie polla po 24h - niezalogowani (sql server agent - job schedule)
 
         [AllowAnonymous]
-        public ActionResult ShowAll()
+        public ActionResult ShowPublicPolls()
         {
             var pagingInfo = new PagingInfo
             {
@@ -109,6 +109,43 @@ namespace SimpleVoter.Controllers
             }
 
             return PartialView("_UserPollsTable", new Tuple<IEnumerable<PollListViewModel>, PagingInfo>(viewModelList, tableInfo.PagingInfo));
+        }
+
+        [Authorize(Roles = "Administrator")]
+        public ActionResult ShowAllPolls()
+        {
+            var pagingInfo = new PagingInfo
+            {
+                ItemsPerPage = int.Parse(WebConfigurationManager.AppSettings["PollsPerPage"]),
+                CurrentPage = 1
+            };
+
+            return View("AdminPollList", pagingInfo);
+        }
+
+        [Authorize(Roles = "Administrator")]
+        public ActionResult RenderAdminPollTable(string json)
+        {
+            var tableInfo = JsonConvert.DeserializeObject<PollTableInfo>(json);
+
+            var polls = _unitOfWork.Polls.GetAll(tableInfo, "", true);
+
+            var viewModelList = new List<PollListViewModel>();
+            var userManager = Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
+
+            foreach (var poll in polls)
+            {
+                viewModelList.Add(new PollListViewModel
+                {
+                    PollId = poll.Id,
+                    Question = poll.Question,
+                    UserName = poll.UserId == null ? "Anonymous" : userManager.Users.Single(u => u.Id == poll.UserId).UserName,
+                    ExpirationDate = poll.ExpirationDate,
+                    Visibility = poll.Visibility
+                });
+            }
+
+            return PartialView("_AdminPollsTable", new Tuple<IEnumerable<PollListViewModel>, PagingInfo>(viewModelList, tableInfo.PagingInfo));
         }
 
         [AllowAnonymous]
