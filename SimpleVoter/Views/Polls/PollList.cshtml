@@ -46,6 +46,15 @@
                     window.location.href = "/Polls/Details/" + e.currentTarget.id;
                 });
 
+
+            $("#pollTableContainer").on("mousedown",
+                "tr:not(:first-child)",
+                function (e) {
+                    if (e.which === 2) {
+                        window.open("/Polls/Details/" + e.currentTarget.id, '_blank');
+                    }
+                });
+
             $("#pollTableContainer").on("click",
                 "th:first-child",
                 function (e) {
@@ -116,14 +125,16 @@
 
             $("body").on("click",
                 ".previous",
-                function () {
+                function (e) {
+                    e.preventDefault();
                     var page = parseInt($(".pagination-box").attr('placeholder')) - 1;
                     getPolls(page);
                 });
 
             $("body").on("click",
                 ".next",
-                function () {
+                function (e) {
+                    e.preventDefault();
                     var page = parseInt($(".pagination-box").attr('placeholder')) + 1;
                     getPolls(page);
                 });

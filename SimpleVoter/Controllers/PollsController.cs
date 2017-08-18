@@ -31,8 +31,9 @@ namespace SimpleVoter.Controllers
         //TODO: zmiana przyciskow next/previous na buttony - po kliknieciu scrolluje na poczatek tabeli, zmienic wyglad przyciskow
         //TODO: panel admina
         //      - lista użytkowników
-        //      - możliwość zablokowania / usunięcia użytkownika oraz usuniecie polla
-        //      - dashboard ze statystykami - dodac wykres pokazujacy unikalne wizyty
+        //      - zablokowanie użytkownika
+        //      - usunięcie użytkownika
+        //      - dodac wykres pokazujacy unikalne wizyty w admin dashboard
         //TODO: przy tworzeniu możliwość wybrania typu wykresu (tylko zalogowani)
         //TODO: dodać visibility 'personal?' gdzie tylko zaproszeni przez tworce uzytkownicy moga glosowac
         //TODO: po kliknięciu scrollem na pozycje w tabeli - otworz w nowej karcie

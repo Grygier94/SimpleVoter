@@ -2,7 +2,7 @@
 
 @if (Model.Item1.Any())
 {
-    <table id="pollTable" class="table table-responsive table-striped table-bordered">
+    <table id="adminPollTable" class="table table-responsive table-striped table-bordered">
         <tr>
             <th>
                 Number
@@ -42,7 +42,8 @@
                     @Html.DisplayFor(modelItem => item.Visibility)
                 </td>
                 <td>
-                    <button class="table-delete-button">Delete</button>
+                    <button data-pollid="@item.PollId" class="table-details-button">Details</button>
+                    <button data-username="@item.UserName" data-pollid="@item.PollId" class="table-delete-button" data-toggle="modal" data-target="#deleteModal">Delete</button>
                 </td>
             </tr>
         }

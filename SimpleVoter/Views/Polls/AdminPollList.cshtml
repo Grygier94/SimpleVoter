@@ -33,12 +33,32 @@
     </div>
 </section>
 
+<div id="deleteModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Delete Poll</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this poll? Poll will be deleted permanently.</p>
+            </div>
+            <div class="modal-footer">
+                <button id="poll-delete-button" type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 @section scripts
 {
     <script>
         _sortBy = 0;
         _sortDirection = 0;
         _searchText = "";
+        _pollIdToDelete = 0;
 
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
@@ -46,13 +66,51 @@
 
             if (sessionStorage.deleted == 'true') {
                 sessionStorage.setItem('deleted', 'false');
-                toastr.warning('Your poll has been deleted.', 'Poll deleted!');
             }
 
             $("#pollTableContainer").on("click",
-                "tr:not(:first-child)",
+                ".table-details-button",
                 function (e) {
-                    window.location.href = "/Polls/Details/" + e.currentTarget.id;
+                    pollId = $(e.currentTarget).data("pollid");
+                    window.location.href = "/Polls/Details/" + pollId;
+                });
+
+            $("#pollTableContainer").on("mousedown",
+                ".table-details-button",
+                function(e) {
+                    if (e.which === 2) {
+                        pollId = $(e.currentTarget).data("pollid");
+                        window.open("/Polls/Details/" + pollId, '_blank');
+                    }
+                });
+
+            $("#pollTableContainer").on("click",
+                ".table-delete-button",
+                function (e) {
+                    _pollIdToDelete = $(e.currentTarget).data("pollid");
+                    var userName = $(e.currentTarget).data("username");
+
+                    $(".modal-body p")
+                        .html("Are you sure you want to delete poll number <b>"
+                        + _pollIdToDelete
+                        + "</b> created by user '<b>" + userName + "</b>'? Poll will be deleted permanently.");
+                });
+
+            $("#poll-delete-button").on("click",
+                function() {
+                    $.ajax({
+                        url: '/Polls/Delete',
+                        type: 'POST',
+                        data: { id: _pollIdToDelete },
+                        success: function(data) {
+                            if (data.success) {
+                                toastr.warning('Poll has been deleted.', 'Poll deleted!');
+                                getPolls();
+                            } else {
+                                toastr.error(data.responseText, 'Error!');
+                            }
+                        }
+                    });
                 });
 
             $("#pollTableContainer").on("click",
@@ -90,9 +148,9 @@
                     _sortBy = 1;
                     var icon = e.currentTarget.children[0];
 
-                    if (icon.classList.contains("fa-sort-amount-asc")) 
+                    if (icon.classList.contains("fa-sort-amount-asc"))
                         _sortDirection = 1;
-                    else 
+                    else
                         _sortDirection = 0;
 
                     getPolls();
@@ -176,7 +234,7 @@
                     url: '/Polls/RenderAdminPollTable',
                     type: 'GET',
                     data: { json: JSON.stringify(jsonData) }
-                }).done(function(partialViewResult) {
+                }).done(function (partialViewResult) {
                     $("#pollTableContainer").html(partialViewResult);
 
                     var noPollsTextElement = $(".no-polls-info-text");

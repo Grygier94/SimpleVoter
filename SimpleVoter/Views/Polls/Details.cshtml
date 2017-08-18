@@ -36,6 +36,12 @@
             }
             <button class="btn btn-custom btn-white error-hover" data-toggle="modal" data-target="#deleteModal">Delete Poll</button>
         }
+        else if (User.IsInRole("Administrator"))
+        {
+            <button class="btn btn-custom btn-white error-hover" data-toggle="modal" data-target="#deleteModal">Delete Poll</button>
+            <button class="btn btn-custom btn-white error-hover" data-toggle="modal" data-target="#deleteModal">Block User</button>
+            <button class="btn btn-custom btn-white error-hover" data-toggle="modal" data-target="#deleteModal">Delete User</button>
+        }
         else
         {
             @Html.ActionLink("New Poll", "Create", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
