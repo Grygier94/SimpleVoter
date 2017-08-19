@@ -7,9 +7,10 @@ namespace SimpleVoter.Core.Enums
 {
     public enum SortBy
     {
-        Id,
-        Question,
-        UserName,
-        Visibility
+        Id = 0,
+        Question = 1,
+        UserName = 2,
+        Visibility = 3,
+        Email = 4
     }
 }

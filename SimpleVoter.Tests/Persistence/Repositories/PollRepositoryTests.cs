@@ -153,26 +153,31 @@ namespace SimpleVoter.Tests.Persistence.Repositories
         [TestMethod]
         public void GetAllFiltered_ValidRequest_ShouldReturnFittingPolls()
         {
-            var poll1 = new Poll { Id = 1, Question = "What is it?", User = new ApplicationUser { Id = "1", UserName = "JohnHansen1@gmail.com" } };
-            var poll2 = new Poll { Id = 2, Question = "What is your favorite color?", User = new ApplicationUser { Id = "2", UserName = "test@test.com" } };
-            var poll3 = new Poll { Id = 3, Question = "Do you like winter?", User = new ApplicationUser { Id = "2", UserName = "Anonymous" } };
-            var poll4 = new Poll { Id = 4, Question = "Is it better or worse?", User = new ApplicationUser { Id = "3", UserName = "noemail123@email.com" } };
+            var poll1 = new Poll { Id = 1, Question = "What is it?", User = new ApplicationUser { Id = "1", UserName = "JohnHansen1@gmail.com" }, Visibility = Visibility.Public };
+            var poll2 = new Poll { Id = 2, Question = "What is your favorite color?", User = new ApplicationUser { Id = "2", UserName = "test@test.com" }, Visibility = Visibility.Public };
+            var poll3 = new Poll { Id = 3, Question = "Do you like winter?", User = new ApplicationUser { Id = "2", UserName = "Anonymous" }, Visibility = Visibility.Public };
+            var poll4 = new Poll { Id = 4, Question = "Is it better or worse?", User = new ApplicationUser { Id = "3", UserName = "noemail123@email.com" }, Visibility = Visibility.Public};
             _mockPolls.SetSource(new[] { poll1, poll2, poll3, poll4 });
 
-            var polls = _pollRepository.GetAll("4");
+            var tableInfo = new PollTableInfo { PagingInfo = new PagingInfo { ItemsPerPage = 20, CurrentPage = 1}, SearchText = "4", SortBy = SortBy.Id, SortDirection = SortDirection.Ascending};
+            var polls = _pollRepository.GetAll(tableInfo);
             polls.Should().HaveCount(1);
 
-            polls = _pollRepository.GetAll("Anonymous");
+            tableInfo.SearchText = "Anonymous";
+            polls = _pollRepository.GetAll(tableInfo);
             polls.Should().HaveCount(1);
 
-            polls = _pollRepository.GetAll("2");
+            tableInfo.SearchText = "2";
+            polls = _pollRepository.GetAll(tableInfo);
             polls.Should().NotBeNull();
             polls.Should().HaveCount(2);
 
-            polls = _pollRepository.GetAll("What is");
+            tableInfo.SearchText = "What is";
+            polls = _pollRepository.GetAll(tableInfo);
             polls.Should().HaveCount(2);
 
-            polls = _pollRepository.GetAll("is");
+            tableInfo.SearchText = "is";
+            polls = _pollRepository.GetAll(tableInfo);
             polls.Should().HaveCount(2);
         }
 

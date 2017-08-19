@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
@@ -11,6 +12,8 @@ namespace SimpleVoter.Core.Models
     {
         public bool IsGoogleAuthenticatorEnabled { get; set; }
         public string GoogleAuthenticatorSecretKey { get; set; }
+
+        public DateTime? AccountLockExpirationDate { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

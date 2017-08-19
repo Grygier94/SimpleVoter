@@ -310,7 +310,14 @@
                     success: function(data) {
                         if (data.success) {
                             sessionStorage.setItem('deleted', 'true');
-                            window.location.replace('@Url.Action("ShowUserPolls", "Polls")');
+                            @if (User.IsInRole("Administrator") && Model.UserId != User.Identity.GetUserId())
+                            {
+                                @:window.location.replace('@Url.Action("ShowAllPolls", "Polls")');
+                            }
+                            else
+                            {
+                                @:window.location.replace('@Url.Action("ShowUserPolls", "Polls")');
+                            }
                         } else {
                             toastr.error(data.responseText, 'Error!');
                         }

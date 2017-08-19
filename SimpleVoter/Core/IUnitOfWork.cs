@@ -10,6 +10,7 @@ namespace SimpleVoter.Core
     {
         IPollRepository Polls { get; }
         IAnswerRepository Answers { get; }
+        IUserRepository Users { get; }
         void Complete();
     }
 }

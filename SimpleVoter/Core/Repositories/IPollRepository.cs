@@ -13,7 +13,6 @@ namespace SimpleVoter.Core.Repositories
     {
         Poll GetSingle(int id);
         IEnumerable<Poll> GetAll(PollTableInfo tableInfo, string userId = "", bool isAdmin = false);
-        IEnumerable<Poll> GetAll(string searchWord);
         void Add(Poll poll);
         void Remove(Poll poll);
         int Count();

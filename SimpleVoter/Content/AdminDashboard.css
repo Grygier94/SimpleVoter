@@ -66,14 +66,8 @@
                                   supported by Chrome and Opera */
 }
 
-
-
-/* MEDIA QUERIES */
-@media (min-width: 768px) {
-
-    .admin-title {
-        font-size: 4.5em;
-    }
+.locked {
+    color: red;
 }
 
 .info-box {
@@ -240,7 +234,9 @@
             font-size: 95px
         }
 
+/* MEDIA QUERIES */
 @media (max-width: 767px) {
+
     .small-box {
         text-align: center
     }
@@ -252,4 +248,11 @@
         .small-box p {
             font-size: 12px
         }
+}
+
+@media (min-width: 767px) {
+
+    .admin-title {
+        font-size: 4.5em;
+    }
 }

@@ -59,48 +59,42 @@
                 "th:first-child",
                 function (e) {
 
+                    _sortBy = 0;
                     var icon = e.currentTarget.children[0];
-                    if (icon.classList.contains("fa-sort-amount-asc")) {
-                        _sortBy = 0;
+                    if (icon.classList.contains("fa-sort-amount-asc"))
                         _sortDirection = 1;
-                        getPolls();
-                    } else {
-                        _sortBy = 0;
+                     else 
                         _sortDirection = 0;
-                        getPolls();
-                    }
+
+                    getPolls();
                 });
 
             $("#pollTableContainer").on("click",
                 "th:nth-child(2)",
                 function (e) {
 
+                    _sortBy = 1;
                     var icon = e.currentTarget.children[0];
-                    if (icon.classList.contains("fa-sort-amount-asc")) {
-                        _sortBy = 1;
+                    if (icon.classList.contains("fa-sort-amount-asc"))
                         _sortDirection = 1;
-                        getPolls();
-                    } else {
-                        _sortBy = 1;
+                    else
                         _sortDirection = 0;
-                        getPolls();
-                    }
+
+                     getPolls();
                 });
 
             $("#pollTableContainer").on("click",
                 "th:last-child",
                 function (e) {
 
+                    _sortBy = 2;
                     var icon = e.currentTarget.children[0];
-                    if (icon.classList.contains("fa-sort-amount-asc")) {
-                        _sortBy = 2;
+                    if (icon.classList.contains("fa-sort-amount-asc"))
                         _sortDirection = 1;
-                        getPolls();
-                    } else {
-                        _sortBy = 2;
+                    else 
                         _sortDirection = 0;
-                        getPolls();
-                    }
+
+                    getPolls();
                 });
 
 

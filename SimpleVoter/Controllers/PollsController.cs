@@ -28,7 +28,6 @@ namespace SimpleVoter.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        //TODO: zmiana przyciskow next/previous na buttony - po kliknieciu scrolluje na poczatek tabeli, zmienic wyglad przyciskow
         //TODO: panel admina
         //      - lista użytkowników
         //      - zablokowanie użytkownika
@@ -38,7 +37,7 @@ namespace SimpleVoter.Controllers
         //TODO: dodać visibility 'personal?' gdzie tylko zaproszeni przez tworce uzytkownicy moga glosowac
         //TODO: po kliknięciu scrollem na pozycje w tabeli - otworz w nowej karcie
         //TODO: walidacja daty wygasniecia po stronie klienta przy tworzeniu polla oraz przy aktualizacji
-        //TODO: admin - szukanie polli po userze
+        //TODO: admin i publc polls - szukanie polli po userze
 
         //TODO: automatyczne usuwanie polla po 24h - niezalogowani (sql server agent - job schedule)
 
@@ -155,7 +154,6 @@ namespace SimpleVoter.Controllers
             var poll = _unitOfWork.Polls.GetSingle(id);
             return View(poll);
         }
-
 
         [HttpGet]
         public ActionResult Update(int id)
