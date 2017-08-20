@@ -273,11 +273,16 @@ fieldset input[type="password"] {
     margin-bottom: 10px;
 }
 
-.poll-info {
+.poll-info,
+.user-info {
     border: 1px silver solid;
     -ms-border-radius: 4px;
     border-radius: 4px;
     padding: 15px;
+}
+
+.user-info {
+    text-align: center;
 }
 
 .no-polls-info-text {
@@ -425,6 +430,15 @@ fieldset input[type="password"] {
     color: white !important;
     background-color: #fe8585 !important;
 }
+
+.user-xs-buttons {
+    margin-top: 15px;
+}
+
+    .user-xs-buttons button,
+    .user-xs-buttons a {
+        width: 80%;
+    }
 
 /* CUSTOM CHECKBOX/RADIO */
 .answer-group input[type="checkbox"],
@@ -646,7 +660,7 @@ footer {
 /* MEDIA QUERIES */
 @media (min-width: 768px) {
     html {
-        padding-bottom: 150px;
+        padding-bottom: 120px;
     }
 
     .registration-fieldset {

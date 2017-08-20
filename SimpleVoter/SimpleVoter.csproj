@@ -402,6 +402,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PollsController.cs" />
@@ -613,11 +614,12 @@
     <Content Include="Views\Polls\UserPollList.cshtml" />
     <Content Include="Views\Polls\_UserPollsTable.cshtml" />
     <Content Include="Views\Polls\Update.cshtml" />
-    <Content Include="Views\Home\AdminDashboard.cshtml" />
+    <Content Include="Views\Admin\AdminDashboard.cshtml" />
     <Content Include="Views\Polls\AdminPollList.cshtml" />
     <Content Include="Views\Polls\_AdminPollsTable.cshtml" />
-    <Content Include="Views\Home\UsersList.cshtml" />
-    <Content Include="Views\Home\_UsersTable.cshtml" />
+    <Content Include="Views\Admin\UsersList.cshtml" />
+    <Content Include="Views\Admin\_UsersTable.cshtml" />
+    <Content Include="Views\Admin\UserDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

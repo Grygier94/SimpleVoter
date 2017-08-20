@@ -29,15 +29,15 @@ namespace SimpleVoter.Controllers
         }
 
         //TODO: panel admina
-        //      - lista użytkowników
-        //      - zablokowanie użytkownika
-        //      - usunięcie użytkownika
+        //      - zablokowanie użytkownika w user details
+        //      - usunięcie użytkownika w user details i user list
         //      - dodac wykres pokazujacy unikalne wizyty w admin dashboard
         //TODO: przy tworzeniu możliwość wybrania typu wykresu (tylko zalogowani)
         //TODO: dodać visibility 'personal?' gdzie tylko zaproszeni przez tworce uzytkownicy moga glosowac
         //TODO: po kliknięciu scrollem na pozycje w tabeli - otworz w nowej karcie
         //TODO: walidacja daty wygasniecia po stronie klienta przy tworzeniu polla oraz przy aktualizacji
         //TODO: admin i publc polls - szukanie polli po userze
+        //TODO: dodanie statystyk i aktualizacja danych w admin dashboard
 
         //TODO: automatyczne usuwanie polla po 24h - niezalogowani (sql server agent - job schedule)
 

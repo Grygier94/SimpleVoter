@@ -234,6 +234,10 @@
             font-size: 95px
         }
 
+.admin-buttons {
+    margin-top: 10px;
+}
+
 /* MEDIA QUERIES */
 @media (max-width: 767px) {
 

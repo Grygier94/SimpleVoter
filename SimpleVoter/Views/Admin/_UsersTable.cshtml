@@ -1,0 +1,72 @@
+﻿@model Tuple<IEnumerable<SimpleVoter.Core.Models.ApplicationUser>, SimpleVoter.Core.Models.PagingInfo>
+
+@if (Model.Item1.Any())
+{
+    <table id="adminPollTable" class="table table-responsive table-striped table-bordered">
+        <tr>
+            <th>
+                Id
+                <i class="fa fa-sort-amount-asc pull-right" aria-hidden="true"></i>
+            </th>
+            <th class="hidden-xs">
+                Name
+                <i class="fa fa-sort-amount-asc pull-right" aria-hidden="true"></i>
+            </th>
+            <th>
+                Email
+                <i class="fa fa-sort-amount-asc pull-right" aria-hidden="true"></i>
+            </th>
+            <th class="hidden-xs">
+                Locked
+            </th>
+            <th>
+                Options
+            </th>
+        </tr>
+
+        @foreach (var item in Model.Item1)
+        {
+            var isAccountLocked = item.AccountLockExpirationDate.HasValue && item.AccountLockExpirationDate.Value > DateTime.Now;
+            <tr id="@item.Id" class="@(isAccountLocked ? "locked" : "")">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td class="hidden-xs">
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td class="hidden-xs">
+                    @(isAccountLocked ? item.AccountLockExpirationDate.ToString() : "Not locked")
+                </td>
+                <td>
+                    <button data-userid="@item.Id" class="table-details-button">Details</button>
+                    <button data-username="@item.UserName" data-userid="@item.Id" class="table-delete-button" data-toggle="modal" data-target="#deleteModal">Delete</button>
+                </td>
+            </tr>
+        }
+    </table>
+
+    if (Model.Item2.AllPages != 1)
+    {
+        <nav aria-label="pagination">
+            <ul class="pager">
+                @if (Model.Item2.CurrentPage != 1)
+                {
+                    <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Older</a></li>
+                }
+                <li><input maxlength="3" type="text" class="pagination-box" placeholder="@Model.Item2.CurrentPage" /></li>
+                <li class="max-page-number">/@Model.Item2.AllPages</li>
+                @if (Model.Item2.CurrentPage != Model.Item2.AllPages)
+                {
+                    <li class="next"><a href="#">Newer <span aria-hidden="true">&rarr;</span></a></li>
+                }
+            </ul>
+        </nav>
+    }
+}
+else
+{
+    <h3 class="no-polls-info-text">You have no polls yet. You can create your own poll @Html.ActionLink("-here-", "Create", "Polls") !</h3>
+}

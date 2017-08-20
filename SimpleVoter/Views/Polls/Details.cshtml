@@ -1,4 +1,5 @@
 ﻿@using CsQuery.Implementation
+@using Microsoft.Ajax.Utilities
 @using Microsoft.AspNet.Identity
 @using Newtonsoft.Json
 @model SimpleVoter.Core.Models.Poll
@@ -38,9 +39,9 @@
         }
         else if (User.IsInRole("Administrator"))
         {
-            <button class="btn btn-custom btn-white error-hover" data-toggle="modal" data-target="#deleteModal">Delete Poll</button>
-            <button class="btn btn-custom btn-white error-hover" data-toggle="modal" data-target="#deleteModal">Block User</button>
-            <button class="btn btn-custom btn-white error-hover" data-toggle="modal" data-target="#deleteModal">Delete User</button>
+            @Html.ActionLink("Dashboard", "AdminDashboard", "Admin", null, new { @class = "btn btn-custom btn-white danger-hover" })
+            @Html.ActionLink("Users", "ShowUsers", "Admin", null, new { @class = "btn btn-custom btn-white danger-hover" })
+            @Html.ActionLink("Polls", "ShowAllPolls", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
         }
         else
         {
@@ -163,10 +164,21 @@
             </div>
         }
     </div>
+    
+    @if (User.IsInRole("Administrator") && Model.UserId != User.Identity.GetUserId())
+    {
+        <div class="admin-buttons text-center">
+            <button class="btn btn-custom btn-white error-hover" data-toggle="modal" data-target="#deleteModal">Delete Poll</button>
+            @if (!Model.UserId.IsNullOrWhiteSpace())
+            {
+                @Html.ActionLink("User Details", "UserDetails", "Admin", new { id = Model.UserId }, new { @class = "btn btn-custom btn-white danger-hover" })
+            }
+        </div>
+    }
 
     @if (!string.IsNullOrWhiteSpace(Model.UserId) && Model.UserId == User.Identity.GetUserId())
     {
-        <div class="visible-xs text-center">
+        <div class="visible-xs text-center user-xs-buttons">
             @Html.ActionLink("End Poll", "ShowPublicPolls", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
             @Html.ActionLink("Update Poll", "ShowUserPolls", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
             <button class="btn btn-custom btn-white error-hover" data-toggle="modal" data-target="#deleteModal">Delete Poll</button>

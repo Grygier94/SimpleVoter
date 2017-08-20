@@ -109,9 +109,6 @@ D:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\ApplicationInsights.conf
 D:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
 D:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
 D:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
-D:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\pl\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.resources.dll
-D:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\pl\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.resources.dll
-D:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\pl\Microsoft.VisualStudio.TestPlatform.TestFramework.resources.dll
 D:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\SimpleVoter.Tests.dll.config
 D:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\SimpleVoter.Tests.dll
 D:\Repositories\simplevoter\SimpleVoter.Tests\bin\Debug\SimpleVoter.Tests.pdb

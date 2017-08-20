@@ -19,6 +19,11 @@ namespace SimpleVoter.Persistence.Repositories
             Context = context;
         }
 
+        public ApplicationUser Get(string userId)
+        {
+            return Context.Users.Single(u => u.Id == userId);
+        }
+
         public IEnumerable<ApplicationUser> GetAll(PollTableInfo tableInfo)
         {
             var usersQuery = Context.Users

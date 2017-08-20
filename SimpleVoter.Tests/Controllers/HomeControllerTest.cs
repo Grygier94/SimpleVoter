@@ -34,10 +34,10 @@ namespace SimpleVoter.Tests.Controllers
         {
             // Arrange
             var mockUoW = new Mock<IUnitOfWork>();
-            HomeController controller = new HomeController(mockUoW.Object);
+            var controller = new HomeController(mockUoW.Object);
 
             // Act
-            ViewResult result = controller.Index() as ViewResult;
+            var result = controller.Index() as ViewResult;
 
             // Assert
             Assert.IsNotNull(result);
