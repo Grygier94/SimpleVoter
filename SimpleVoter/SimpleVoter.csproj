@@ -410,6 +410,12 @@
     <Compile Include="Core\Enums\Visibility.cs" />
     <Compile Include="Core\Models\PagingInfo.cs" />
     <Compile Include="Core\Models\PollTableInfo.cs" />
+    <Compile Include="Core\Models\Statistics\PageViewsStatistics.cs" />
+    <Compile Include="Core\Models\Statistics\PollsStatistics.cs" />
+    <Compile Include="Core\Models\Statistics\PrivatePollsStatistics.cs" />
+    <Compile Include="Core\Models\Statistics\PublicPollsStatistics.cs" />
+    <Compile Include="Core\Models\Statistics\UniqueVisitorsStatistics.cs" />
+    <Compile Include="Core\Models\Statistics\UsersStatistics.cs" />
     <Compile Include="Core\Repositories\IUserRepository.cs" />
     <Compile Include="Core\Validators\CurrentDateAttribute.cs" />
     <Compile Include="Core\Validators\EnsureMinimumElementsAttribute.cs" />
@@ -419,6 +425,7 @@
     <Compile Include="Core\ViewModels\AccountViewModels\AddPhoneNumberViewModel.cs" />
     <Compile Include="Core\ViewModels\AccountViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="Core\ViewModels\AccountViewModels\ConfigureTwoFactorViewModel.cs" />
+    <Compile Include="Core\ViewModels\AdminViewModels\AdminDashboardViewModel.cs" />
     <Compile Include="Core\ViewModels\PollViewModels\CreateViewModel.cs" />
     <Compile Include="Core\ViewModels\AccountViewModels\ExternalLoginConfirmationViewModel.cs" />
     <Compile Include="Core\ViewModels\AccountViewModels\ExternalLoginListViewModel.cs" />

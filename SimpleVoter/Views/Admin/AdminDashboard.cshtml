@@ -14,7 +14,7 @@
 <section class="mid-section">
     <div class="col-sm-10 col-sm-offset-1">
         <div class="col-lg-3 col-sm-6 col-xs-12">
-            <div class="small-box" id="small-box-1">
+            <div class="small-box">
                 <div class="inner">
                     <h3>150</h3>
                     <p>Total Users</p>
@@ -23,11 +23,11 @@
                     <i class="fa fa-users" aria-hidden="true"></i>
                 </div>
                 <a href="#" class="small-box-footer">
-                    Hide details <i class="fa fa-arrow-circle-up"></i>
+                    Show details <i class="fa fa-arrow-circle-down"></i>
                 </a>
             </div>
 
-            <div id="small-box-details-1">
+            <div class="small-box-details">
                 <div class="info-box bg-orange">
                     <span class="info-box-icon"><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>
                     <div class="info-box-content">
@@ -55,7 +55,7 @@
         </div>
 
         <div class="col-lg-3 col-sm-6 col-xs-12">
-            <div id="small-box-2" class="small-box">
+            <div class="small-box">
                 <div class="inner">
                     <h3>53<sup style="font-size: 20px">%</sup></h3>
                     <p>Total Public Polls</p>
@@ -68,7 +68,7 @@
                 </a>
             </div>
 
-            <div id="small-box-details-2">
+            <div class="small-box-details">
                 <div class="info-box bg-orange">
                     <span class="info-box-icon"><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>
                     <div class="info-box-content">
@@ -96,7 +96,7 @@
         </div>
 
         <div class="col-lg-3 col-sm-6 col-xs-12">
-            <div class="small-box" id="small-box-3">
+            <div class="small-box">
                 <div class="inner">
                     <h3>53<sup style="font-size: 20px">%</sup></h3>
                     <p>Total Private Polls</p>
@@ -109,7 +109,7 @@
                 </a>
             </div>
 
-            <div id="small-box-details-3">
+            <div class="small-box-details">
                 <div class="info-box bg-orange">
                     <span class="info-box-icon"><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>
                     <div class="info-box-content">
@@ -137,7 +137,7 @@
         </div>
 
         <div class="col-lg-3 col-sm-6 col-xs-12">
-            <div class="small-box" id="small-box-4">
+            <div class="small-box">
                 <div class="inner">
                     <h3>65</h3>
                     <p>Total Unique Visitors</p>
@@ -150,7 +150,7 @@
                 </a>
             </div>
 
-            <div id="small-box-details-4">
+            <div class="small-box-details">
                 <div class="info-box bg-orange">
                     <span class="info-box-icon"><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>
                     <div class="info-box-content">
@@ -177,61 +177,64 @@
             </div>
         </div>
 
+        <div class="col-xs-12">
+            <canvas id="statisticsChart" height="100"></canvas>
+        </div>
     </div>
 </section>
 
 @section scripts
 {
     <script>
-        $(document).ready(function () {
-            $("#small-box-1 .small-box-footer").click(function (e) {
-                e.preventDefault();
-                if ($("#small-box-details-1").css("display") == "none") {
-                    $("#small-box-details-1").slideDown(400, function() {
-                        $("#small-box-1 .small-box-footer").html("Hide details <i class='fa fa-arrow-circle-up'></i>");
-                    });
-                } else {
-                    $("#small-box-details-1").slideUp(400, function() {
-                        $("#small-box-1 .small-box-footer").html("Show details <i class='fa fa-arrow-circle-down'></i>");
-                    });
+
+    $(document).ready(function () {
+        var ctx = document.getElementById("statisticsChart").getContext('2d');
+
+        var labels = ['test', 'test2'];
+        var data = [11, 22];
+        var colors = ['rgba(255, 206, 86, 1)', 'rgba(54, 162, 235, 1)'];
+        @*@foreach (var d in Model.Answers)
+            {
+                @:labels.push("@d.Content");
+                @:data.push("@d.Votes");
+            }*@
+
+        var myChart = new Chart(ctx,
+            {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Votes',
+                            data: data,
+                            backgroundColor: colors,
+                            borderColor: colors,
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    legend: {
+                        display: false
+                    }
                 }
             });
+        });
 
-            $("#small-box-2 .small-box-footer").click(function (e) {
-                e.preventDefault();
-                if ($("#small-box-details-2").css("display") == "none")
-                    $("#small-box-details-2").slideDown(400, function () {
-                        $("#small-box-2 .small-box-footer").html("Hide details <i class='fa fa-arrow-circle-up'></i>");
-                    });
-                else
-                    $("#small-box-details-2").slideUp(400, function () {
-                        $("#small-box-2 .small-box-footer").html("Show details <i class='fa fa-arrow-circle-down'></i>");
-                    });
-            });
-
-            $("#small-box-3 .small-box-footer").click(function (e) {
-                e.preventDefault();
-                if ($("#small-box-details-3").css("display") == "none")
-                    $("#small-box-details-3").slideDown(400, function () {
-                        $("#small-box-3 .small-box-footer").html("Hide details <i class='fa fa-arrow-circle-up'></i>");
-                    });
-                else
-                    $("#small-box-details-3").slideUp(400, function () {
-                        $("#small-box-3 .small-box-footer").html("Show details <i class='fa fa-arrow-circle-down'></i>");
-                    });
-            });
-
-            $("#small-box-4 .small-box-footer").click(function (e) {
-                e.preventDefault();
-                if ($("#small-box-details-4").css("display") == "none")
-                    $("#small-box-details-4").slideDown(400, function () {
-                        $("#small-box-4 .small-box-footer").html("Hide details <i class='fa fa-arrow-circle-up'></i>");
-                    });
-                else
-                    $("#small-box-details-4").slideUp(400, function () {
-                        $("#small-box-4 .small-box-footer").html("Show details <i class='fa fa-arrow-circle-down'></i>");
-                    });
-            });
+        $(".small-box .small-box-footer").click(function (e) {
+            e.preventDefault();
+            var details = $(this).parent().next();
+            var footer = $(this);
+            if (details.css("display") == "none") {
+                details.slideDown(400, function() {
+                    footer.html("Hide details <i class='fa fa-arrow-circle-up'></i>");
+                });
+            } else {
+                details.slideUp(400, function () {
+                    footer.html("Show details <i class='fa fa-arrow-circle-down'></i>");
+                });
+            }
         });
     </script>
 }

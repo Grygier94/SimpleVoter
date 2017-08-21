@@ -234,6 +234,10 @@
             font-size: 95px
         }
 
+.small-box-details {
+    display: none;
+}
+
 .admin-buttons {
     margin-top: 10px;
 }
