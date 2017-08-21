@@ -25,6 +25,7 @@ namespace SimpleVoter.Persistence
         {
             modelBuilder.Configurations.Add(new PollConfiguration());
             modelBuilder.Configurations.Add(new AnswerConfiguration());
+            modelBuilder.Configurations.Add(new UserConfiguration());
             base.OnModelCreating(modelBuilder);
         }
     }

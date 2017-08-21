@@ -175,7 +175,8 @@ fieldset input[type="password"] {
 }
 
     fieldset input[type="text"].answer,
-    #ExpirationDate {
+    #ExpirationDate,
+    #AccountLockExpirationDate {
         width: 50%;
         margin: 5px auto;
     }
@@ -341,7 +342,8 @@ fieldset input[type="password"] {
     margin: 5px auto;
 }
 
-.renew-expiration-date {
+.renew-expiration-date,
+.block-expiration-date {
     display: block;
     text-align: center;
 }

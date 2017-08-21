@@ -28,7 +28,7 @@ namespace SimpleVoter.Persistence.Repositories
 
         public IEnumerable<Poll> GetAll(PollTableInfo tableInfo, string userId = "", bool isAdmin = false)
         {
-            IQueryable<Poll> pollQuery = Context.Polls
+            var pollQuery = Context.Polls
                 .Where(p => p.UserId == userId || userId == "")
                 .Where(p =>
                     p.Question.Contains(tableInfo.SearchText) ||

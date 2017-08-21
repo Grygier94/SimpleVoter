@@ -479,3 +479,4 @@ D:\Repositories\simplevoter\SimpleVoter\obj\Debug\SimpleVoter.csproj.CoreCompile
 D:\Repositories\simplevoter\SimpleVoter\obj\Debug\SimpleVoter.dll
 D:\Repositories\simplevoter\SimpleVoter\obj\Debug\SimpleVoter.pdb
 D:\Repositories\simplevoter\SimpleVoter\obj\Debug\SimpleVoter.Migrations.AddLockDateColumnToUsersTable.resources
+D:\Repositories\simplevoter\SimpleVoter\obj\Debug\SimpleVoter.Migrations.UpdateUserPollsRelationship.resources

@@ -30,9 +30,41 @@ namespace SimpleVoter.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult UserDetails(string id)
         {
-            var user = _unitOfWork.Users.Get(id);
+            var user = _unitOfWork.Users.GetWithPolls(id);
             return View(user);
         }
+
+        public ActionResult UnblockUser(string id)
+        {
+            var user = _unitOfWork.Users.Get(id);
+            user.AccountLockExpirationDate = null;
+            _unitOfWork.Complete();
+
+            return Json(new { success = true });
+        }
+
+        public ActionResult BlockUser(string id, DateTime expirationDate)
+        {
+            if (expirationDate <= DateTime.Now)
+                return Json(new { success = false, responseText = "Date must be greater than current date!" });
+
+            var user = _unitOfWork.Users.Get(id);
+            user.AccountLockExpirationDate = expirationDate;
+            _unitOfWork.Complete();
+
+            return Json(new { success = true });
+        }
+
+
+        public ActionResult DeleteUser(string id)
+        {
+            var user = _unitOfWork.Users.Get(id);
+            _unitOfWork.Users.Remove(user);
+            _unitOfWork.Complete();
+
+            return Json(new { success = true });
+        }
+
 
         [Authorize(Roles = "Administrator")]
         public ActionResult ShowUsers()

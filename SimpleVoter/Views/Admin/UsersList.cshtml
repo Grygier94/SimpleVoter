@@ -33,12 +33,31 @@
     </div>
 </section>
 
+<div id="deleteModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Delete user account</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this user account? Account will be deleted permanently.</p>
+            </div>
+            <div class="modal-footer">
+                <button id="user-delete-button" type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section scripts
 {
     <script>
         _sortBy = 0;
         _sortDirection = 0;
         _searchText = "";
+        _userIdToDelete = "";
 
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
@@ -48,6 +67,41 @@
                 sessionStorage.setItem('userDeleted', 'false');
                 toastr.warning('User has been deleted.', 'User deleted!');
             }
+
+            $("#user-delete-button").on("click",
+                function() {
+                    $.ajax({
+                        url: '/Admin/DeleteUser',
+                        type: 'POST',
+                        data: { id: _userIdToDelete },
+                        success: function(data) {
+                            if (data.success) {
+                                sessionStorage.setItem('userDeleted', 'true');
+                                window.location.reload();
+                            } else {
+                                toastr.error(data.responseText, 'Error!');
+                            }
+                        }
+                    });
+                });
+
+            $("#pollTableContainer").on("click",
+                ".table-delete-button",
+                function (e) {
+                    _userIdToDelete = $(e.currentTarget).data("userid");
+                    var userName = $(e.currentTarget).data("username");
+
+                    $("#deleteModal .modal-title")
+                        .html("Delete '<b>"
+                        + userName
+                        + "</b>' account");
+
+                    $("#deleteModal .modal-body p")
+                        .html("Are you sure you want to delete '<b>"
+                        + userName
+                            + "</b>' user account? User will be deleted permanently.");
+                });
+
 
             $("#pollTableContainer").on("click",
                 ".table-details-button",
@@ -172,7 +226,7 @@
                     url: '/Admin/RenderUsersTable',
                     type: 'GET',
                     data: { json: JSON.stringify(jsonData) }
-                }).done(function(partialViewResult) {
+                }).done(function (partialViewResult) {
                     $("#pollTableContainer").html(partialViewResult);
 
                     var noPollsTextElement = $(".no-polls-info-text");
@@ -187,30 +241,30 @@
 
             function changeSortIcon() {
                 switch (_sortBy) {
-                case 0:
-                    var iElement1 = $("#adminPollTable tr th:first-child").children("i");
-                    _sortDirection == 0
-                        ? iElement1.removeClass("fa-sort-amount-desc")
-                        .addClass("fa-sort-amount-asc").css("color", "yellow")
-                        : iElement1.removeClass("fa-sort-amount-asc")
-                        .addClass("fa-sort-amount-desc").css("color", "yellow");
-                    break;
-                case 2:
-                    var iElement2 = $("#adminPollTable tr th:nth-child(2)").children("i");
-                    _sortDirection == 0
-                        ? iElement2.removeClass("fa-sort-amount-desc")
-                        .addClass("fa-sort-amount-asc").css("color", "yellow")
-                        : iElement2.removeClass("fa-sort-amount-asc")
-                        .addClass("fa-sort-amount-desc").css("color", "yellow");
-                    break;
-                case 4:
-                    var iElement3 = $("#adminPollTable tr th:nth-child(3)").children("i");
-                    _sortDirection == 0
-                        ? iElement3.removeClass("fa-sort-amount-desc")
-                        .addClass("fa-sort-amount-asc").css("color", "yellow")
-                        : iElement3.removeClass("fa-sort-amount-asc")
-                        .addClass("fa-sort-amount-desc").css("color", "yellow");
-                    break;
+                    case 0:
+                        var iElement1 = $("#adminPollTable tr th:first-child").children("i");
+                        _sortDirection == 0
+                            ? iElement1.removeClass("fa-sort-amount-desc")
+                                .addClass("fa-sort-amount-asc").css("color", "yellow")
+                            : iElement1.removeClass("fa-sort-amount-asc")
+                                .addClass("fa-sort-amount-desc").css("color", "yellow");
+                        break;
+                    case 2:
+                        var iElement2 = $("#adminPollTable tr th:nth-child(2)").children("i");
+                        _sortDirection == 0
+                            ? iElement2.removeClass("fa-sort-amount-desc")
+                                .addClass("fa-sort-amount-asc").css("color", "yellow")
+                            : iElement2.removeClass("fa-sort-amount-asc")
+                                .addClass("fa-sort-amount-desc").css("color", "yellow");
+                        break;
+                    case 4:
+                        var iElement3 = $("#adminPollTable tr th:nth-child(3)").children("i");
+                        _sortDirection == 0
+                            ? iElement3.removeClass("fa-sort-amount-desc")
+                                .addClass("fa-sort-amount-asc").css("color", "yellow")
+                            : iElement3.removeClass("fa-sort-amount-asc")
+                                .addClass("fa-sort-amount-desc").css("color", "yellow");
+                        break;
                 }
             }
         });

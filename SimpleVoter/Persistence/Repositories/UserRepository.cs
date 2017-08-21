@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Helpers;
@@ -22,6 +23,16 @@ namespace SimpleVoter.Persistence.Repositories
         public ApplicationUser Get(string userId)
         {
             return Context.Users.Single(u => u.Id == userId);
+        }
+
+        public ApplicationUser GetWithPolls(string userId)
+        {
+            return Context.Users.Include(u => u.Polls).Single(u => u.Id == userId);
+        }
+
+        public void Remove(ApplicationUser user)
+        {
+            Context.Users.Remove(user);
         }
 
         public IEnumerable<ApplicationUser> GetAll(PollTableInfo tableInfo)

@@ -437,6 +437,7 @@
     <Compile Include="Core\ViewModels\AccountViewModels\VerifyCodeViewModel.cs" />
     <Compile Include="Core\ViewModels\AccountViewModels\VerifyPhoneNumberViewModel.cs" />
     <Compile Include="Core\IApplicationDbContext.cs" />
+    <Compile Include="Persistence\EntityConfigurations\UserConfiguration.cs" />
     <Compile Include="Persistence\Migrations\201707021234474_Init.cs" />
     <Compile Include="Persistence\Migrations\201707021234474_Init.Designer.cs">
       <DependentUpon>201707021234474_Init.cs</DependentUpon>
@@ -480,6 +481,10 @@
     <Compile Include="Persistence\Migrations\201708191742038_AddLockDateColumnToUsersTable.cs" />
     <Compile Include="Persistence\Migrations\201708191742038_AddLockDateColumnToUsersTable.Designer.cs">
       <DependentUpon>201708191742038_AddLockDateColumnToUsersTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\Migrations\201708211459569_UpdateUserPollsRelationship.cs" />
+    <Compile Include="Persistence\Migrations\201708211459569_UpdateUserPollsRelationship.Designer.cs">
+      <DependentUpon>201708211459569_UpdateUserPollsRelationship.cs</DependentUpon>
     </Compile>
     <Compile Include="Persistence\Migrations\Configuration.cs" />
     <Compile Include="Persistence\ApplicationDbContext.cs" />
@@ -672,6 +677,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Persistence\Migrations\201708191742038_AddLockDateColumnToUsersTable.resx">
       <DependentUpon>201708191742038_AddLockDateColumnToUsersTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201708211459569_UpdateUserPollsRelationship.resx">
+      <DependentUpon>201708211459569_UpdateUserPollsRelationship.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

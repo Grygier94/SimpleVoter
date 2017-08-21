@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -12,6 +14,7 @@ namespace SimpleVoter.Core.Models
     {
         public bool IsGoogleAuthenticatorEnabled { get; set; }
         public string GoogleAuthenticatorSecretKey { get; set; }
+        public ICollection<Poll> Polls { get; set; }
 
         public DateTime? AccountLockExpirationDate { get; set; }
 

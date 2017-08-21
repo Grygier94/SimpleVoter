@@ -252,6 +252,10 @@
         .small-box p {
             font-size: 12px
         }
+
+    .user-manage-button {
+        width: 80%;
+    }
 }
 
 @media (min-width: 767px) {
@@ -259,4 +263,5 @@
     .admin-title {
         font-size: 4.5em;
     }
+
 }
