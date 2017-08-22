@@ -410,12 +410,7 @@
     <Compile Include="Core\Enums\Visibility.cs" />
     <Compile Include="Core\Models\PagingInfo.cs" />
     <Compile Include="Core\Models\PollTableInfo.cs" />
-    <Compile Include="Core\Models\Statistics\PageViewsStatistics.cs" />
-    <Compile Include="Core\Models\Statistics\PollsStatistics.cs" />
-    <Compile Include="Core\Models\Statistics\PrivatePollsStatistics.cs" />
-    <Compile Include="Core\Models\Statistics\PublicPollsStatistics.cs" />
-    <Compile Include="Core\Models\Statistics\UniqueVisitorsStatistics.cs" />
-    <Compile Include="Core\Models\Statistics\UsersStatistics.cs" />
+    <Compile Include="Core\Models\DailyStatistics.cs" />
     <Compile Include="Core\Repositories\IUserRepository.cs" />
     <Compile Include="Core\Validators\CurrentDateAttribute.cs" />
     <Compile Include="Core\Validators\EnsureMinimumElementsAttribute.cs" />
@@ -444,6 +439,7 @@
     <Compile Include="Core\ViewModels\AccountViewModels\VerifyCodeViewModel.cs" />
     <Compile Include="Core\ViewModels\AccountViewModels\VerifyPhoneNumberViewModel.cs" />
     <Compile Include="Core\IApplicationDbContext.cs" />
+    <Compile Include="Persistence\EntityConfigurations\DailyStatisticsConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\UserConfiguration.cs" />
     <Compile Include="Persistence\Migrations\201707021234474_Init.cs" />
     <Compile Include="Persistence\Migrations\201707021234474_Init.Designer.cs">
@@ -492,6 +488,10 @@
     <Compile Include="Persistence\Migrations\201708211459569_UpdateUserPollsRelationship.cs" />
     <Compile Include="Persistence\Migrations\201708211459569_UpdateUserPollsRelationship.Designer.cs">
       <DependentUpon>201708211459569_UpdateUserPollsRelationship.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\Migrations\201708222125227_AddDailyStatisticsTable.cs" />
+    <Compile Include="Persistence\Migrations\201708222125227_AddDailyStatisticsTable.Designer.cs">
+      <DependentUpon>201708222125227_AddDailyStatisticsTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Persistence\Migrations\Configuration.cs" />
     <Compile Include="Persistence\ApplicationDbContext.cs" />
@@ -687,6 +687,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Persistence\Migrations\201708211459569_UpdateUserPollsRelationship.resx">
       <DependentUpon>201708211459569_UpdateUserPollsRelationship.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201708222125227_AddDailyStatisticsTable.resx">
+      <DependentUpon>201708222125227_AddDailyStatisticsTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
