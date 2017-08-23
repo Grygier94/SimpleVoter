@@ -30,6 +30,7 @@ namespace SimpleVoter.Controllers
 
         //TODO: panel admina
         //      - dodac wykres pokazujacy unikalne wizyty w admin dashboard
+        //      - zwiekszanie statystyk pageviews i unique visitors
         //TODO: przy tworzeniu możliwość wybrania typu wykresu (tylko zalogowani)
         //TODO: dodać visibility 'personal?' gdzie tylko zaproszeni przez tworce uzytkownicy moga glosowac
         //TODO: po kliknięciu scrollem na pozycje w tabeli - otworz w nowej karcie
@@ -39,6 +40,7 @@ namespace SimpleVoter.Controllers
         //TODO: zaktualizować email confirmation view
         //TODO: zaktualizować account manage view
         //TODO: mozliwosc zalogowania tylko kiedy email zostal potwierdzony
+        //TODO: W manage dodac mozliwosc usuniecia konta (+ zaimplementowac zwiekszanie statystyk IncreaseDeletedAccount)
 
         //TODO: automatyczne usuwanie polla po 24h - niezalogowani (sql server agent - job schedule)
 
@@ -179,6 +181,21 @@ namespace SimpleVoter.Controllers
             if (viewModel != null && ModelState.IsValid)
             {
                 var poll = _unitOfWork.Polls.GetSingle(viewModel.Id);
+
+                if (poll.Visibility != viewModel.Visibility)
+                {
+                    if (viewModel.Visibility == Visibility.Public)
+                    {
+                        _unitOfWork.DailyStatistics.Increase_NewPublicPolls();
+                        _unitOfWork.DailyStatistics.Increase_DeletedPrivatePolls();
+                    }
+                    else if (viewModel.Visibility == Visibility.Private)
+                    {
+                        _unitOfWork.DailyStatistics.Increase_NewPrivatePolls();
+                        _unitOfWork.DailyStatistics.Increase_DeletedPublicPolls();
+                    }
+                }
+
                 if (poll.Answers.All(a => a.Votes == 0))
                 {
                     poll.Question = viewModel.Question;
@@ -193,6 +210,8 @@ namespace SimpleVoter.Controllers
                 poll.ExpirationDate = viewModel.ExpirationDate;
                 poll.Visibility = viewModel.Visibility;
 
+                
+
                 _unitOfWork.Complete();
                 return RedirectToAction("Details", new { id = poll.Id });
             }
@@ -206,6 +225,11 @@ namespace SimpleVoter.Controllers
         public ActionResult Delete(int id)
         {
             var poll = _unitOfWork.Polls.GetSingle(id);
+            if(poll.Visibility == Visibility.Public)
+                _unitOfWork.DailyStatistics.Increase_DeletedPublicPolls();
+            else if(poll.Visibility == Visibility.Private)
+                _unitOfWork.DailyStatistics.Increase_DeletedPrivatePolls();
+
             _unitOfWork.Polls.Remove(poll);
             _unitOfWork.Complete();
 
@@ -285,6 +309,11 @@ namespace SimpleVoter.Controllers
                     Visibility = viewModel.Visibility
                 };
 
+                if (poll.Visibility == Visibility.Public)
+                    _unitOfWork.DailyStatistics.Increase_NewPublicPolls();
+                else if (poll.Visibility == Visibility.Private)
+                    _unitOfWork.DailyStatistics.Increase_NewPrivatePolls();
+
                 _unitOfWork.Polls.Add(poll);
                 _unitOfWork.Complete();
 
@@ -292,31 +321,6 @@ namespace SimpleVoter.Controllers
             }
 
             return View(viewModel);
-        }
-
-        public ActionResult Edit()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Edit(Poll poll)
-        {
-            if (poll != null && ModelState.IsValid)
-            {
-                var pollFromDb = _unitOfWork.Polls.GetSingle(poll.Id);
-                pollFromDb.Answers = poll.Answers;
-                pollFromDb.Question = poll.Question;
-
-                return RedirectToAction("Details", poll.Id);
-            }
-
-            return View(poll);
-        }
-
-        public ActionResult DeletePoll(int pollId)
-        {
-            return View();
         }
     }
 }

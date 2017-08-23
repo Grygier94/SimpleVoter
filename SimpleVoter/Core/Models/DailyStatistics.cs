@@ -12,8 +12,8 @@ namespace SimpleVoter.Core.Models
 
         public int NewUsers { get; set; }
         public int DeletedUsers { get; set; }
-        public int TotalUsers {
-            get { return NewUsers + DeletedUsers; }
+        public int Users {
+            get { return NewUsers - DeletedUsers; }
             private set { }
         }
 
@@ -21,7 +21,7 @@ namespace SimpleVoter.Core.Models
         public int DeletedPublicPolls { get; set; }
         public int PublicPolls
         {
-            get { return NewPublicPolls + DeletedPublicPolls; }
+            get { return NewPublicPolls - DeletedPublicPolls; }
             private set { }
         }
 
@@ -29,7 +29,7 @@ namespace SimpleVoter.Core.Models
         public int DeletedPrivatePolls { get; set; }
         public int PrivatePolls
         {
-            get { return NewPrivatePolls + DeletedPrivatePolls; }
+            get { return NewPrivatePolls - DeletedPrivatePolls; }
             private set { }
         }
 

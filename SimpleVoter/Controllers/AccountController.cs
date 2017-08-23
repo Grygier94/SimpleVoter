@@ -9,6 +9,7 @@ using System.Web.Routing;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using SimpleVoter.Core;
 using SimpleVoter.Core.Extensions;
 using SimpleVoter.Core.Models;
 using SimpleVoter.Core.ViewModels;
@@ -22,14 +23,18 @@ namespace SimpleVoter.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        public AccountController()
+        private readonly IUnitOfWork _unitOfWork;
+
+        public AccountController(IUnitOfWork unitOfWork)
         {
+            _unitOfWork = unitOfWork;
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IUnitOfWork unitOfWork)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            _unitOfWork = unitOfWork;
         }
 
         public ApplicationSignInManager SignInManager
@@ -169,10 +174,12 @@ namespace SimpleVoter.Controllers
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
-                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     var message = "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>";
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", message);
+
+                    _unitOfWork.DailyStatistics.Increase_NewUsers();
 
                     return View("NewAccountCheckEmail");
                 }
@@ -232,7 +239,7 @@ namespace SimpleVoter.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                 await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");

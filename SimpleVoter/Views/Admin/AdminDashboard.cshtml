@@ -1,4 +1,5 @@
-﻿@{
+﻿@model SimpleVoter.Core.ViewModels.AdminViewModels.AdminDashboardViewModel
+@{
     ViewBag.Title = "Admin Dashboard";
 }
 
@@ -8,7 +9,6 @@
         @Html.ActionLink("Users", "ShowUsers", "Admin", null, new { @class = "btn btn-custom btn-white danger-hover" })
         @Html.ActionLink("Polls", "ShowAllPolls", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
     </div>
-
 </header>
 
 <section class="mid-section">
@@ -16,8 +16,8 @@
         <div class="col-lg-3 col-sm-6 col-xs-12">
             <div class="small-box">
                 <div class="inner">
-                    <h3>150</h3>
-                    <p>Total Users</p>
+                    <h3>@Model.TotalUsers</h3>
+                    <p>@Html.LabelFor(vm => vm.TotalUsers)</p>
                 </div>
                 <div class="icon">
                     <i class="fa fa-users" aria-hidden="true"></i>
@@ -31,24 +31,24 @@
                 <div class="info-box bg-orange">
                     <span class="info-box-icon"><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">Users Today</span>
-                        <span class="info-box-number">1,410</span>
+                        <span class="info-box-text">@Html.LabelFor(vm => vm.TotalUsersToday)</span>
+                        <span class="info-box-number">@Model.TotalUsersToday</span>
                     </div>
                 </div>
 
                 <div class="info-box bg-green">
                     <span class="info-box-icon"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">New Users Today</span>
-                        <span class="info-box-number">1,410</span>
+                        <span class="info-box-text">@Html.LabelFor(vm => vm.NewUsersToday)</span>
+                        <span class="info-box-number">@Model.NewUsersToday</span>
                     </div>
                 </div>
 
                 <div class="info-box bg-red">
                     <span class="info-box-icon"><i class="fa fa-calendar-minus-o" aria-hidden="true"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">Deleted Users Today</span>
-                        <span class="info-box-number">1,410</span>
+                        <span class="info-box-text"> @Html.LabelFor(vm => vm.DeletedUsersToday)</span>
+                        <span class="info-box-number">@Model.DeletedUsersToday</span>
                     </div>
                 </div>
             </div>
@@ -57,8 +57,8 @@
         <div class="col-lg-3 col-sm-6 col-xs-12">
             <div class="small-box">
                 <div class="inner">
-                    <h3>53<sup style="font-size: 20px">%</sup></h3>
-                    <p>Total Public Polls</p>
+                    <h3>@Model.TotalPublicPolls</h3>
+                    <p>@Html.LabelFor(vm => vm.TotalPublicPolls)</p>
                 </div>
                 <div class="icon">
                     <i class="fa fa-sticky-note" aria-hidden="true"></i>
@@ -72,24 +72,24 @@
                 <div class="info-box bg-orange">
                     <span class="info-box-icon"><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">Public Polls Today</span>
-                        <span class="info-box-number">1,410</span>
+                        <span class="info-box-text">@Html.LabelFor(vm => vm.PublicPollsToday)</span>
+                        <span class="info-box-number">@Model.PublicPollsToday</span>
                     </div>
                 </div>
 
                 <div class="info-box bg-green">
                     <span class="info-box-icon"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">New Public Polls Today</span>
-                        <span class="info-box-number">1,410</span>
+                        <span class="info-box-text">@Html.LabelFor(vm => vm.NewPublicPollsToday)</span>
+                        <span class="info-box-number">@Model.NewPublicPollsToday</span>
                     </div>
                 </div>
 
                 <div class="info-box bg-red">
                     <span class="info-box-icon"><i class="fa fa-calendar-minus-o" aria-hidden="true"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">Deleted Public Polls Today</span>
-                        <span class="info-box-number">1,410</span>
+                        <span class="info-box-text">@Html.LabelFor(vm => vm.DeletedPublicPollsToday)</span>
+                        <span class="info-box-number">@Model.DeletedPublicPollsToday</span>
                     </div>
                 </div>
             </div>
@@ -98,8 +98,8 @@
         <div class="col-lg-3 col-sm-6 col-xs-12">
             <div class="small-box">
                 <div class="inner">
-                    <h3>53<sup style="font-size: 20px">%</sup></h3>
-                    <p>Total Private Polls</p>
+                    <h3>@Model.TotalPrivatePolls</h3>
+                    <p>@Html.LabelFor(vm => vm.TotalPrivatePolls)</p>
                 </div>
                 <div class="icon">
                     <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
@@ -113,24 +113,24 @@
                 <div class="info-box bg-orange">
                     <span class="info-box-icon"><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">Private Polls Today</span>
-                        <span class="info-box-number">1,410</span>
+                        <span class="info-box-text">@Html.LabelFor(vm => vm.PrivatePollsToday)</span>
+                        <span class="info-box-number">@Model.PrivatePollsToday</span>
                     </div>
                 </div>
 
                 <div class="info-box bg-green">
                     <span class="info-box-icon"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">New Private Polls Today</span>
-                        <span class="info-box-number">1,410</span>
+                        <span class="info-box-text">@Html.LabelFor(vm => vm.NewPrivatePollsToday)</span>
+                        <span class="info-box-number">@Model.NewPrivatePollsToday</span>
                     </div>
                 </div>
 
                 <div class="info-box bg-red">
                     <span class="info-box-icon"><i class="fa fa-calendar-minus-o" aria-hidden="true"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">Deleted Private Polls Today</span>
-                        <span class="info-box-number">1,410</span>
+                        <span class="info-box-text">@Html.LabelFor(vm => vm.DeletedPrivatePollsToday)</span>
+                        <span class="info-box-number">@Model.DeletedPrivatePollsToday</span>
                     </div>
                 </div>
             </div>
@@ -139,8 +139,8 @@
         <div class="col-lg-3 col-sm-6 col-xs-12">
             <div class="small-box">
                 <div class="inner">
-                    <h3>65</h3>
-                    <p>Total Unique Visitors</p>
+                    <h3>@Model.TotalUniqueVisitors</h3>
+                    <p>@Html.LabelFor(vm => vm.TotalUniqueVisitors)</p>
                 </div>
                 <div class="icon">
                     <i class="fa fa-eye" aria-hidden="true"></i>
@@ -154,24 +154,24 @@
                 <div class="info-box bg-orange">
                     <span class="info-box-icon"><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">Unique Visitors Today</span>
-                        <span class="info-box-number">1,410</span>
+                        <span class="info-box-text">@Html.LabelFor(vm => vm.UniqueVisitorsToday)</span>
+                        <span class="info-box-number">@Model.UniqueVisitorsToday</span>
                     </div>
                 </div>
 
                 <div class="info-box bg-orange">
                     <span class="info-box-icon"><i class="fa fa-eye" aria-hidden="true"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">Page Views</span>
-                        <span class="info-box-number">1,410</span>
+                        <span class="info-box-text">@Html.LabelFor(vm => vm.TotalPageViews)</span>
+                        <span class="info-box-number">@Model.TotalPageViews</span>
                     </div>
                 </div>
 
                 <div class="info-box bg-orange">
                     <span class="info-box-icon"><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">Page Views Today</span>
-                        <span class="info-box-number">1,410</span>
+                        <span class="info-box-text">@Html.LabelFor(vm => vm.PageViewsToday)</span>
+                        <span class="info-box-number">@Model.PageViewsToday</span>
                     </div>
                 </div>
             </div>

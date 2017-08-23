@@ -11,6 +11,7 @@ namespace SimpleVoter.Core
         IPollRepository Polls { get; }
         IAnswerRepository Answers { get; }
         IUserRepository Users { get; }
+        IDailyStatisticsRepository DailyStatistics { get; }
         void Complete();
     }
 }

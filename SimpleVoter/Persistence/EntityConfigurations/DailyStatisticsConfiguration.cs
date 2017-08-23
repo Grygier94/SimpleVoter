@@ -17,7 +17,7 @@ namespace SimpleVoter.Persistence.EntityConfigurations
             Property(ds => ds.Date)
                 .HasColumnType("date");
 
-            Property(ds => ds.TotalUsers)
+            Property(ds => ds.Users)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
 
             Property(ds => ds.PublicPolls)

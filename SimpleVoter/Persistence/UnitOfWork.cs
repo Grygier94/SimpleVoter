@@ -16,6 +16,7 @@ namespace SimpleVoter.Persistence
         public IPollRepository Polls { get; }
         public IAnswerRepository Answers { get; }
         public IUserRepository Users { get; }
+        public IDailyStatisticsRepository DailyStatistics { get; }
 
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -23,6 +24,7 @@ namespace SimpleVoter.Persistence
             Polls = new PollRepository(_context);
             Answers = new AnswerRepository(_context);
             Users = new UserRepository(_context);
+            DailyStatistics = new DailyStatisticsRepository(_context);
         }
 
         public void Complete()

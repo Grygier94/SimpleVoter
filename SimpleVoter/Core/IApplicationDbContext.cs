@@ -8,5 +8,6 @@ namespace SimpleVoter.Core
         IDbSet<Poll> Polls { get; set; }
         IDbSet<Answer> Answers { get; set; }
         IDbSet<ApplicationUser> Users { get; set; }
+        IDbSet<DailyStatistics> DailyStatistics { get; set; }
     }
 }

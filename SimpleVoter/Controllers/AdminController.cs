@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Newtonsoft.Json;
 using SimpleVoter.Core;
 using SimpleVoter.Core.Models;
+using SimpleVoter.Core.ViewModels.AdminViewModels;
 using SimpleVoter.Core.ViewModels.PollViewModels;
 
 namespace SimpleVoter.Controllers
@@ -24,7 +25,29 @@ namespace SimpleVoter.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult AdminDashboard()
         {
-            return View();
+            var statistics = _unitOfWork.DailyStatistics.GetTodays();
+            var dashboardViewModel = new AdminDashboardViewModel
+            {
+                TotalUsers = _unitOfWork.DailyStatistics.GetTotalUsers(),
+                NewUsersToday = statistics.NewUsers,
+                DeletedUsersToday = statistics.DeletedUsers,
+
+                TotalPublicPolls = _unitOfWork.DailyStatistics.GetTotalPublicPolls(),
+                NewPublicPollsToday = statistics.NewPublicPolls,
+                DeletedPublicPollsToday = statistics.DeletedPublicPolls,
+
+                TotalPrivatePolls = _unitOfWork.DailyStatistics.GetTotalPrivatePolls(),
+                NewPrivatePollsToday = statistics.NewPrivatePolls,
+                DeletedPrivatePollsToday = statistics.DeletedPrivatePolls,
+
+                TotalPageViews = _unitOfWork.DailyStatistics.GetTotalPageViews(),
+                PageViewsToday = statistics.PageViews,
+
+                TotalUniqueVisitors = _unitOfWork.DailyStatistics.GetTotalUniqueVisitors(),
+                UniqueVisitorsToday = statistics.UniqueVisitors
+            };
+
+            return View(dashboardViewModel);
         }
 
         [Authorize(Roles = "Administrator")]
@@ -55,10 +78,10 @@ namespace SimpleVoter.Controllers
             return Json(new { success = true });
         }
 
-
         public ActionResult DeleteUser(string id)
         {
             var user = _unitOfWork.Users.Get(id);
+            _unitOfWork.DailyStatistics.Increase_DeletedUsers();
             _unitOfWork.Users.Remove(user);
             _unitOfWork.Complete();
 

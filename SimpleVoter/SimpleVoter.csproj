@@ -411,6 +411,7 @@
     <Compile Include="Core\Models\PagingInfo.cs" />
     <Compile Include="Core\Models\PollTableInfo.cs" />
     <Compile Include="Core\Models\DailyStatistics.cs" />
+    <Compile Include="Core\Repositories\IDailyStatisticsRepository.cs" />
     <Compile Include="Core\Repositories\IUserRepository.cs" />
     <Compile Include="Core\Validators\CurrentDateAttribute.cs" />
     <Compile Include="Core\Validators\EnsureMinimumElementsAttribute.cs" />
@@ -493,6 +494,10 @@
     <Compile Include="Persistence\Migrations\201708222125227_AddDailyStatisticsTable.Designer.cs">
       <DependentUpon>201708222125227_AddDailyStatisticsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Persistence\Migrations\201708231414288_ChangeUsersColumnNameInDailyStatisticsTable.cs" />
+    <Compile Include="Persistence\Migrations\201708231414288_ChangeUsersColumnNameInDailyStatisticsTable.Designer.cs">
+      <DependentUpon>201708231414288_ChangeUsersColumnNameInDailyStatisticsTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Persistence\Migrations\Configuration.cs" />
     <Compile Include="Persistence\ApplicationDbContext.cs" />
     <Compile Include="Core\Models\Poll.cs" />
@@ -506,6 +511,7 @@
     <Compile Include="Persistence\EntityConfigurations\AnswerConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\PollConfiguration.cs" />
     <Compile Include="Persistence\Repositories\AnswerRepository.cs" />
+    <Compile Include="Persistence\Repositories\DailyStatisticsRepository.cs" />
     <Compile Include="Persistence\Repositories\PollRepository.cs" />
     <Compile Include="Persistence\Repositories\UserRepository.cs" />
     <Compile Include="Persistence\UnitOfWork.cs" />
@@ -690,6 +696,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Persistence\Migrations\201708222125227_AddDailyStatisticsTable.resx">
       <DependentUpon>201708222125227_AddDailyStatisticsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201708231414288_ChangeUsersColumnNameInDailyStatisticsTable.resx">
+      <DependentUpon>201708231414288_ChangeUsersColumnNameInDailyStatisticsTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
