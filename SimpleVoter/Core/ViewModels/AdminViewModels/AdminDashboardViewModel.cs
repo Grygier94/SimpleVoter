@@ -56,5 +56,7 @@ namespace SimpleVoter.Core.ViewModels.AdminViewModels
 
         [Display(Name = "Page Views Today")]
         public int PageViewsToday { get; set; }
+
+        public IEnumerable<int> LastMonthUniqueVisitors { get; set; }
     }
 }

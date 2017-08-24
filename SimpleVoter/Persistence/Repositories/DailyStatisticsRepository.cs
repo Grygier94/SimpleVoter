@@ -21,31 +21,37 @@ namespace SimpleVoter.Persistence.Repositories
             return GetTodaysRecord();
         }
 
+        public IEnumerable<DailyStatistics> GetRecordsFromLastDays(int numberOfDays)
+        {
+            var tresholdDate = DateTime.Now.AddDays(-numberOfDays);
+            return Context.DailyStatistics
+                .Where(ds => ds.Date >= tresholdDate)
+                .ToList();
+        }
+
         private DailyStatistics GetTodaysRecord()
         {
             var todayDate = DateTime.Now;
             var todaysStatistics = Context.DailyStatistics
-                                       .SingleOrDefault(ds => ds.Date.Year == todayDate.Year
-                                                              && ds.Date.Month == todayDate.Month
-                                                              && ds.Date.Day == todayDate.Day) 
-                                        ?? Context.DailyStatistics.Add(new DailyStatistics());
+                                       .SingleOrDefault(ds => ds.Date == todayDate.Date)
+                                        ?? Context.DailyStatistics.Add(new DailyStatistics{Date = DateTime.Now.Date});
             return todaysStatistics;
         }
 
         #region GetTotalData
         public int GetTotalUsers()
         {
-            return Context.DailyStatistics.Sum(ds => ds.Users);
+            return Context.DailyStatistics.Sum(ds => ds.Users).Value;
         }
 
         public int GetTotalPublicPolls()
         {
-            return Context.DailyStatistics.Sum(ds => ds.PublicPolls);
+            return Context.DailyStatistics.Sum(ds => ds.PublicPolls).Value;
         }
 
         public int GetTotalPrivatePolls()
         {
-            return Context.DailyStatistics.Sum(ds => ds.PrivatePolls);
+            return Context.DailyStatistics.Sum(ds => ds.PrivatePolls).Value;
         }
 
         public int GetTotalUniqueVisitors()

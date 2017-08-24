@@ -482,3 +482,4 @@ D:\Repositories\simplevoter\SimpleVoter\obj\Debug\SimpleVoter.Migrations.AddLock
 D:\Repositories\simplevoter\SimpleVoter\obj\Debug\SimpleVoter.Migrations.UpdateUserPollsRelationship.resources
 D:\Repositories\simplevoter\SimpleVoter\obj\Debug\SimpleVoter.Migrations.AddDailyStatisticsTable.resources
 D:\Repositories\simplevoter\SimpleVoter\obj\Debug\SimpleVoter.Migrations.ChangeUsersColumnNameInDailyStatisticsTable.resources
+D:\Repositories\simplevoter\SimpleVoter\obj\Debug\SimpleVoter.Migrations.UpdateComputedColumsInDailyStatistics.resources

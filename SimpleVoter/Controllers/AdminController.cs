@@ -44,7 +44,12 @@ namespace SimpleVoter.Controllers
                 PageViewsToday = statistics.PageViews,
 
                 TotalUniqueVisitors = _unitOfWork.DailyStatistics.GetTotalUniqueVisitors(),
-                UniqueVisitorsToday = statistics.UniqueVisitors
+                UniqueVisitorsToday = statistics.UniqueVisitors,
+
+                LastMonthUniqueVisitors = _unitOfWork.DailyStatistics
+                    .GetRecordsFromLastDays(30)
+                    .Select(ds => ds.UniqueVisitors)
+                    .ToList()
             };
 
             return View(dashboardViewModel);

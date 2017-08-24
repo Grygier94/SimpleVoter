@@ -29,7 +29,7 @@ namespace SimpleVoter.Controllers
         }
 
         //TODO: panel admina
-        //      - dodac wykres pokazujacy unikalne wizyty w admin dashboard
+        //      - dodac date do wykresu jako label (tuple)
         //      - zwiekszanie statystyk pageviews i unique visitors
         //TODO: przy tworzeniu możliwość wybrania typu wykresu (tylko zalogowani)
         //TODO: dodać visibility 'personal?' gdzie tylko zaproszeni przez tworce uzytkownicy moga glosowac

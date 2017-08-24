@@ -12,14 +12,15 @@ namespace SimpleVoter.Core.Models
 
         public int NewUsers { get; set; }
         public int DeletedUsers { get; set; }
-        public int Users {
+        public int? Users {
             get { return NewUsers - DeletedUsers; }
             private set { }
         }
 
         public int NewPublicPolls { get; set; }
         public int DeletedPublicPolls { get; set; }
-        public int PublicPolls
+
+        public int? PublicPolls
         {
             get { return NewPublicPolls - DeletedPublicPolls; }
             private set { }
@@ -27,7 +28,7 @@ namespace SimpleVoter.Core.Models
 
         public int NewPrivatePolls { get; set; }
         public int DeletedPrivatePolls { get; set; }
-        public int PrivatePolls
+        public int? PrivatePolls
         {
             get { return NewPrivatePolls - DeletedPrivatePolls; }
             private set { }

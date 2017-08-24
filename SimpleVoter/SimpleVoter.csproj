@@ -498,6 +498,10 @@
     <Compile Include="Persistence\Migrations\201708231414288_ChangeUsersColumnNameInDailyStatisticsTable.Designer.cs">
       <DependentUpon>201708231414288_ChangeUsersColumnNameInDailyStatisticsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Persistence\Migrations\201708242028441_UpdateComputedColumsInDailyStatistics.cs" />
+    <Compile Include="Persistence\Migrations\201708242028441_UpdateComputedColumsInDailyStatistics.Designer.cs">
+      <DependentUpon>201708242028441_UpdateComputedColumsInDailyStatistics.cs</DependentUpon>
+    </Compile>
     <Compile Include="Persistence\Migrations\Configuration.cs" />
     <Compile Include="Persistence\ApplicationDbContext.cs" />
     <Compile Include="Core\Models\Poll.cs" />
@@ -699,6 +703,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Persistence\Migrations\201708231414288_ChangeUsersColumnNameInDailyStatisticsTable.resx">
       <DependentUpon>201708231414288_ChangeUsersColumnNameInDailyStatisticsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201708242028441_UpdateComputedColumsInDailyStatistics.resx">
+      <DependentUpon>201708242028441_UpdateComputedColumsInDailyStatistics.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

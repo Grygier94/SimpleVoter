@@ -1,4 +1,5 @@
-﻿using SimpleVoter.Core.Models;
+﻿using System.Collections.Generic;
+using SimpleVoter.Core.Models;
 
 namespace SimpleVoter.Core.Repositories
 {
@@ -20,5 +21,7 @@ namespace SimpleVoter.Core.Repositories
         void Increase_DeletedPrivatePolls();
         void Increase_UniqueVisitors();
         void Increase_PageViews();
+
+        IEnumerable<DailyStatistics> GetRecordsFromLastDays(int numberOfDays);
     }
 }
