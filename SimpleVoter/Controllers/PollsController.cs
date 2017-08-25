@@ -29,14 +29,12 @@ namespace SimpleVoter.Controllers
         }
 
         //TODO: panel admina
-        //      - dodac date do wykresu jako label (tuple)
         //      - zwiekszanie statystyk pageviews i unique visitors
         //TODO: przy tworzeniu możliwość wybrania typu wykresu (tylko zalogowani)
         //TODO: dodać visibility 'personal?' gdzie tylko zaproszeni przez tworce uzytkownicy moga glosowac
         //TODO: po kliknięciu scrollem na pozycje w tabeli - otworz w nowej karcie
         //TODO: walidacja daty wygasniecia po stronie klienta przy tworzeniu polla oraz przy aktualizacji
         //TODO: admin i publc polls - szukanie polli po userze
-        //TODO: dodanie statystyk i aktualizacja danych w admin dashboard
         //TODO: zaktualizować email confirmation view
         //TODO: zaktualizować account manage view
         //TODO: mozliwosc zalogowania tylko kiedy email zostal potwierdzony
@@ -291,6 +289,7 @@ namespace SimpleVoter.Controllers
             {
                 viewModel.ExpirationDate = DateTime.Now.AddDays(1);
                 viewModel.Visibility = Visibility.Public;
+                viewModel.ChartType = ChartType.Doughnut;
             }
 
             if (viewModel != null && ModelState.IsValid)
@@ -306,7 +305,8 @@ namespace SimpleVoter.Controllers
                     CreationDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
                     ExpirationDate = viewModel.ExpirationDate,
-                    Visibility = viewModel.Visibility
+                    Visibility = viewModel.Visibility,
+                    ChartType = viewModel.ChartType
                 };
 
                 if (poll.Visibility == Visibility.Public)

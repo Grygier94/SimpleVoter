@@ -603,6 +603,69 @@ fieldset input[type="password"] {
     color: white;
 }
 
+/* Chart Radio*/
+ul.chart-list {
+    list-style-type: none;
+}
+
+.chart-list li {
+    display: inline-block;
+}
+
+.chart-list input[type="radio"] {
+    display: none;
+}
+
+.chart-list label {
+    border: 1px solid #fff;
+    padding: 10px;
+    display: block;
+    position: relative;
+    margin: 10px;
+    cursor: pointer;
+}
+
+    .chart-list label:before {
+        background-color: white;
+        color: white;
+        content: " ";
+        display: block;
+        border-radius: 50%;
+        border: 1px solid grey;
+        position: absolute;
+        top: -5px;
+        left: -5px;
+        width: 25px;
+        height: 25px;
+        text-align: center;
+        line-height: 28px;
+        transition-duration: 0.4s;
+        transform: scale(0);
+    }
+
+    .chart-list label img {
+        height: 200px;
+        width: 200px;
+        transition-duration: 0.2s;
+        transform-origin: 50% 50%;
+    }
+
+.chart-list :checked + label {
+    border-color: #ddd;
+}
+
+    .chart-list :checked + label:before {
+        content: "✓";
+        background-color: grey;
+        transform: scale(1);
+    }
+
+    .chart-list :checked + label img {
+        transform: scale(0.9);
+        box-shadow: 0 0 5px #333;
+        z-index: -1;
+    }
+
 
 /* FOOTER */
 footer {

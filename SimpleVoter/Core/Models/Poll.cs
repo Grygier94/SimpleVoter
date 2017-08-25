@@ -22,6 +22,7 @@ namespace SimpleVoter.Core.Models
         public DateTime UpdateDate { get; set; }
         public DateTime? ExpirationDate { get; set; }
         public DateTime? RenewingDate { get; set; }
+        public ChartType ChartType { get; set; }
 
         public Poll()
         {

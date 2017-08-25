@@ -58,8 +58,30 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.Visibility)
                             @Html.DropDownList("Visibility",
-                            EnumHelper.GetSelectList(typeof(Visibility)),
+                                EnumHelper.GetSelectList(typeof(Visibility)),
                                 new { @class = "form-control" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ChartType)
+                            <ul class="chart-list">
+                                <li><input type="radio" id="chart1" name="ChartType" value="1" />
+                                    <label for="chart1"><img src="~/Content/images/Charts/Bar.png" alt="Bar"/></label>
+                                </li>
+                                <li><input type="radio" id="chart2" name="ChartType" value="2" />
+                                    <label for="chart2"><img src="~/Content/images/Charts/Doughnut.png" alt="Doughnut" /></label>
+                                </li>
+                                <li><input type="radio" id="chart3" name="ChartType" value="3" />
+                                    <label for="chart3"><img src="~/Content/images/Charts/Pie.png" alt="Pie"/></label>
+                                </li>
+                                <li>
+                                    <input type="radio" id="chart4" name="ChartType" value="4" />
+                                    <label for="chart4"><img src="~/Content/images/Charts/PolarArea.png" alt="Polar Area" /></label>
+                                </li>
+                                <li><input type="radio" id="chart5" name="ChartType" value="5" />
+                                    <label for="chart5"><img src="~/Content/images/Charts/Radar.png" alt="Polar Area" /></label>
+                                </li>
+                            </ul>
                         </div>
                     }
 

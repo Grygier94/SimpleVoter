@@ -25,31 +25,33 @@ namespace SimpleVoter.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult AdminDashboard()
         {
-            var statistics = _unitOfWork.DailyStatistics.GetTodays();
+            var todaysStatistics = _unitOfWork.DailyStatistics.GetTodays();
+            var lastMonthStatistics = _unitOfWork.DailyStatistics
+                .GetRecordsFromLastDays(30) as IList<DailyStatistics>;
+
             var dashboardViewModel = new AdminDashboardViewModel
             {
                 TotalUsers = _unitOfWork.DailyStatistics.GetTotalUsers(),
-                NewUsersToday = statistics.NewUsers,
-                DeletedUsersToday = statistics.DeletedUsers,
+                NewUsersToday = todaysStatistics.NewUsers,
+                DeletedUsersToday = todaysStatistics.DeletedUsers,
 
                 TotalPublicPolls = _unitOfWork.DailyStatistics.GetTotalPublicPolls(),
-                NewPublicPollsToday = statistics.NewPublicPolls,
-                DeletedPublicPollsToday = statistics.DeletedPublicPolls,
+                NewPublicPollsToday = todaysStatistics.NewPublicPolls,
+                DeletedPublicPollsToday = todaysStatistics.DeletedPublicPolls,
 
                 TotalPrivatePolls = _unitOfWork.DailyStatistics.GetTotalPrivatePolls(),
-                NewPrivatePollsToday = statistics.NewPrivatePolls,
-                DeletedPrivatePollsToday = statistics.DeletedPrivatePolls,
+                NewPrivatePollsToday = todaysStatistics.NewPrivatePolls,
+                DeletedPrivatePollsToday = todaysStatistics.DeletedPrivatePolls,
 
                 TotalPageViews = _unitOfWork.DailyStatistics.GetTotalPageViews(),
-                PageViewsToday = statistics.PageViews,
+                PageViewsToday = todaysStatistics.PageViews,
 
                 TotalUniqueVisitors = _unitOfWork.DailyStatistics.GetTotalUniqueVisitors(),
-                UniqueVisitorsToday = statistics.UniqueVisitors,
+                UniqueVisitorsToday = todaysStatistics.UniqueVisitors,
 
-                LastMonthUniqueVisitors = _unitOfWork.DailyStatistics
-                    .GetRecordsFromLastDays(30)
-                    .Select(ds => ds.UniqueVisitors)
-                    .ToList()
+                LastMonthUniqueVisitors = new Tuple<IEnumerable<int>, IEnumerable<DateTime>>(
+                    lastMonthStatistics.Select(ds => ds.UniqueVisitors).ToList(),
+                    lastMonthStatistics.Select(ds => ds.Date).ToList())
             };
 
             return View(dashboardViewModel);

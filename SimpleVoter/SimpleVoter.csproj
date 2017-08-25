@@ -406,6 +406,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PollsController.cs" />
+    <Compile Include="Core\Enums\ChartType.cs" />
     <Compile Include="Core\Enums\SortBy.cs" />
     <Compile Include="Core\Enums\Visibility.cs" />
     <Compile Include="Core\Models\PagingInfo.cs" />
@@ -502,6 +503,10 @@
     <Compile Include="Persistence\Migrations\201708242028441_UpdateComputedColumsInDailyStatistics.Designer.cs">
       <DependentUpon>201708242028441_UpdateComputedColumsInDailyStatistics.cs</DependentUpon>
     </Compile>
+    <Compile Include="Persistence\Migrations\201708252205390_AddChartTypeColumnToPoll.cs" />
+    <Compile Include="Persistence\Migrations\201708252205390_AddChartTypeColumnToPoll.Designer.cs">
+      <DependentUpon>201708252205390_AddChartTypeColumnToPoll.cs</DependentUpon>
+    </Compile>
     <Compile Include="Persistence\Migrations\Configuration.cs" />
     <Compile Include="Persistence\ApplicationDbContext.cs" />
     <Compile Include="Core\Models\Poll.cs" />
@@ -537,6 +542,11 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\images\bolt.png" />
+    <Content Include="Content\images\Charts\Bar.png" />
+    <Content Include="Content\images\Charts\Doughnut.png" />
+    <Content Include="Content\images\Charts\Pie.png" />
+    <Content Include="Content\images\Charts\PolarArea.png" />
+    <Content Include="Content\images\Charts\Radar.png" />
     <Content Include="Content\images\checkbox.png" />
     <Content Include="Content\images\earth.png" />
     <Content Include="Content\reset.css" />
@@ -706,6 +716,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Persistence\Migrations\201708242028441_UpdateComputedColumsInDailyStatistics.resx">
       <DependentUpon>201708242028441_UpdateComputedColumsInDailyStatistics.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201708252205390_AddChartTypeColumnToPoll.resx">
+      <DependentUpon>201708252205390_AddChartTypeColumnToPoll.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

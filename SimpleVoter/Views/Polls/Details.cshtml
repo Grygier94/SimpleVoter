@@ -128,22 +128,25 @@
             <div class="col-sm-pull-8 col-sm-4 text-center poll-details-container">
                 <div class="poll-info">
                     <p>
-                        Visibility:<br class="visible-xs" /> @Model.Visibility
+                        <b>Visibility:</b><br class="visible-xs" /> @Model.Visibility
                     </p>
-                    <p> Author:<br class="visible-xs" /> @userName</p>
-                    <p> Multiple answers:<br class="visible-xs" /> @multipleAnswers</p>
+                    <p><b> Author:</b><br class="visible-xs" /> @userName</p>
+                    <p><b> Multiple answers:</b><br class="visible-xs" /> @multipleAnswers</p>
                     <p>
-                        Only logged in users can vote:<br class="visible-xs" /> yes/no
+                        <b> Only logged in users can vote:</b><br class="visible-xs" /> yes/no
                     </p>
                     <p>
-                        Only logged in users can display:<br class="visible-xs" /> yes/no (if yes - 'only logged in users can vote will' be checked as well)
+                        <b> Only logged in users can display:</b><br class="visible-xs" /> yes/no (if yes - 'only logged in users can vote will' be checked as well)
                     </p>
-                    <p> Creation time:<br class="visible-xs" /> @Model.CreationDate</p>
+                    <p>
+                        <b> Chart type:</b><br class="visible-xs" /> @Model.ChartType
+                    </p>
+                    <p><b> Creation time:</b><br class="visible-xs" /> @Model.CreationDate</p>
                     @if (updated)
-                    { <p class="last-update"> Last update:<br class="visible-xs" /> @Model.UpdateDate</p> }
-                    <p> Expiration time:<br class="visible-xs" /> @expirationDate</p>
+                    { <p class="last-update"><b> Last update:</b><br class="visible-xs" /> @Model.UpdateDate</p> }
+                    <p> <b>Expiration time:</b><br class="visible-xs" /> @expirationDate</p>
                     @if (Model.RenewingDate != null)
-                    {<p> Renewed:<br class="visible-xs" /> @Model.RenewingDate</p>}
+                    {<p><b> Renewed:</b><br class="visible-xs" /> @Model.RenewingDate</p>}
                 </div>
             </div>
         }
@@ -164,7 +167,7 @@
             </div>
         }
     </div>
-    
+
     @if (User.IsInRole("Administrator") && Model.UserId != User.Identity.GetUserId())
     {
         <div class="admin-buttons text-center">
@@ -403,7 +406,7 @@
 
             var myChart = new Chart(ctx,
             {
-                type: 'doughnut',
+                type: lowerFirstLetter('@Model.ChartType'),
                 data: {
                     labels: labels,
                     datasets: [
@@ -434,6 +437,10 @@
 
             var resultArray = arrayOfColors.slice(0, numberOfElements);
             return resultArray;
+        }
+
+        function lowerFirstLetter(string) {
+            return string.charAt(0).toLocaleLowerCase() + string.slice(1);
         }
     </script>
 }

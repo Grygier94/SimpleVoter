@@ -1,4 +1,5 @@
-﻿@using Newtonsoft.Json
+﻿@using System.Globalization
+@using Newtonsoft.Json
 @model SimpleVoter.Core.ViewModels.AdminViewModels.AdminDashboardViewModel
 @{
     ViewBag.Title = "Admin Dashboard";
@@ -191,9 +192,14 @@
     $(document).ready(function () {
         var ctx = document.getElementById("statisticsChart").getContext('2d');
 
-        var labels = ['test', 'test2'];
-        var data = @JsonConvert.SerializeObject(Model.LastMonthUniqueVisitors.ToArray());
+        var labels = [];
+        var data = @JsonConvert.SerializeObject(Model.LastMonthUniqueVisitors.Item1.ToArray());
         var colors = ['rgba(255, 206, 86, 1)', 'rgba(54, 162, 235, 1)'];
+
+        @foreach (var d in Model.LastMonthUniqueVisitors.Item2)
+            {
+                @:labels.push("@d.ToShortDateString()");
+            }
 
         var myChart = new Chart(ctx,
             {
@@ -202,7 +208,7 @@
                     labels: labels,
                     datasets: [
                         {
-                            label: 'Votes',
+                            label: 'Unique visitors',
                             data: data,
                             backgroundColor: colors,
                             borderColor: colors,
@@ -223,7 +229,7 @@
             var details = $(this).parent().next();
             var footer = $(this);
             if (details.css("display") == "none") {
-                details.slideDown(400, function() {
+                details.slideDown(400, function () {
                     footer.html("Hide details <i class='fa fa-arrow-circle-up'></i>");
                 });
             } else {

@@ -18,6 +18,9 @@ namespace SimpleVoter.Core.ViewModels.PollViewModels
 
         public Visibility Visibility { get; set; }
 
+        [Display(Name = "Chart Type")]
+        public ChartType ChartType { get; set; }
+
         [CurrentDate]
         [Display(Name = "Expiration Date")]
         public DateTime? ExpirationDate { get; set; }

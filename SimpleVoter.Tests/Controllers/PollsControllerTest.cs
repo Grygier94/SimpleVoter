@@ -30,11 +30,11 @@ namespace SimpleVoter.Tests.Controllers
         {
             _mockPollRepository = new Mock<IPollRepository>();
             _mockAnswerRepository = new Mock<IAnswerRepository>();
-            var _mockUoW = new Mock<IUnitOfWork>();
+            var mockUoW = new Mock<IUnitOfWork>();
 
-            _mockUoW.SetupGet(u => u.Polls).Returns(_mockPollRepository.Object);
-            _mockUoW.SetupGet(u => u.Answers).Returns(_mockAnswerRepository.Object);
-            _pollsController = new PollsController(_mockUoW.Object);
+            mockUoW.SetupGet(u => u.Polls).Returns(_mockPollRepository.Object);
+            mockUoW.SetupGet(u => u.Answers).Returns(_mockAnswerRepository.Object);
+            _pollsController = new PollsController(mockUoW.Object);
         }
 
         [TestMethod]
