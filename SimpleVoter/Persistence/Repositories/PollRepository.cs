@@ -28,28 +28,48 @@ namespace SimpleVoter.Persistence.Repositories
 
         public IEnumerable<Poll> GetAll(PollTableInfo tableInfo, string userId = "", bool isAdmin = false)
         {
-            var pollQuery = Context.Polls
-                .Where(p => p.UserId == userId || userId == "")
-                .Where(p =>
-                    p.Question.Contains(tableInfo.SearchText) ||
-                    p.Id.ToString().Contains(tableInfo.SearchText) ||
-                    p.Visibility.ToString().Contains(tableInfo.SearchText) ||
-                    tableInfo.SearchText == ""
-            );
-
+            IQueryable<Poll> pollQuery;
             if (userId == "" && !isAdmin)
-                pollQuery = pollQuery
-                    .Where(p => 
-                        (p.ExpirationDate != null 
-                            && p.ExpirationDate.Value > DateTime.Now
-                            || p.ExpirationDate == null)
+            {
+                pollQuery = Context.Polls
+                    .Include(p => p.User)
+                    .Where(p =>
+                        p.Question.Contains(tableInfo.SearchText) ||
+                        p.Id.ToString().Contains(tableInfo.SearchText) ||
+                        p.Visibility.ToString().Contains(tableInfo.SearchText) ||
+                        p.User.UserName.Contains(tableInfo.SearchText) ||
+                        (p.User.UserName == null && "Anonymous".Contains(tableInfo.SearchText)) ||
+                        tableInfo.SearchText == ""
+                    )
+                    .Where(p =>
+                        (p.ExpirationDate != null
+                         && p.ExpirationDate.Value > DateTime.Now
+                         || p.ExpirationDate == null)
                         && p.Visibility == Visibility.Public);
-
-            //if (isAdmin)
-            //    pollQuery = pollQuery
-            //        .Include(p => p.User)
-            //        .Where(p => 
-            //            p.User.UserName.Contains(tableInfo.SearchText) || tableInfo.SearchText == "");
+            }
+            else if (isAdmin)
+            {
+                pollQuery = Context.Polls
+                    .Include(p => p.User)
+                    .Where(p =>
+                        p.Question.Contains(tableInfo.SearchText) ||
+                        p.Id.ToString().Contains(tableInfo.SearchText) ||
+                        p.Visibility.ToString().Contains(tableInfo.SearchText) ||
+                        p.User.UserName.Contains(tableInfo.SearchText) ||
+                        (p.User.UserName == null && "Anonymous".Contains(tableInfo.SearchText)) ||
+                        tableInfo.SearchText == ""
+                    );
+            }
+            else {
+                pollQuery = Context.Polls
+                    .Where(p => p.UserId == userId || userId == "")
+                    .Where(p =>
+                        p.Question.Contains(tableInfo.SearchText) ||
+                        p.Id.ToString().Contains(tableInfo.SearchText) ||
+                        p.Visibility.ToString().Contains(tableInfo.SearchText) ||
+                        tableInfo.SearchText == ""
+                    );
+            }
 
             IEnumerable <Poll> polls = null;
 

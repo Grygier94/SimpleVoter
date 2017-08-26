@@ -28,14 +28,14 @@ namespace SimpleVoter.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        //TODO: admin i publc polls - szukanie polli po userze
+        //TODO: Naprawic external logins
         //TODO: zaktualizować email confirmation view
         //TODO: zaktualizować account manage view
         //TODO: mozliwosc zalogowania tylko kiedy email zostal potwierdzony
         //TODO: W manage dodac mozliwosc usuniecia konta (+ zaimplementowac zwiekszanie statystyk IncreaseDeletedAccount)
         //TODO: panel admina - zwiekszanie statystyk pageviews i unique visitors
-        //TODO: dodać visibility 'personal?' gdzie tylko zaproszeni przez tworce uzytkownicy moga glosowac
 
+        //TODO: dodać visibility 'personal?' gdzie tylko zaproszeni przez tworce uzytkownicy moga glosowac
         //TODO: automatyczne usuwanie polla po 24h - niezalogowani (sql server agent - job schedule)
 
         [AllowAnonymous]
