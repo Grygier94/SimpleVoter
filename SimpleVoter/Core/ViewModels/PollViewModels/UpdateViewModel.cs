@@ -19,6 +19,8 @@ namespace SimpleVoter.Core.ViewModels.PollViewModels
 
         public Visibility Visibility { get; set; }
 
+        public ChartType ChartType { get; set; }
+
         [EnsureMinimumElements(2, "Question must contains at least 2 different answers!")]
         public List<Answer> Answers { get; set; }
 

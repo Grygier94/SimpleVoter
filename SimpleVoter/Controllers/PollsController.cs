@@ -28,17 +28,13 @@ namespace SimpleVoter.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        //TODO: panel admina
-        //      - zwiekszanie statystyk pageviews i unique visitors
-        //TODO: przy tworzeniu możliwość wybrania typu wykresu (tylko zalogowani)
-        //TODO: dodać visibility 'personal?' gdzie tylko zaproszeni przez tworce uzytkownicy moga glosowac
-        //TODO: po kliknięciu scrollem na pozycje w tabeli - otworz w nowej karcie
-        //TODO: walidacja daty wygasniecia po stronie klienta przy tworzeniu polla oraz przy aktualizacji
         //TODO: admin i publc polls - szukanie polli po userze
         //TODO: zaktualizować email confirmation view
         //TODO: zaktualizować account manage view
         //TODO: mozliwosc zalogowania tylko kiedy email zostal potwierdzony
         //TODO: W manage dodac mozliwosc usuniecia konta (+ zaimplementowac zwiekszanie statystyk IncreaseDeletedAccount)
+        //TODO: panel admina - zwiekszanie statystyk pageviews i unique visitors
+        //TODO: dodać visibility 'personal?' gdzie tylko zaproszeni przez tworce uzytkownicy moga glosowac
 
         //TODO: automatyczne usuwanie polla po 24h - niezalogowani (sql server agent - job schedule)
 
@@ -167,7 +163,8 @@ namespace SimpleVoter.Controllers
                 AllowMultipleAnswers = poll.AllowMultipleAnswers,
                 Answers = poll.Answers.ToList(),
                 ExpirationDate = poll.ExpirationDate,
-                Visibility = poll.Visibility
+                Visibility = poll.Visibility,
+                ChartType = poll.ChartType
             };
 
             return View(viewModel);
@@ -176,46 +173,50 @@ namespace SimpleVoter.Controllers
         [HttpPost]
         public ActionResult Update(UpdateViewModel viewModel)
         {
-            if (viewModel != null && ModelState.IsValid)
+            if (viewModel != null)
             {
                 var poll = _unitOfWork.Polls.GetSingle(viewModel.Id);
-
-                if (poll.Visibility != viewModel.Visibility)
+                if (ModelState.IsValid)
                 {
-                    if (viewModel.Visibility == Visibility.Public)
+                    if (poll.Visibility != viewModel.Visibility)
                     {
-                        _unitOfWork.DailyStatistics.Increase_NewPublicPolls();
-                        _unitOfWork.DailyStatistics.Increase_DeletedPrivatePolls();
+                        if (viewModel.Visibility == Visibility.Public)
+                        {
+                            _unitOfWork.DailyStatistics.Increase_NewPublicPolls();
+                            _unitOfWork.DailyStatistics.Increase_DeletedPrivatePolls();
+                        }
+                        else if (viewModel.Visibility == Visibility.Private)
+                        {
+                            _unitOfWork.DailyStatistics.Increase_NewPrivatePolls();
+                            _unitOfWork.DailyStatistics.Increase_DeletedPublicPolls();
+                        }
                     }
-                    else if (viewModel.Visibility == Visibility.Private)
+
+                    if (poll.Answers.All(a => a.Votes == 0))
                     {
-                        _unitOfWork.DailyStatistics.Increase_NewPrivatePolls();
-                        _unitOfWork.DailyStatistics.Increase_DeletedPublicPolls();
+                        poll.Question = viewModel.Question;
+                        _unitOfWork.Answers.RemoveRange(poll.Answers.ToList());
+                        poll.Answers = viewModel.Answers
+                            .Where(a => !string.IsNullOrWhiteSpace(a.Content))
+                            .DistinctBy(a => a.Content).ToList();
                     }
+
+                    poll.AllowMultipleAnswers = viewModel.AllowMultipleAnswers;
+                    poll.UpdateDate = DateTime.Now;
+                    poll.ExpirationDate = viewModel.ExpirationDate;
+                    poll.Visibility = viewModel.Visibility;
+                    poll.ChartType = viewModel.ChartType;
+
+                    _unitOfWork.Complete();
+                    return RedirectToAction("Details", new { id = poll.Id });
                 }
 
-                if (poll.Answers.All(a => a.Votes == 0))
-                {
-                    poll.Question = viewModel.Question;
-                    _unitOfWork.Answers.RemoveRange(poll.Answers.ToList());
-                    poll.Answers = viewModel.Answers
-                        .Where(a => !string.IsNullOrWhiteSpace(a.Content))
-                        .DistinctBy(a => a.Content).ToList();
-                }
-
-                poll.AllowMultipleAnswers = viewModel.AllowMultipleAnswers;
-                poll.UpdateDate = DateTime.Now;
-                poll.ExpirationDate = viewModel.ExpirationDate;
-                poll.Visibility = viewModel.Visibility;
-
-                
-
-                _unitOfWork.Complete();
-                return RedirectToAction("Details", new { id = poll.Id });
-            }
-
-            if (viewModel != null)
+                if (poll.Answers.Any(a => a.Votes > 0))
+                    ViewBag.ContainsVotes = true;
+                else
+                    ViewBag.ContainsVotes = false;
                 viewModel.Answers = viewModel.Answers.Where(a => !a.Content.IsNullOrWhiteSpace()).ToList();
+            }
 
             return View(viewModel);
         }
@@ -223,9 +224,9 @@ namespace SimpleVoter.Controllers
         public ActionResult Delete(int id)
         {
             var poll = _unitOfWork.Polls.GetSingle(id);
-            if(poll.Visibility == Visibility.Public)
+            if (poll.Visibility == Visibility.Public)
                 _unitOfWork.DailyStatistics.Increase_DeletedPublicPolls();
-            else if(poll.Visibility == Visibility.Private)
+            else if (poll.Visibility == Visibility.Private)
                 _unitOfWork.DailyStatistics.Increase_DeletedPrivatePolls();
 
             _unitOfWork.Polls.Remove(poll);
@@ -248,7 +249,7 @@ namespace SimpleVoter.Controllers
         public ActionResult Renew(int id, DateTime expirationDate)
         {
             if (expirationDate <= DateTime.Now)
-                return Json(new {success = false, responseText = "Date must be greater than current date!"});
+                return Json(new { success = false, responseText = "Date must be greater than current date!" });
 
             var poll = _unitOfWork.Polls.GetSingle(id);
             poll.ExpirationDate = expirationDate;

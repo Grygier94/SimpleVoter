@@ -2,6 +2,7 @@
 @using Microsoft.Ajax.Utilities
 @using Microsoft.AspNet.Identity
 @using Newtonsoft.Json
+@using SimpleVoter.Core.Enums
 @model SimpleVoter.Core.Models.Poll
 
 @{
@@ -252,7 +253,7 @@
 @section scripts
 {
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('#ExpirationDate').datetimepicker({
                 format: 'YYYY-MM-DD HH:mm'
             });
@@ -282,15 +283,18 @@
                 {
                     <text>
                         $(options[i])
-                            .find(".checkbox-answer-content, .checkbox-answer-votes, .radio-answer-content, .radio-answer-votes")
+                            .find(
+                                ".checkbox-answer-content, .checkbox-answer-votes, .radio-answer-content, .radio-answer-votes")
                             .css("border-left", "20px " + colors[i] + " solid");
 
                         $(options[i])
-                            .find(".checkbox-answer-content, .checkbox-answer-check, .radio-answer-content, .radio-answer-check")
+                            .find(
+                                ".checkbox-answer-content, .checkbox-answer-check, .radio-answer-content, .radio-answer-check")
                             .css("border-right", "20px " + colors[i] + " solid");
 
                         $(options[i])
-                            .find(".checkbox-answer-votes, .checkbox-answer-check, .radio-answer-votes, .radio-answer-check")
+                            .find(
+                                ".checkbox-answer-votes, .checkbox-answer-check, .radio-answer-votes, .radio-answer-check")
                             .css("background-color", colors[i]);
                     </text>
                 }
@@ -298,7 +302,7 @@
         });
 
         $("#poll-renew-button").on("click",
-            function () {
+            function() {
                 var newExpirationDate = $("#ExpirationDate").val();
 
                 $.ajax({
@@ -379,7 +383,7 @@
                     url: '/Polls/Vote',
                     type: 'POST',
                     data: { ids: answerIds, expirationDate: '@Model.ExpirationDate' },
-                    success: function (data) {
+                    success: function(data) {
                         if (data.success) {
                             sessionStorage.setItem('voted', 'true');
                             location.reload();
@@ -405,21 +409,42 @@
             }
 
             var myChart = new Chart(ctx,
-            {
-                type: lowerFirstLetter('@Model.ChartType'),
-                data: {
-                    labels: labels,
-                    datasets: [
-                        {
-                            label: 'Votes',
-                            data: data,
-                            backgroundColor: getColors(data.length),
-                            borderColor: getColors(data.length),
-                            borderWidth: 1
+                {
+                    type: lowerFirstLetter('@Model.ChartType'),
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'Votes',
+                                data: data,
+                                borderWidth: 1,
+                                @if (Model.ChartType == ChartType.Radar)
+                                {
+                                    @:pointBackgroundColor: getColors(data.length),
+                                    @:pointHoverBackgroundColor: getColors(data.length),
+                                    @:backgroundColor: ["rgba(54, 162, 235, 0.1"],
+                                    @:borderColor: ["rgba(54, 162, 235, 1"]
+                                }
+                                else
+                                {
+                                    @:backgroundColor: getColors(data.length),
+                                    @:borderColor: getColors(data.length)
+                                }
+                            }
+                        ]
+                    },
+                    @if (Model.ChartType == ChartType.Bar ||
+                         Model.ChartType == ChartType.Radar)
+                    {
+                        <text>
+                        options: {
+                            legend: {
+                                display: false
+                            }
                         }
-                    ]
-                }
-            });
+                        </text>
+                    }
+                });
         };
 
         function getColors(numberOfElements) {
