@@ -4,6 +4,20 @@
     ViewBag.Title = "Error";
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+<header class="main-header text-center">
+    <h1 class="main-title text-danger">Error</h1>
+    <p class="main-description">It seems like you lost your way.</p>
+    <div class="dashboard-buttons">
+        @Html.ActionLink("Home", "Index", "Home", null, new { @class = "btn btn-custom btn-white danger-hover" })
+        @Html.ActionLink("Login", "Login", "Account", null, new { @class = "btn btn-custom btn-white danger-hover" })
+        @Html.ActionLink("Browse Polls", "ShowPublicPolls", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
+    </div>
+</header>
+
+<section class="mid-section text-center">
+    <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
+        <h1 class="text-danger">An error occurred while processing your request.</h1>
+        <img class="envelope-img img-responsive" src="~/Content/images/Error.png" alt="Error"/>
+    </div>
+</section>
 

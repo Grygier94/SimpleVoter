@@ -23,10 +23,13 @@ body {
     margin: 0;
     font-size: 3em;
     color: #eee;
-    letter-spacing: 0px;
     font-weight: bold;
     letter-spacing: 5px;
 }
+
+.no-spacing {
+    letter-spacing: 0px;
+} 
 
 .main-description {
     font-size: 1.4em;
@@ -100,6 +103,12 @@ body {
     min-width: 100px;
 }
 
+.envelope-img,
+.done-img {
+    max-height: 200px;
+    margin: 20px auto;
+    margin-top: 40px;
+}
 /* UNIVERSAL */
 .transition {
     -webkit-transition: 0.4s ease-in-out;
@@ -277,11 +286,21 @@ fieldset input[type="password"] {
 
 .poll-info,
 .user-info,
-.manage-account {
+.manage-account,
+.email-confirmed {
     border: 1px silver solid;
     -ms-border-radius: 4px;
     border-radius: 4px;
     padding: 15px;
+}
+
+.email-confirmed {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.email-confirmed h1{
+    margin-top: 10px;
 }
 
 #twofactor-form {

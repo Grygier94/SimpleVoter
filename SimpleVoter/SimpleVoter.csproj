@@ -538,6 +538,7 @@
     <Content Include="Content\bootstrap-toggle.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\Done.png" />
     <Content Include="Content\font-awesome-overrides.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
@@ -549,7 +550,11 @@
     <Content Include="Content\images\Charts\Radar.png" />
     <Content Include="Content\images\checkbox.png" />
     <Content Include="Content\images\earth.png" />
+    <Content Include="Content\images\Email-Receive.png" />
+    <Content Include="Content\images\Email-Send.png" />
+    <Content Include="Content\images\Error.png" />
     <Content Include="Content\reset.css" />
+    <Content Include="Content\images\Padlock.png" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
     <Content Include="favicon.ico" />

@@ -28,10 +28,9 @@ namespace SimpleVoter.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        //TODO: zaktualizować email confirmation view
-        //TODO: zaktualizować account manage view
         //TODO: mozliwosc zalogowania tylko kiedy email zostal potwierdzony
         //TODO: W manage dodac mozliwosc usuniecia konta (+ zaimplementowac zwiekszanie statystyk IncreaseDeletedAccount)
+        //TODO: W manage zmienic wlaczenie weryfikacji dwuetapowej
         //TODO: panel admina - zwiekszanie statystyk pageviews i unique visitors
 
         //TODO: dodać visibility 'personal?' gdzie tylko zaproszeni przez tworce uzytkownicy moga glosowac

@@ -4,7 +4,19 @@
     ViewBag.Title = "Locked Out";
 }
 
-<hgroup>
-    <h1 class="text-danger">Locked out.</h1>
-    <h2 class="text-danger">This account has been locked out, please try again later.</h2>
-</hgroup>
+<header class="main-header text-center">
+    <h1 class="main-title text-danger">Locked out</h1>
+    <p class="main-description">Account has been locked out.</p>
+    <div class="dashboard-buttons">
+        @Html.ActionLink("Home", "Index", "Home", null, new { @class = "btn btn-custom btn-white danger-hover" })
+        @Html.ActionLink("Login", "Login", "Account", null, new { @class = "btn btn-custom btn-white danger-hover" })
+        @Html.ActionLink("Browse Polls", "ShowPublicPolls", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
+    </div>
+</header>
+
+<section class="mid-section text-center">
+    <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
+        <h1 class="text-danger">This account has been locked out, please try again later..</h1>
+        <img class="envelope-img img-responsive" src="~/Content/images/Padlock.png" alt="Padlock" />
+    </div>
+</section>
