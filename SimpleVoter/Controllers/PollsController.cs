@@ -28,7 +28,6 @@ namespace SimpleVoter.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        //TODO: Naprawic external logins
         //TODO: zaktualizować email confirmation view
         //TODO: zaktualizować account manage view
         //TODO: mozliwosc zalogowania tylko kiedy email zostal potwierdzony

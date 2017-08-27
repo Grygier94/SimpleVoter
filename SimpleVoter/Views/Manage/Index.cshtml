@@ -1,4 +1,5 @@
-﻿@model SimpleVoter.Core.ViewModels.PollViewModels.IndexViewModel
+﻿@using Microsoft.Ajax.Utilities
+@model SimpleVoter.Core.ViewModels.PollViewModels.IndexViewModel
 @{
     ViewBag.Title = "Manage";
 }
@@ -7,40 +8,46 @@
     <h1 class="main-title">Manage</h1>
     <p class="main-description">Change your account settings.</p>
     <div class="dashboard-buttons">
-        @Html.ActionLink("New Poll", "Create", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
-        @if (Request.IsAuthenticated)
-        {
-            @Html.ActionLink("Public Polls", "ShowPublicPolls", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
-            @Html.ActionLink("My Polls", "ShowUserPolls", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
-        }
-        else
-        {
-            @Html.ActionLink("Browse Polls", "ShowPublicPolls", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
-        }
+        @Html.ActionLink("Home", "Index", "Home", null, new { @class = "btn btn-custom btn-white danger-hover" })
+        @Html.ActionLink("Public Polls", "ShowPublicPolls", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
+        @Html.ActionLink("My Polls", "ShowUserPolls", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
     </div>
 </header>
-<p class="text-success">@ViewBag.StatusMessage</p>
-<div class="col-md-4 col-md-offset-4 col-xs-6 col-xs-offset-3">
-    <div class="manage-account">
-        <dl class="dl-horizontal">
-            <dt>Password:</dt>
-            <dd>
-                [
-                @if (Model.HasPassword)
+
+<section class="mid-section">
+    <div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+        <div class="btn-group-vertical manage-account-buttons">
+            @if (Model.HasPassword)
+            {
+                @Html.ActionLink("Change your password", "ChangePassword", null, new { @class = "btn btn-default" })
+            }
+            else
+            {
+                @Html.ActionLink("Create Password", "SetPassword", null, new { @class = "btn btn-default" })
+            }
+            @Html.ActionLink("Manage External Logins (" + Model.Logins.Count + ")", "ManageLogins", null, new { @class = "btn btn-default" })
+            @if (Model.TwoFactor)
+            {
+                using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { id = "twofactor-form", @class = "form-horizontal btn btn-default", role = "form" }))
                 {
-                    @Html.ActionLink("Change your password", "ChangePassword")
+                    @Html.AntiForgeryToken()
+                    <text><input type="submit" value="Disable Two Factor Authentication" /></text>
                 }
-                else
+            }
+            else
+            {
+                using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { id = "twofactor-form", @class = "form-horizontal btn btn-default", role = "form" }))
                 {
-                    @Html.ActionLink("Create", "SetPassword")
+                    @Html.AntiForgeryToken()
+                    <text><input type="submit" value="Enable Two Factor Authentication" /></text>
                 }
-                ]
-            </dd>
-            <dt>External Logins:</dt>
-            <dd>
-                @Model.Logins.Count [
-                @Html.ActionLink("Manage", "ManageLogins") ]
-            </dd>
+            }
+            @(Model.IsGoogleAuthenticatorEnabled
+                  ? Html.ActionLink("Disable Google Authenticator", "DisableGoogleAuthenticator", null, new { @class = "btn btn-default" })
+                  : Html.ActionLink("Enable Google Authenticator", "EnableGoogleAuthenticator", null, new { @class = "btn btn-default" }))
+
+            @Html.ActionLink("Remove Account", "RemoveLogin", null, new { @class = "btn btn-default" })
+
             @*
                 Phone Numbers can used as a second factor of verification in a two-factor authentication system.
 
@@ -68,37 +75,34 @@
                         @:&nbsp;&nbsp;@Html.ActionLink("Add", "AddPhoneNumber")
                     }
                 </dd>*@
-
-            <dt>Two-Factor Authentication:</dt>
-            <dd>
-                @*<p>
-                        There are no two-factor authentication providers configured. See <a href="https://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
-                        for details on setting up this ASP.NET application to support two-factor authentication.
-                    </p>*@
-                @if (Model.TwoFactor)
-                {
-                    using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <text>Enabled<input type="submit" value="[Disable]" class="btn btn-link" /></text>
-                    }
-                }
-                else
-                {
-                    using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <text>Disabled<input type="submit" value="[Enable]" class="btn btn-link" /></text>
-                    }
-                }
-            </dd>
-            <dt> Google Authenticator: </dt>
-            <dd>
-                @(Model.IsGoogleAuthenticatorEnabled ? "Enabled" : "Disabled")
-                @(Model.IsGoogleAuthenticatorEnabled
-                      ? Html.ActionLink("[Disable]", "DisableGoogleAuthenticator")
-                      : Html.ActionLink("[Enable]", "EnableGoogleAuthenticator"))
-            </dd>
-        </dl>
+        </div>
     </div>
-</div>
+</section>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+            @{
+                var message = ViewBag.StatusMessage as string;
+
+                if (!message.IsNullOrWhiteSpace())
+                {
+                    if (message.ToLower().Contains("error"))
+                    {
+                        @:toastr.error('@ViewBag.StatusMessage', 'Error');
+                    }
+                    else if (message.ToLower().Contains("linked"))
+                    {
+                        @:toastr.success('@ViewBag.StatusMessage');
+                    }
+                    else
+                    {
+                        @:toastr.warning('@ViewBag.StatusMessage');
+                    }
+                }
+            }
+        });
+    </script>
+}

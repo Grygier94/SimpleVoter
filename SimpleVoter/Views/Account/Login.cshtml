@@ -12,12 +12,11 @@
 </header>
 
 <section id="loginForm">
-    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    <section class="mid-section mid-login-section">
+        <div class="col-lg-6 col-lg-offset-2 col-md-7 col-md-offset-1 no-padding">
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
-        @*@Html.AntiForgeryToken()*@
-
-        <section class="mid-section mid-login-section">
-            <div class="col-lg-6 col-lg-offset-2 col-md-8 col-md-offset-1 no-padding">
+                @Html.AntiForgeryToken()
                 <fieldset class="left-login-fieldset">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="form-group">
@@ -57,24 +56,24 @@
                         </div>
                         <div class="col-md-offset-8 col-md-4 hidden-md hidden-lg">
                             <p>
-                                @Html.ActionLink("Register as a new user", "Register", null, new {@class = "register-as-new-user"})
+                                @Html.ActionLink("Register as a new user", "Register", null, new { @class = "register-as-new-user" })
                             </p>
                             <p>
-                                @Html.ActionLink("Forgot your password?", "ForgotPassword", null, new {@class = "forgot-password"})
+                                @Html.ActionLink("Forgot your password?", "ForgotPassword", null, new { @class = "forgot-password" })
                             </p>
                         </div>
                     </div>
                 </fieldset>
-            </div>
-            <div class="col-md-2 no-padding">
-                <fieldset class="right-login-fieldset">
-                    <section id="socialLoginForm">
-                        @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-                    </section>
-                </fieldset>
-            </div>
-        </section>
-    }
+            }
+        </div>
+        <div class="col-lg-2 col-md-3 no-padding">
+            <fieldset class="right-login-fieldset">
+                <section id="socialLoginForm">
+                    @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+                </section>
+            </fieldset>
+        </div>
+    </section>
 </section>
 
 @section Scripts {

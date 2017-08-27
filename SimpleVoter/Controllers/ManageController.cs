@@ -345,7 +345,9 @@ namespace SimpleVoter.Controllers
                     ? "The external login was removed."
                     : message == ManageMessageId.Error
                         ? "An error has occurred."
-                        : "";
+                        : message == ManageMessageId.LinkExternalLogin
+                            ? "The external login has been linked."
+                            : "";
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             if (user == null)
             {
@@ -386,7 +388,7 @@ namespace SimpleVoter.Controllers
             }
             var result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
             return result.Succeeded
-                ? RedirectToAction("ManageLogins")
+                ? RedirectToAction("ManageLogins", new { Message = ManageMessageId.LinkExternalLogin })
                 : RedirectToAction("ManageLogins", new {Message = ManageMessageId.Error});
         }
 
@@ -447,7 +449,8 @@ namespace SimpleVoter.Controllers
             SetPasswordSuccess,
             RemoveLoginSuccess,
             RemovePhoneSuccess,
-            Error
+            Error,
+            LinkExternalLogin
         }
 
         #endregion

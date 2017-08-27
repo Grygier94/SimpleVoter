@@ -3,35 +3,49 @@
     ViewBag.Title = "EnableGoogleAuthenticator";
 }
 
-<div class="row">
-    <div class="col-md-8">
-        <h3>1. Add Simple Voter to Google Authenticator</h3>
-        <p>Open Google Authenticator and add Simple Voter by scanning the QR Code to the right.</p>
-        <h3>2. Enter the 6 digit code that Google Authenticator generates</h3>
-        <p>
-            Verify that Simple Voter is added correctly in Google Authenticator by entering the 6 digit code which
-            Google Authenticator generates for Simple Voter below, and then click Enable.
-        </p>
-        @using (Html.BeginForm("EnableGoogleAuthenticator", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-        {
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary(false)
-            @Html.HiddenFor(m => m.SecretKey)
-            @Html.HiddenFor(m => m.BarcodeUrl)
-            <div class="form-group">
-                @Html.LabelFor(m => m.Code, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(m => m.Code, new { @class = "form-control" })
+<header class="main-header text-center">
+    <h1 class="main-title">Google Authenticator</h1>
+    <p class="main-description">Add Simple Voter to Google Authenticator.</p>
+    <div class="dashboard-buttons">
+        @Html.ActionLink("Home", "Index", "Home", null, new { @class = "btn btn-custom btn-white danger-hover" })
+        @Html.ActionLink("Account", "Index", "Manage", null, new { @class = "btn btn-custom btn-white danger-hover" })
+        @Html.ActionLink("My Polls", "ShowUserPolls", "Polls", null, new { @class = "btn btn-custom btn-white danger-hover" })
+    </div>
+</header>
+
+<section class="mid-section">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <fieldset class="setpassword-fieldset">
+            <div class="row">
+                <div class="col-md-8">
+                    <h3>1. Add Simple Voter to Google Authenticator</h3>
+                    <p>Open Google Authenticator and add Simple Voter by scanning the QR Code to the right.</p>
+                    <h3>2. Enter the 6 digit code that Google Authenticator generates</h3>
+                    <p>
+                        Verify that Simple Voter is added correctly in Google Authenticator by entering the 6 digit code which
+                        Google Authenticator generates for Simple Voter below, and then click Enable.
+                    </p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <img src="http://qrcode.kaywa.com/img.php?s=4&d=@(Model.BarcodeUrl)" />
+                </div>
+                <div class="col-md-10 col-md-offset-1">
+                    @using (Html.BeginForm("EnableGoogleAuthenticator", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(false)
+                        @Html.HiddenFor(m => m.SecretKey)
+                        @Html.HiddenFor(m => m.BarcodeUrl)
+                        <div class="form-group col-sm-8">
+                            @Html.LabelFor(m => m.Code)
+                            @Html.TextBoxFor(m => m.Code, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group col-sm-4 enable-google-authentication-btn">
+                                <input type="submit" class="btn btn-default" value="Enable" />
+                        </div>
+                    }
                 </div>
             </div>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" class="btn btn-default" value="Enable" />
-                </div>
-            </div>
-        }
+        </fieldset>
     </div>
-    <div class="col-md-4">
-        <img src="http://qrcode.kaywa.com/img.php?s=4&d=@(Model.BarcodeUrl)" />
-    </div>
-</div>
+</section>
