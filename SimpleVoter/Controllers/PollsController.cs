@@ -28,12 +28,11 @@ namespace SimpleVoter.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        //TODO: W manage zmienic wlaczenie weryfikacji dwuetapowej
-        //TODO: panel admina - zwiekszanie statystyk pageviews i unique visitors
-        //TODO: zabezpieczenie po IP
-
-        //TODO: dodać visibility 'personal?' gdzie tylko zaproszeni przez tworce uzytkownicy moga glosowac
-        //TODO: automatyczne usuwanie polla po 24h - niezalogowani (sql server agent - job schedule)
+        //TODO: User ip, cookies, session check before vote for unique votes
+        //TODO: Add option 'Only logged in users can display'
+        //TODO: Add option 'Only logged in users can vote'
+        //TODO: Add visibility 'Personal' where only users invited by owner can vote
+        //TODO: Auto deletion anonymous polls after 24h using sql server agent - job schedule
 
         [AllowAnonymous]
         public ActionResult ShowPublicPolls()

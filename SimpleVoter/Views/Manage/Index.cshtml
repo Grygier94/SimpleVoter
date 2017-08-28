@@ -26,26 +26,31 @@
                 @Html.ActionLink("Create Password", "SetPassword", null, new { @class = "btn btn-default" })
             }
             @Html.ActionLink("Manage External Logins (" + Model.Logins.Count + ")", "ManageLogins", null, new { @class = "btn btn-default" })
-            @if (Model.TwoFactor)
+            
+            <button class="btn btn-default two-factor-trigger">
+                Two Factor Authentication
+            </button>
+            <div class="two-factor-container">
+                @if (Model.TwoFactor)
             {
                 using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { id = "twofactor-form", @class = "form-horizontal btn btn-default", role = "form" }))
                 {
-                    @Html.AntiForgeryToken()
-                    <text><input type="submit" value="Disable Two Factor Authentication" /></text>
+                        @Html.AntiForgeryToken()
+                        <text><input type="submit" value="Disable Email Authentication" /></text>
+                    }
                 }
-            }
-            else
-            {
-                using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { id = "twofactor-form", @class = "form-horizontal btn btn-default", role = "form" }))
+                else
                 {
-                    @Html.AntiForgeryToken()
-                    <text><input type="submit" value="Enable Two Factor Authentication" /></text>
+                    using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { id = "twofactor-form", @class = "form-horizontal btn btn-default", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <text><input type="submit" value="Enable Email Authentication" /></text>
+                    }
                 }
-            }
-            @(Model.IsGoogleAuthenticatorEnabled
+                @(Model.IsGoogleAuthenticatorEnabled
                   ? Html.ActionLink("Disable Google Authenticator", "DisableGoogleAuthenticator", null, new { @class = "btn btn-default" })
-                  : Html.ActionLink("Enable Google Authenticator", "EnableGoogleAuthenticator", null, new { @class = "btn btn-default" }))
-            
+                  : Html.ActionLink("Configure Google Authenticator", "EnableGoogleAuthenticator", null, new { @class = "btn btn-default" }))
+            </div>
             <button class="btn btn-default" data-toggle="modal" data-target="#deleteModal">Delete Account</button>
 
             @*
@@ -100,7 +105,7 @@
 @section scripts
 {
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('[data-toggle="tooltip"]').tooltip();
             @{
                 var message = ViewBag.StatusMessage as string;
@@ -137,6 +142,22 @@
                         }
                     }
                 });
+            });
+
+        $(".two-factor-trigger").on("click",
+            function() {
+                var twoFactorContainer = $('.two-factor-container');
+                if (twoFactorContainer.css("display") == "none") {
+                    twoFactorContainer.slideDown(400);
+                    $(".two-factor-trigger").css("background-color", "#ddd");
+                    $(".two-factor-trigger").css("border-right-color", "#8c8c8c");
+                    $(".two-factor-trigger").css("border-left-color", "#8c8c8c");
+                } else {
+                    twoFactorContainer.slideUp(400);
+                    $(".two-factor-trigger").css("background-color", "#fff");
+                    $(".two-factor-trigger").css("border-right-color", "#0084b4");
+                    $(".two-factor-trigger").css("border-left-color", "#0084b4");
+                }
             });
     </script>
 }

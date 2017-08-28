@@ -409,10 +409,13 @@
     <Compile Include="Core\Enums\ChartType.cs" />
     <Compile Include="Core\Enums\SortBy.cs" />
     <Compile Include="Core\Enums\Visibility.cs" />
+    <Compile Include="Core\Filters\ViewsCounterFilterAttribute.cs" />
     <Compile Include="Core\Models\PagingInfo.cs" />
     <Compile Include="Core\Models\PollTableInfo.cs" />
     <Compile Include="Core\Models\DailyStatistics.cs" />
+    <Compile Include="Core\Models\UniqueVisitor.cs" />
     <Compile Include="Core\Repositories\IDailyStatisticsRepository.cs" />
+    <Compile Include="Core\Repositories\IUniqueVisitorsRepository.cs" />
     <Compile Include="Core\Repositories\IUserRepository.cs" />
     <Compile Include="Core\Validators\CurrentDateAttribute.cs" />
     <Compile Include="Core\Validators\EnsureMinimumElementsAttribute.cs" />
@@ -442,6 +445,7 @@
     <Compile Include="Core\ViewModels\AccountViewModels\VerifyPhoneNumberViewModel.cs" />
     <Compile Include="Core\IApplicationDbContext.cs" />
     <Compile Include="Persistence\EntityConfigurations\DailyStatisticsConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\UniqueVisitorsConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\UserConfiguration.cs" />
     <Compile Include="Persistence\Migrations\201707021234474_Init.cs" />
     <Compile Include="Persistence\Migrations\201707021234474_Init.Designer.cs">
@@ -507,6 +511,10 @@
     <Compile Include="Persistence\Migrations\201708252205390_AddChartTypeColumnToPoll.Designer.cs">
       <DependentUpon>201708252205390_AddChartTypeColumnToPoll.cs</DependentUpon>
     </Compile>
+    <Compile Include="Persistence\Migrations\201708281921442_AddUniqueVisitorsTable.cs" />
+    <Compile Include="Persistence\Migrations\201708281921442_AddUniqueVisitorsTable.Designer.cs">
+      <DependentUpon>201708281921442_AddUniqueVisitorsTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Persistence\Migrations\Configuration.cs" />
     <Compile Include="Persistence\ApplicationDbContext.cs" />
     <Compile Include="Core\Models\Poll.cs" />
@@ -522,6 +530,7 @@
     <Compile Include="Persistence\Repositories\AnswerRepository.cs" />
     <Compile Include="Persistence\Repositories\DailyStatisticsRepository.cs" />
     <Compile Include="Persistence\Repositories\PollRepository.cs" />
+    <Compile Include="Persistence\Repositories\UniqueVisitorsRepository.cs" />
     <Compile Include="Persistence\Repositories\UserRepository.cs" />
     <Compile Include="Persistence\UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -725,6 +734,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Persistence\Migrations\201708252205390_AddChartTypeColumnToPoll.resx">
       <DependentUpon>201708252205390_AddChartTypeColumnToPoll.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201708281921442_AddUniqueVisitorsTable.resx">
+      <DependentUpon>201708281921442_AddUniqueVisitorsTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

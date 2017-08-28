@@ -9,5 +9,6 @@ namespace SimpleVoter.Core
         IDbSet<Answer> Answers { get; set; }
         IDbSet<ApplicationUser> Users { get; set; }
         IDbSet<DailyStatistics> DailyStatistics { get; set; }
+        IDbSet<UniqueVisitor> UniqueVisitors { get; set; }
     }
 }
