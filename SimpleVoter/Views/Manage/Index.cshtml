@@ -45,8 +45,8 @@
             @(Model.IsGoogleAuthenticatorEnabled
                   ? Html.ActionLink("Disable Google Authenticator", "DisableGoogleAuthenticator", null, new { @class = "btn btn-default" })
                   : Html.ActionLink("Enable Google Authenticator", "EnableGoogleAuthenticator", null, new { @class = "btn btn-default" }))
-
-            @Html.ActionLink("Remove Account", "RemoveLogin", null, new { @class = "btn btn-default" })
+            
+            <button class="btn btn-default" data-toggle="modal" data-target="#deleteModal">Delete Account</button>
 
             @*
                 Phone Numbers can used as a second factor of verification in a two-factor authentication system.
@@ -79,6 +79,24 @@
     </div>
 </section>
 
+<div id="deleteModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Delete account</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete your user account? Account will be deleted permanently.</p>
+            </div>
+            <div class="modal-footer">
+                <button id="account-delete-button" type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section scripts
 {
     <script>
@@ -104,5 +122,21 @@
                 }
             }
         });
+
+        $("#account-delete-button").on("click",
+            function() {
+                $.ajax({
+                    url: '/Account/DeleteUserAccount',
+                    type: 'POST',
+                    success: function(data) {
+                        if (data.success) {
+                            sessionStorage.setItem('accountDeleted', 'true');
+                            window.location.href = "/Home/Index";
+                        } else {
+                            toastr.error(data.responseText, 'Error!');
+                        }
+                    }
+                });
+            });
     </script>
 }

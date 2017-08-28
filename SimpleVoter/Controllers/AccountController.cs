@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -85,12 +86,17 @@ namespace SimpleVoter.Controllers
                 return View(model);
             }
 
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: true);
             switch (result)
             {
                 case SignInStatus.Success:
+                    var userid = UserManager.FindByEmail(model.Email).Id;
+                    if (!UserManager.IsEmailConfirmed(userid))
+                    {
+                        var autheticationManager = HttpContext.GetOwinContext().Authentication;
+                        autheticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                        return View("EmailNotConfirmed");
+                    }
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -101,6 +107,17 @@ namespace SimpleVoter.Controllers
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
             }
+        }
+
+        public ActionResult DeleteUserAccount()
+        {
+            var user = _unitOfWork.Users.Get(User.Identity.GetUserId());
+            _unitOfWork.Users.Remove(user);
+            _unitOfWork.DailyStatistics.Increase_DeletedUsers();
+            _unitOfWork.Complete();
+            var autheticationManager = HttpContext.GetOwinContext().Authentication;
+            autheticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            return Json(new {success = true});
         }
 
         //
@@ -172,14 +189,13 @@ namespace SimpleVoter.Controllers
                 {
                     //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     var message = "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>";
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", message);
 
                     _unitOfWork.DailyStatistics.Increase_NewUsers();
+                    _unitOfWork.Complete();
 
                     return View("NewAccountCheckEmail");
                 }

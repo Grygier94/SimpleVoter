@@ -28,10 +28,9 @@ namespace SimpleVoter.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        //TODO: mozliwosc zalogowania tylko kiedy email zostal potwierdzony
-        //TODO: W manage dodac mozliwosc usuniecia konta (+ zaimplementowac zwiekszanie statystyk IncreaseDeletedAccount)
         //TODO: W manage zmienic wlaczenie weryfikacji dwuetapowej
         //TODO: panel admina - zwiekszanie statystyk pageviews i unique visitors
+        //TODO: zabezpieczenie po IP
 
         //TODO: dodać visibility 'personal?' gdzie tylko zaproszeni przez tworce uzytkownicy moga glosowac
         //TODO: automatyczne usuwanie polla po 24h - niezalogowani (sql server agent - job schedule)

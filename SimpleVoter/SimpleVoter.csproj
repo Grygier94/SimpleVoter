@@ -657,6 +657,7 @@
     <Content Include="Views\Admin\UsersList.cshtml" />
     <Content Include="Views\Admin\_UsersTable.cshtml" />
     <Content Include="Views\Admin\UserDetails.cshtml" />
+    <Content Include="Views\Account\EmailNotConfirmed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

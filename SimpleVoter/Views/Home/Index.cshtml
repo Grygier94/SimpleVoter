@@ -41,3 +41,15 @@
         </section>
     </div>
 </div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function() {
+            if (sessionStorage.accountDeleted == 'true') {
+                sessionStorage.setItem('accountDeleted', 'false');
+                toastr.warning('Account has been deleted permanently.', 'Account deleted!');
+            }
+        });
+    </script>
+}
