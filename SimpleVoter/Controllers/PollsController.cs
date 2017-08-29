@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Web;
 using System.Web.Configuration;
-using System.Web.Helpers;
 using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
@@ -12,9 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Newtonsoft.Json;
 using SimpleVoter.Core;
 using SimpleVoter.Core.Enums;
-using SimpleVoter.Core.Extensions;
 using SimpleVoter.Core.Models;
-using SimpleVoter.Core.ViewModels;
 using SimpleVoter.Core.ViewModels.PollViewModels;
 
 namespace SimpleVoter.Controllers
@@ -50,8 +46,7 @@ namespace SimpleVoter.Controllers
         [AllowAnonymous]
         public ActionResult RenderPollTable(string json)
         {
-            PollTableInfo tableInfo = JsonConvert.DeserializeObject<PollTableInfo>(json);
-
+            var tableInfo = JsonConvert.DeserializeObject<PollTableInfo>(json);
             var polls = _unitOfWork.Polls.GetAll(tableInfo);
 
             var viewModelList = new List<PollListViewModel>();

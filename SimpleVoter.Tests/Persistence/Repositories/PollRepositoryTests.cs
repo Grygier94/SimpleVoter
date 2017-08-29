@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Security.Principal;
 using System.Web.Helpers;
 using FluentAssertions;
 using Microsoft.AspNet.Identity;
@@ -71,12 +72,13 @@ namespace SimpleVoter.Tests.Persistence.Repositories
         }
 
         [TestMethod]
-        public void GetAll_PollsExist_ShouldReturnAllPolls()
+        public void GetAll_PollsExist_ShouldReturnPublicPolls()
         {
-            var poll1 = new Poll { Id = 1, Question = "Question1" };
-            var poll2 = new Poll { Id = 2, Question = "Question2" };
-            var poll3 = new Poll { Id = 3, Question = "Question3" };
-            _mockPolls.SetSource(new[] { poll1, poll2, poll3 });
+            var poll1 = new Poll { Id = 1, Question = "Question1", ExpirationDate = DateTime.Now.AddDays(1), Visibility = Visibility.Public};
+            var poll2 = new Poll { Id = 2, Question = "Question2", ExpirationDate = DateTime.Now.AddDays(1), Visibility = Visibility.Public };
+            var poll3 = new Poll { Id = 3, Question = "Question3", ExpirationDate = DateTime.Now.AddDays(1), Visibility = Visibility.Public };
+            var poll4 = new Poll { Id = 4, Question = "Question4", ExpirationDate = DateTime.Now.AddDays(1), Visibility = Visibility.Private };
+            _mockPolls.SetSource(new[] { poll1, poll2, poll3, poll4 });
 
             var pollTableInfo = new PollTableInfo
             {
@@ -94,6 +96,59 @@ namespace SimpleVoter.Tests.Persistence.Repositories
 
             allPolls.Should().NotBeNull();
             allPolls.Should().HaveCount(3);
+        }
+
+        [TestMethod]
+        public void GetAll_LoggedAsADminPollsExist_ShouldReturnAllPolls()
+        {
+            var poll1 = new Poll { Id = 1, Question = "Question1", ExpirationDate = DateTime.Now.AddDays(1), Visibility = Visibility.Public };
+            var poll2 = new Poll { Id = 2, Question = "Question2", ExpirationDate = DateTime.Now.AddDays(1), Visibility = Visibility.Public };
+            var poll3 = new Poll { Id = 3, Question = "Question3", ExpirationDate = DateTime.Now.AddDays(1), Visibility = Visibility.Public };
+            var poll4 = new Poll { Id = 4, Question = "Question4", ExpirationDate = DateTime.Now.AddDays(1), Visibility = Visibility.Private };
+            _mockPolls.SetSource(new[] { poll1, poll2, poll3, poll4 });
+
+            var pollTableInfo = new PollTableInfo
+            {
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = 1,
+                    ItemsPerPage = 20
+                },
+                SearchText = "",
+                SortBy = SortBy.Id,
+                SortDirection = SortDirection.Ascending
+            };
+
+            var allPolls = _pollRepository.GetAll(pollTableInfo, "", true);
+
+            allPolls.Should().NotBeNull();
+            allPolls.Should().HaveCount(4);
+        }
+
+        public void GetAll_AuthenticatedUser_ShouldReturnUserPolls()
+        {
+            var poll1 = new Poll { Id = 1, Question = "Question1", ExpirationDate = DateTime.Now.AddDays(1), Visibility = Visibility.Public, User = new ApplicationUser{Id = "test"}};
+            var poll2 = new Poll { Id = 2, Question = "Question2", ExpirationDate = DateTime.Now.AddDays(1), Visibility = Visibility.Public, User = new ApplicationUser{ Id = "random"} };
+            var poll3 = new Poll { Id = 3, Question = "Question3", ExpirationDate = DateTime.Now.AddDays(1), Visibility = Visibility.Public, User = new ApplicationUser { Id = "random" } };
+            var poll4 = new Poll { Id = 4, Question = "Question4", ExpirationDate = DateTime.Now.AddDays(1), Visibility = Visibility.Private, User = new ApplicationUser{ Id = "test"}};
+            _mockPolls.SetSource(new[] { poll1, poll2, poll3, poll4 });
+
+            var pollTableInfo = new PollTableInfo
+            {
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = 1,
+                    ItemsPerPage = 20
+                },
+                SearchText = "",
+                SortBy = SortBy.Id,
+                SortDirection = SortDirection.Ascending
+            };
+
+            var allPolls = _pollRepository.GetAll(pollTableInfo, "test");
+
+            allPolls.Should().NotBeNull();
+            allPolls.Should().HaveCount(2);
         }
 
         [TestMethod]

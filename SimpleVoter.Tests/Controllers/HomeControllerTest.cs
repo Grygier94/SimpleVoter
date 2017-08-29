@@ -16,30 +16,11 @@ namespace SimpleVoter.Tests.Controllers
     [TestClass]
     public class HomeControllerTest
     {
-        public HomeControllerTest()
-        {
-            var identity = new GenericIdentity("user1@domain.com");
-            identity.AddClaim(new Claim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name", "user1@domain.com"));
-            identity.AddClaim(new Claim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier", "1"));
-
-            var principal = new GenericPrincipal(identity, null);
-
-            var mockUoW = new Mock<IUnitOfWork>();
-            var controller = new HomeController(mockUoW.Object);
-            //controller.User = principal;
-        }
-
         [TestMethod]
         public void Index()
         {
-            // Arrange
-            var mockUoW = new Mock<IUnitOfWork>();
-            var controller = new HomeController(mockUoW.Object);
-
-            // Act
+            var controller = new HomeController();
             var result = controller.Index() as ViewResult;
-
-            // Assert
             Assert.IsNotNull(result);
         }
     }

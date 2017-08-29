@@ -9,6 +9,7 @@ using FluentAssertions;
 using Microsoft.AspNet.Identity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Newtonsoft.Json;
 using SimpleVoter.Controllers;
 using SimpleVoter.Core;
 using SimpleVoter.Core.Models;
@@ -24,27 +25,42 @@ namespace SimpleVoter.Tests.Controllers
         private PollsController _pollsController;
         private Mock<IPollRepository> _mockPollRepository;
         private Mock<IAnswerRepository> _mockAnswerRepository;
+        private Mock<IDailyStatisticsRepository> _mockDailyStatisticsRepository;
 
         [TestInitialize]
         public void TestInitialize()
         {
             _mockPollRepository = new Mock<IPollRepository>();
             _mockAnswerRepository = new Mock<IAnswerRepository>();
+            _mockDailyStatisticsRepository = new Mock<IDailyStatisticsRepository>();
             var mockUoW = new Mock<IUnitOfWork>();
 
             mockUoW.SetupGet(u => u.Polls).Returns(_mockPollRepository.Object);
             mockUoW.SetupGet(u => u.Answers).Returns(_mockAnswerRepository.Object);
+            mockUoW.SetupGet(u => u.DailyStatistics).Returns(_mockDailyStatisticsRepository.Object);
             _pollsController = new PollsController(mockUoW.Object);
         }
 
-        [TestMethod]
-        public void ShowAll_ValidRequest_ShouldReturnView()
-        {
-            var result = _pollsController.ShowPublicPolls() as ViewResult;
+        //[TestMethod]
+        //public void RenderPollTable_ValidRequest_ShouldReturnPartialView()
+        //{
+        //    var json = JsonConvert.SerializeObject(new
+        //    {
+        //        SortBy = 1,
+        //        SortDirection = 1,
+        //        SearchText = "",
+        //        PagingInfo = new
+        //        {
+        //            ItemsPerPage = 20,
+        //            CurrentPage = 1
+        //        }
+        //    });
 
-            result.Should().NotBe(null);
-            result.Should().BeOfType<ViewResult>();
-        }
+        //    var result = _pollsController.RenderPollTable(json) as PartialViewResult;
+
+        //    result.Should().NotBe(null);
+        //    result.Should().BeOfType<PartialViewResult>();
+        //}
 
         [TestMethod]
         public void Create_ValidRequest_ShouldCreatePollAndReturnView()
@@ -71,21 +87,12 @@ namespace SimpleVoter.Tests.Controllers
         }
 
         [TestMethod]
-        public void Create_InvalidRequest_ShouldReturnCreateView()
+        public void Update_InvalidRequest_ShouldReturnEditView()
         {
-            var result = _pollsController.Create(null) as ViewResult;
+            var result = _pollsController.Update(null) as ViewResult;
 
             result.Should().NotBe(null);
             result.Should().BeOfType<ViewResult>();
-        }
-
-        [TestMethod]
-        public void Edit_InvalidRequest_ShouldReturnEditView()
-        {
-            //var result = _pollsController.Edit(null) as ViewResult;
-
-            //result.Should().NotBe(null);
-            //result.Should().BeOfType<ViewResult>();
         }
 
 
