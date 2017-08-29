@@ -10,5 +10,7 @@ namespace SimpleVoter.Core.Repositories
     {
         bool Exists(string ip);
         void Add(UniqueVisitor visitor);
+        bool HasAnsweredPoll(string ip, int pollId);
+        UniqueVisitor Get(string ip);
     }
 }

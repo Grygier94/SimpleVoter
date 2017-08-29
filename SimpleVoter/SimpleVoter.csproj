@@ -515,6 +515,14 @@
     <Compile Include="Persistence\Migrations\201708281921442_AddUniqueVisitorsTable.Designer.cs">
       <DependentUpon>201708281921442_AddUniqueVisitorsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Persistence\Migrations\201708282314359_UpdateUniqueVisitorName.cs" />
+    <Compile Include="Persistence\Migrations\201708282314359_UpdateUniqueVisitorName.Designer.cs">
+      <DependentUpon>201708282314359_UpdateUniqueVisitorName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\Migrations\201708282315365_AddPollsColumnToUniqueVisitorsTable.cs" />
+    <Compile Include="Persistence\Migrations\201708282315365_AddPollsColumnToUniqueVisitorsTable.Designer.cs">
+      <DependentUpon>201708282315365_AddPollsColumnToUniqueVisitorsTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Persistence\Migrations\Configuration.cs" />
     <Compile Include="Persistence\ApplicationDbContext.cs" />
     <Compile Include="Core\Models\Poll.cs" />
@@ -737,6 +745,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Persistence\Migrations\201708281921442_AddUniqueVisitorsTable.resx">
       <DependentUpon>201708281921442_AddUniqueVisitorsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201708282314359_UpdateUniqueVisitorName.resx">
+      <DependentUpon>201708282314359_UpdateUniqueVisitorName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201708282315365_AddPollsColumnToUniqueVisitorsTable.resx">
+      <DependentUpon>201708282315365_AddPollsColumnToUniqueVisitorsTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

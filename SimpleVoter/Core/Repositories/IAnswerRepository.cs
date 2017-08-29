@@ -12,5 +12,7 @@ namespace SimpleVoter.Core.Repositories
         int GetVotes(int answerId);
         void Remove(Answer answer);
         void RemoveRange(List<Answer> answers);
+        int GetPollId(int answerId);
+        Poll GetPoll(int answerId);
     }
 }

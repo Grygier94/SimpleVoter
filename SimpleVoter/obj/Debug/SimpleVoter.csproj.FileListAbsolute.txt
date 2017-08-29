@@ -485,3 +485,5 @@ D:\Repositories\simplevoter\SimpleVoter\obj\Debug\SimpleVoter.Migrations.ChangeU
 D:\Repositories\simplevoter\SimpleVoter\obj\Debug\SimpleVoter.Migrations.UpdateComputedColumsInDailyStatistics.resources
 D:\Repositories\simplevoter\SimpleVoter\obj\Debug\SimpleVoter.Migrations.AddChartTypeColumnToPoll.resources
 D:\Repositories\simplevoter\SimpleVoter\obj\Debug\SimpleVoter.Migrations.AddUniqueVisitorsTable.resources
+D:\Repositories\simplevoter\SimpleVoter\obj\Debug\SimpleVoter.Migrations.UpdateUniqueVisitorName.resources
+D:\Repositories\simplevoter\SimpleVoter\obj\Debug\SimpleVoter.Migrations.AddPollsColumnToUniqueVisitorsTable.resources

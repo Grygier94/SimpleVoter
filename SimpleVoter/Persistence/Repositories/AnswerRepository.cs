@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using SimpleVoter.Core;
@@ -24,6 +25,16 @@ namespace SimpleVoter.Persistence.Repositories
         public int GetVotes(int answerId)
         {
             return Context.Answers.Single(a => a.Id == answerId).Votes;
+        }
+
+        public int GetPollId(int answerId)
+        {
+            return Context.Answers.Single(a => a.Id == answerId).PollId;
+        }
+
+        public Poll GetPoll(int answerId)
+        {
+            return Context.Answers.Include(a => a.Poll).Single(a => a.Id == answerId).Poll;
         }
 
         public void Remove(Answer answer)

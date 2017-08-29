@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Ninject.Activation;
 using SimpleVoter.Core.Models;
 using SimpleVoter.Persistence;
 
@@ -29,8 +30,20 @@ namespace SimpleVoter.Core.Filters
             }
 
             var userIp = HttpContext.Current.Request.UserHostAddress;
-            if (!_unitOfWork.UniqueVisitors.Exists(userIp))
+            if (HttpContext.Current.Request.Cookies["UniqueVisit"] == null &&
+                _unitOfWork.UniqueVisitors.Exists(userIp))
             {
+                var cookie = new HttpCookie("UniqueVisit", "false");
+                cookie.Expires.AddYears(10);
+                HttpContext.Current.Response.SetCookie(cookie);
+            }
+
+            if (HttpContext.Current.Request.Cookies["UniqueVisit"] == null && 
+                !_unitOfWork.UniqueVisitors.Exists(userIp))
+            {
+                var cookie = new HttpCookie("UniqueVisit", "false");
+                cookie.Expires.AddYears(10);
+                HttpContext.Current.Response.SetCookie(cookie);
                 _unitOfWork.DailyStatistics.Increase_UniqueVisitors();
                 _unitOfWork.UniqueVisitors.Add(new UniqueVisitor { IpAdress = userIp});
                 _unitOfWork.Complete();

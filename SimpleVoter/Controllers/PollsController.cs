@@ -28,7 +28,8 @@ namespace SimpleVoter.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        //TODO: User ip, cookies, session check before vote for unique votes
+        //TODO: Add ability to change email
+        //TODO: Add ability to choose unique user name on registration and display it instead of email
         //TODO: Add option 'Only logged in users can display'
         //TODO: Add option 'Only logged in users can vote'
         //TODO: Add visibility 'Personal' where only users invited by owner can vote
@@ -262,12 +263,51 @@ namespace SimpleVoter.Controllers
             if (expirationDate != null && DateTime.Now > expirationDate.Value)
                 return Json(new { success = false, responseText = "Poll has expired." });
 
+            var userIp = Request.UserHostAddress;
+            var poll = _unitOfWork.Answers.GetPoll(ids[0]);
+
+            if (Session["Voted-Poll" + poll.Id] != null || Request.Cookies["Voted-Poll" + poll.Id] != null || _unitOfWork.UniqueVisitors.HasAnsweredPoll(userIp, poll.Id))
+            {
+                if (Session["Voted-Poll" + poll.Id] == null)
+                    Session["Voted-Poll" + poll.Id] = true;
+
+                if (Request.Cookies["Voted-Poll" + poll.Id] == null)
+                {
+                    var cookie = new HttpCookie("Voted-Poll" + poll.Id, "true");
+                    cookie.Expires.AddYears(10);
+                    Response.SetCookie(cookie);
+                }
+
+                return Json(new { success = false, responseText = "You've already participated in this poll." });
+            }
+            
             foreach (var id in ids)
             {
                 var answer = _unitOfWork.Answers.Get(id);
                 answer.Votes++;
-                _unitOfWork.Complete();
             }
+
+            Session["Voted-Poll" + poll.Id] = true;
+            var httpCookie = new HttpCookie("Voted-Poll" + poll.Id, "true");
+            httpCookie.Expires.AddYears(10);
+            Response.SetCookie(httpCookie);
+
+            if (_unitOfWork.UniqueVisitors.Exists(userIp))
+            {
+                var user = _unitOfWork.UniqueVisitors.Get(userIp);
+                user.PollsParticipated.Add(poll);
+            }
+            else
+            {
+                var visitor = new UniqueVisitor
+                {
+                    IpAdress = userIp,
+                    PollsParticipated = new List<Poll> {poll}
+                };
+                _unitOfWork.UniqueVisitors.Add(visitor);
+            }
+
+            _unitOfWork.Complete();
             return Json(new { success = true });
         }
 
